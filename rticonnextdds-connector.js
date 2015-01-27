@@ -2,22 +2,15 @@ var os = require('os');
 var ffi = require("ffi");
 var util = require('util');
 EventEmitter = require('events').EventEmitter
-var path = require('path');
-var LIBRARY_PATHS = [];
+
+var LIB_FULL_PATH = "";
 switch (os.platform()) {
   case 'darwin':
-    LIBRARY_PATHS.push('/Users/gianpiero/rti/rticonnextdds-connector/lib/x64Darwin12clang4.1/librti_dds_connector.dylib');
-    //LIBRARY_PATHS.push(path.join(process.env.HOME, '/Users/gianpiero/rti/rticonnextdds-connector/lib/x64Darwin12clang4.1/librti_dds_connector.dylib'));
-    break;
+     LIB_FULL_PATH = __dirname + '/lib/x64Darwin12clang4.1/librti_dds_connector.dylib';
+     break;
 }
 
-exports.LIBRARY_PATHS = LIBRARY_PATHS;
-
-//ffi.Library('/Users/gianpiero/rti/rticonnextdds-connector/lib/x64Darwin12clang4.1/libnddsc.dylib');
-
-//var rtin = ffi.Library('librti_dds_connector.dylib', {
-//var rtin = ffi.Library('/Users/gianpiero/rti/rticonnextdds-connector/lib/x64Darwin12clang4.1/librti_dds_connector.dylib', {
-var rtin = ffi.Library(__dirname + '/lib/x64Darwin12clang4.1/librti_dds_connector.dylib', {
+var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_new": [ "pointer", ["string", "string"]],
 "RTIDDSConnector_getSamplesLength": [ "double", ["pointer", "string"]],
 "RTIDDSConnector_getInfosLength": [ "double", ["pointer", "string"]],
