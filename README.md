@@ -4,5 +4,5 @@ This git repository contains all the file you need to start using the RTI CONNEX
 
 This is an experimental product and is not officially supported. 
 
-You can ask question and find help on http://community.rti.com
+You can ask questions and find help on http://community.rti.com
 
