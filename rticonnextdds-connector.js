@@ -4,10 +4,20 @@ var util = require('util');
 EventEmitter = require('events').EventEmitter
 
 var LIB_FULL_PATH = "";
-switch (os.platform()) {
-  case 'darwin':
-     LIB_FULL_PATH = __dirname + '/lib/x64Darwin12clang4.1/librti_dds_connector.dylib';
-     break;
+
+if (os.arch()=='x64') {
+  switch (os.platform()) {
+    case 'darwin':
+      LIB_FULL_PATH = __dirname + '/lib/x64Darwin12clang4.1/librti_dds_connector.dylib';
+      break;
+    case 'linux':
+      LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librti_dds_connector.so';
+      break;
+    default:
+      console.log(os.platform() + ' not yet supported');
+  }
+} else {
+  console.log('32 bit libraries not available yet');
 }
 
 var rtin = ffi.Library(LIB_FULL_PATH, {
