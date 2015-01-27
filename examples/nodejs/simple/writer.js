@@ -9,7 +9,7 @@
 var sleep = require('sleep');
 var rti   = require('rticonnextdds-connector');
 
-var connector = new rti.Connector("MyParticipantLibrary::Zero","./ShapeExample.xml");
+var connector = new rti.Connector("MyParticipantLibrary::Zero",__dirname + "/../ShapeExample.xml");
 var output = connector.getOutput("MyPublisher::MySquareWriter");
 
 var i =0;
