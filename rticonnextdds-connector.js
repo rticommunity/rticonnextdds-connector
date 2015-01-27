@@ -16,7 +16,7 @@ if (os.arch()=='x64') {
     default:
       console.log(os.platform() + ' not yet supported');
   }
-else {
+} else {
   console.log('32 bit libraries not available yet');
 }
 
