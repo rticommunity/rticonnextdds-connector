@@ -8,7 +8,8 @@
   },
   "files" : [
     "rticonnextdds-connector.js", 
-    "lib"
+    "lib",
+    "examples"
   ],
   "repository": {
     "type": "git",
