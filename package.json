@@ -14,6 +14,12 @@
     "type": "git",
     "url": "https://github.com/gianpiero/rticonnextdds-connector"
   },
+  "dependencies" : {
+    "util" : "*",
+    "ffi" : "*",
+    "sleep" : "*",
+    "events" : "*"
+  },
   "keywords": [
     "rti",
     "dds",
