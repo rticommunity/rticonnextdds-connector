@@ -38,6 +38,7 @@ var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_take": [ "void", ["pointer", "string"]],
 "RTIDDSConnector_wait": [ "int", ["pointer", "int"]],
 "RTIDDSConnector_getJSONSample": [ "string", ["pointer", "string", "int"]],
+"RTIDDSConnector_delete": [ "void", ["pointer"]],
 });
 
 
@@ -59,8 +60,8 @@ function Samples(input) {
     return rtin.RTIDDSConnector_getStringFromSamples(input.connector.native,input.name,index,fieldName);
   }
 
-  this.toJSON = function(index) {
-    return rtin.RTIDDSConnector_getJSONSample(input.connector.native, input.name, index);
+  this.getJSON = function(index) {
+    return JSON.parse(rtin.RTIDDSConnector_getJSONSample(input.connector.native, input.name, index));
   }
 
 }
@@ -106,6 +107,31 @@ function Instance(output) {
   this.setString = function(fieldName, value) {
     rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,fieldName,value);
   }
+
+  var setFromJSONI = function(prefix,jsonObj) {
+    for (var key in jsonObj) {
+      var value = jsonObj[key];
+      if (typeof(value) == "string") {
+        rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,prefix+key,value);
+      } else if (typeof(value) == "number") {
+        rtin.RTIDDSConnector_setNumberIntoSamples(output.connector.native,output.name,prefix+key,value);
+      } else if (typeof(value) == "boolean") {
+        rtin.RTIDDSConnector_setBooleanIntoSamples(output.connector.native,output.name,prefix+key,value);
+      } else if (typeof(value) == "object") {
+        if (prefix.length > 0) {
+          prefix = prefix + '.';
+        }
+        prefix = prefix + key + '.';
+      } else {
+         console.log('Nothing to do for key: ' + key + ' of value: ' + value);
+      }
+      console.log(key + ' = ' + value);
+    }  
+  }
+
+  this.setFromJSON = function(jsonObj) {
+    setFromJSONI("",jsonObj);
+  }
 }
 
 
@@ -123,6 +149,10 @@ function Connector(configName,fileName) {
   this.native = rtin.RTIDDSConnector_new(configName,fileName);
   var on_data_available_run = false;
 
+  this.delete = function() {
+    return rtin.RTIDDSConnector_delete(this.native);
+  }
+ 
   this.getInput = function(inputName) {
     return new Input(this,inputName);
   }
