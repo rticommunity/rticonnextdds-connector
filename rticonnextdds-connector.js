@@ -11,7 +11,7 @@ if (os.arch()=='x64') {
       LIB_FULL_PATH = __dirname + '/lib/x64Darwin12clang4.1/librti_dds_connector.dylib';
       break;
     case 'linux':
-      LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librti_dds_connectord.so';
+      LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librti_dds_connector.so';
       break;
     default:
       console.log(os.platform() + ' not yet supported');
