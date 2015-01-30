@@ -11,7 +11,7 @@ if (os.arch()=='x64') {
       LIB_FULL_PATH = __dirname + '/lib/x64Darwin12clang4.1/librti_dds_connector.dylib';
       break;
     case 'linux':
-      LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librti_dds_connector.so';
+      LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librti_dds_connectord.so';
       break;
     default:
       console.log(os.platform() + ' not yet supported');
@@ -38,6 +38,7 @@ var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_take": [ "void", ["pointer", "string"]],
 "RTIDDSConnector_wait": [ "int", ["pointer", "int"]],
 "RTIDDSConnector_getJSONSample": [ "string", ["pointer", "string", "int"]],
+"RTIDDSConnector_delete": [ "void", ["pointer"]],
 });
 
 
@@ -123,6 +124,10 @@ function Connector(configName,fileName) {
   this.native = rtin.RTIDDSConnector_new(configName,fileName);
   var on_data_available_run = false;
 
+  this.delete = function() {
+    return rtin.RTIDDSConnector_delete(this.native);
+  }
+ 
   this.getInput = function(inputName) {
     return new Input(this,inputName);
   }
