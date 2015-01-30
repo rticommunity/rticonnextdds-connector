@@ -125,7 +125,7 @@ function Instance(output) {
       } else {
          console.log('Nothing to do for key: ' + key + ' of value: ' + value);
       }
-      console.log(key + ' = ' + value);
+      //console.log(key + ' = ' + value);
     }  
   }
 
