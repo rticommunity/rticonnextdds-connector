@@ -55,7 +55,7 @@ function Samples(input) {
   this.getBoolean = function(index, fieldName) {
     return rtin.RTIDDSConnector_getBooleanFromSamples(input.connector.native,input.name,index,fieldName);
   }
-
+  
   this.getString = function(index, fieldName) {
     return rtin.RTIDDSConnector_getStringFromSamples(input.connector.native,input.name,index,fieldName);
   }
@@ -112,16 +112,23 @@ function Instance(output) {
     for (var key in jsonObj) {
       var value = jsonObj[key];
       if (typeof(value) == "string") {
+        console.log('set ' + prefix+key + ' to ' + value);
         rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,prefix+key,value);
       } else if (typeof(value) == "number") {
+        console.log('set ' + prefix+key + ' to ' + value);
         rtin.RTIDDSConnector_setNumberIntoSamples(output.connector.native,output.name,prefix+key,value);
       } else if (typeof(value) == "boolean") {
+        console.log('set ' + prefix+key + ' to ' + value);
         rtin.RTIDDSConnector_setBooleanIntoSamples(output.connector.native,output.name,prefix+key,value);
       } else if (typeof(value) == "object") {
+        oldprefix = prefix;
         if (prefix.length > 0) {
           prefix = prefix + '.';
+          lengthAdded = lengthAdded + 1;
         }
         prefix = prefix + key + '.';
+        setFromJSONI(prefix, value);
+        prefix = oldprefix;
       } else {
          console.log('Nothing to do for key: ' + key + ' of value: ' + value);
       }
