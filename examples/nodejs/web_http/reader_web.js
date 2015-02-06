@@ -37,7 +37,7 @@ http.createServer(function (req, res) {
     console.log(input.samples.getLength());
     for (i=1; i <= input.samples.getLength(); i++) {
       if (input.infos.isValid(i)) {
-        res.write(JSON.stringify((input.samples.toJSON(i)));
+        res.write(JSON.stringify((input.samples.getJSON(i))));
       }
     }
     res.end();
