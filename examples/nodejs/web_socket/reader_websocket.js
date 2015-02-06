@@ -20,17 +20,17 @@ var input = connector.getInput("MySubscriber::MySquareReader");
 
 var server = http.createServer(function (req, res) {
 	if (req.url=="/simple") {
-        fs.readFile('web_socket/indexShape.html', function(error, data) {
+        fs.readFile(__dirname + "/indexShape.html", function(error, data) {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end(data, 'utf-8');
         });
     } else if (req.url=="/chart") {
-	  fs.readFile('web_socket/indexChart.html', function(error, data) {
+	  fs.readFile(__dirname + '/indexChart.html', function(error, data) {
 	    res.writeHead(200, { 'Content-Type': 'text/html' });
 	    res.end(data, 'utf-8');
 	  });
     } else if (req.url == "/earth") {
-      fs.readFile('web_socket/indexEarth.html', function(error, data) {
+      fs.readFile(__dirname + '/indexEarth.html', function(error, data) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(data, 'utf-8');
       });
@@ -46,10 +46,14 @@ var io = require('socket.io').listen(server);
 
 connector.on('on_data_available',
    function() {
+       console.log('on_dat');
        input.take();
+       console.log(input.samples.getLength());
        for (i=1; i <= input.samples.getLength(); i++) {
-         if (input.infos.isValid(i)) {       
+         if (input.infos.isValid(i)) {  
+           console.log('is valid');     
            var jsonObj = input.samples.getJSON(i);
+           console.log(JSON.stringify(jsonObj));
            io.sockets.emit('shape', jsonObj);
            if (jsonObj.x>4000) {
              connector.removeAllListeners('on_data_available');
