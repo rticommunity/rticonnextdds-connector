@@ -22,7 +22,7 @@ connector.on('on_data_available',
      input.take();
      for (i=1; i <= input.samples.getLength(); i++) {
          if (input.infos.isValid(i)) {
-             console.log(JSON.stringfy(input.samples.getJSON(i)));
+             console.log(JSON.stringify(input.samples.getJSON(i)));
          }    
      }
 
