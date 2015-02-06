@@ -24,7 +24,7 @@ connector.on('on_data_available', function() {
 	console.log("length = " + input.samples.getLength());
 	for (i=1; i <= input.samples.getLength(); i++) {
 	  if (input.infos.isValid(i)) {
-	    console.log(JSON.stringify(input.samples.toJSON(i)));
+	    console.log(JSON.stringify(input.samples.getJSON(i)));
 	  }
 	}
 })
@@ -40,7 +40,7 @@ http.createServer(function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
     for (i=1; i <= input.samples.getLength(); i++) {
         if (input.infos.isValid(i)) {
-          res.write(JSON.stringify(input.samples.toJSON(i)));
+          res.write(JSON.stringify(input.samples.getJSON(i)));
         }
     }
     res.end();

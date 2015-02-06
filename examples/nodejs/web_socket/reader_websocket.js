@@ -49,7 +49,7 @@ connector.on('on_data_available',
        input.take();
        for (i=1; i <= input.samples.getLength(); i++) {
          if (input.infos.isValid(i)) {       
-           var jsonObj = input.samples.toJSON(i);
+           var jsonObj = input.samples.getJSON(i);
            io.sockets.emit('shape', jsonObj);
            if (jsonObj.x>4000) {
              connector.removeAllListeners('on_data_available');
