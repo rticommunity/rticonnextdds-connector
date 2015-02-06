@@ -31,7 +31,7 @@
     "pub-sub"
   ],
   "author": "Gianpiero Napoli <gianpiero@rti.com>",
-  "license": "ISC",
+  "license": "See License File",
   "bugs": {
     "url": "https://github.com/gianpiero/rticonnextdds-connector/issues"
   },
