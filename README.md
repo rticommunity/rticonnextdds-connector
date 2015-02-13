@@ -5,8 +5,8 @@ RTI Connext DDS Connector in Node.js.
 
 With the sole exception of the contents of the "examples" subdirectory, all use
 of this product is subject to the RTI Software License Agreement included at 
-the top level of this repository.  
-Files within the "examples" subdirectory are licensed as marked within the file.
+the top level of this repository.  Files within the "examples" subdirectory are
+licensed as marked within the file.
 
 This software is an experimental (aka "pre-production") product. The Software is
 provided "as is", with no warranty of any type, including any warranty for
