@@ -1,7 +1,7 @@
 rticonnextdds-connector
 =======================
-This git repository contains all the files you need to start using the 
-RTI Connext DDS Connector in Node.js.
+This Git repository contains all the files you need to start using the 
+RTI Connext DDS Connector in [Node.js](https://nodejs.org/).
 
 With the sole exception of the contents of the "examples" subdirectory, all use
 of this product is subject to the RTI Software License Agreement included at 
