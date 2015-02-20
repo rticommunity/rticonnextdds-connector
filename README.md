@@ -15,3 +15,22 @@ support the Software. RTI shall not be liable for any incidental or
 consequential  damages arising out of the use or inability to use the software.
 
 You can ask questions and find help on http://community.rti.com
+
+HowTo
+=====
+    git clone git@github.com:rticommunity/rticonnextdds-connector.git
+
+    cd rticonnextdds-connector
+    npm install
+
+    cd examples/nodejs/
+    export DYLD_LIBRARY_PATH=../../lib/x64Darwin12clang4.1/
+    export NODE_PATH=../..
+
+    node web_socket/reader_websocket.js 
+    Point browser to http://127.0.0.1:7400/
+
+    Start Shapes Demo and publish Squares OR in another shell window
+    node simple/writer.js
+    
+    The web-browser display should update to show the published squares
