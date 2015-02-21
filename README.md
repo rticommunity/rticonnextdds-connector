@@ -24,7 +24,6 @@ HowTo
     npm install
 
     cd examples/nodejs/
-    export DYLD_LIBRARY_PATH=../../lib/x64Darwin12clang4.1/
     export NODE_PATH=../..
 
     node web_socket/reader_websocket.js 
