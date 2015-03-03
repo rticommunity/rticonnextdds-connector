@@ -25,7 +25,13 @@ if (os.arch()=='x64') {
       console.log(os.platform() + ' not yet supported');
   }
 } else {
-  console.log('32 bit libraries not available yet');
+  switch (os.platform()) {
+    case 'linux':
+      LIB_FULL_PATH = __dirname + '/lib/i86Linux3.xgcc4.6.3/librti_dds_connector.so';
+      break;
+    default:
+      console.log(os.platform() + ' not yet supported');
+  }
 }
 
 var rtin = ffi.Library(LIB_FULL_PATH, {
