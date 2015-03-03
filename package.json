@@ -17,7 +17,7 @@
   },
   "dependencies" : {
     "util" : "*",
-    "ffi" : "*",
+    "ffi" : "git+https://github.com/kjunichi/node-ffi.git#bad796888ad564bbc6a15b73579223b8f118605e",
     "sleep" : "*",
     "events" : "*",
     "socket.io" : "*"
