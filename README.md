@@ -65,10 +65,10 @@ Be sure you have python (<3). Then clone this repo:
 $ git clone https://github.com/gianpiero/rticonnextdds-connector.git
 ```
 
-You can also download the [zip file](https://github.com/gianpiero/rticonnextdds-connector/archive/master.zip) 
+You can also download the [zip file](archive/master.zip) 
 and then unzip it.
 
-When that is done, cd into your new directory and have a look to the [examples/python/README.md](https://github.com/gianpiero/rticonnextdds-connector/tree/master/examples/python/README.md)
+When that is done, cd into your new directory and have a look to the [examples/python/README.md](examples/python/README.md)
 
 ### License:
 With the sole exception of the contents of the "examples" subdirectory, all use
