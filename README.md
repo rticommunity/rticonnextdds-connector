@@ -57,7 +57,7 @@ Be sure you have all the tools to work with nodejs. Then invoke:
 $ npm install dds
 ```
 
-When that is done, cd into your node_modules directory and have a look to the [examples/nodejs/README.md](https://github.com/gianpiero/rticonnextdds-connector/tree/master/examples/nodejs/README.md)
+When that is done, cd into your node_modules directory and have a look to the [examples/nodejs/README.md](examples/nodejs/README.md)
 ### Getting started with python
 Be sure you have python (<3). Then clone this repo:
 
