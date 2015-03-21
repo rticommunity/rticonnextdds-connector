@@ -1,9 +1,16 @@
-rticonnextdds-connector: nodejs/javascript examples
+rticonnextdds-connector: nodejs/javascript
 ========
 
 ### Installation and Platform support
 Check [here](https://github.com/gianpiero/rticonnextdds-connector#getting-started-with-nodejs) and [here](https://github.com/gianpiero/rticonnextdds-connector#platform-support).
 If you still have trouble write on the [forum](https://community.rti.com/forums/technical-questions)
+
+### Available examples
+In this directory you can find 3 sets of examples
+
+ * **simple**: shows how to write samples, how to read/take, and how to use event based reading
+ * **web_http**: shows how an http client can request DDS data using RESTful
+ * **web_socket**: shows how to push DDS data to a browser through `[socket.io](https://github.com/Automattic/socket.io)`
 
 ### API Overview:
 #### require the connector library
@@ -124,7 +131,8 @@ We can access them in two ways:
  }
  ```
 
- #### event base reading
+#### event base reading
+
  If you don't want to do polling, you can ask the connector to notify you when there are data available:
 
  ```js
