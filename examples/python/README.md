@@ -2,7 +2,7 @@ rticonnextdds-connector: python
 ========
 
 ### Installation and Platform support
-Check [here](https://github.com/gianpiero/rticonnextdds-connector#getting-started-with-python) and [here](https://github.com/gianpiero/rticonnextdds-connector#platform-support).
+Check [here](https://github.com/rticommunity/rticonnextdds-connector#getting-started-with-python) and [here](https://github.com/rticommunity/rticonnextdds-connector#platform-support).
 If you still have trouble write on the [forum](https://community.rti.com/forums/technical-questions)
 
 ### Available examples
