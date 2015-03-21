@@ -21,7 +21,7 @@ var rti = require('rticonnextdds-connector');
 ```
 
 #### instantiate a new connector
-To create a new connector you have to pass an xml file and a configuation name. For more information on
+To create a new connector you have to pass an xml file and a configuration name. For more information on
 the XML format check the [XML App Creation guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_XML_AppCreation_GettingStarted.pdf) or
 have a look to the [ShapeExample.xml](ShapeExample.xml) file included in this directory.  
 
@@ -85,14 +85,14 @@ var input = connector.getInput("MySubscriber::MySquareReader");
 then we can call the `read()` or `take()` API:
 
 ```js
-output.read();
+input.read();
 ```
 
  or
 
- ```js
- output.take();
- ```
+```js
+input.take();
+```
 
 The read/take operation can return multiple samples. So we have to iterate on an array:
 
