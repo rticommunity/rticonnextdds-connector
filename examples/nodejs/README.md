@@ -10,7 +10,7 @@ In this directory you can find 3 sets of examples
 
  * **simple**: shows how to write samples, how to read/take, and how to use event based reading
  * **web_http**: shows how an http client can request DDS data using RESTful
- * **web_socket**: shows how to push DDS data to a browser through `[socket.io](https://github.com/Automattic/socket.io)`
+ * **web_socket**: shows how to push DDS data to a browser through [socket.io](https://github.com/Automattic/socket.io)
 
 ### API Overview:
 #### require the connector library
