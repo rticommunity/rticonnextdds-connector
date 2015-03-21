@@ -32,8 +32,8 @@ var output = connector.getOutput("MyPublisher::MySquareWriter");
 then we have to set the instance's fields:
 
 ```js
-output.instance.setNumber("x",i);
-output.instance.setNumber("y",i*2);
+output.instance.setNumber("x",1);
+output.instance.setNumber("y",2);
 output.instance.setNumber("shapesize",30);
 output.instance.setString("color", "BLUE");
 ```
@@ -50,7 +50,7 @@ The content of an instance can be set in two ways:
  * **Field by field**:
 
 ```js
-output.instance.setNumber("y",i*2);
+output.instance.setNumber("y",2);
 ```
 
 The APIs to do that are only 3: `setNumber(fieldName, number);` `setBoolean(fieldName, boolean);` and `setString(fieldName, string);`.
@@ -123,3 +123,21 @@ We can access them in two ways:
    }
  }
  ```
+
+ #### event base reading
+ If you don't want to do polling, you can ask the connector to notify you when there are data available:
+
+ ```js
+ connector.on('on_data_available',
+   function() {
+     input.take();
+     for (i=1; i <= input.samples.getLength(); i++) {
+         if (input.infos.isValid(i)) {
+             console.log(JSON.stringify(input.samples.getJSON(i)));
+         }
+     }
+
+});
+```
+
+Notice that if you have multiple inputs, you will have to check all of them yourself.  
