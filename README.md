@@ -8,7 +8,7 @@ It is based on [XML App Creation](https://community.rti.com/rti-doc/510/ndds.5.1
 
 It was created by the RTI Research Group to quickly and easily develop demos
 and proof of concept. We think that it can be useful for anybody that needs
-a quick way to script tests and interact with DDS.
+a quick way to script tests and interact with DDS using different scripting languages.
 
 It can be used to quickly create tests for your distributed system and, thanks
 to the binding with scripting languages and the use of XML, to easily integrate
@@ -29,7 +29,7 @@ implemented. Just not ready to release yet...
 
 ### Platform support
 We are building our library for few architectures only. Check them out here. If you need another architecture
-feel free to ask on the [community forum](https://community.rti.com/forums/technical-questions)
+feel free to ask on the [RTI Community Forum](https://community.rti.com/forums/technical-questions)
 
 
 ### What is this git repository
@@ -37,17 +37,16 @@ It is our way to make the connector technology available to you!
 As of today we included nodejs, python and lua (through RTI Prototyper) for few
 architectures.
 
-Also, we will use this repo for the npm registry.
+Also, for the nodejs users, we will use this repo for the npm registry.
 
 ### Support
-This is *not* an official RTI product, so is not officially supported. You can
-try to get help writing on the [community forum](https://community.rti.com/forums/technical-questions).
+This is **not** an official RTI product, so is **not** officially supported. This is early access technology. We'd love your feedback. Please contact the [RTI Community Forum](https://community.rti.com/forums/technical-questions) where fellow users and RTI engineers can help you. 
 
 ### Documentation
 We do not have much documentation yet. But we promise you: if you look at the
 examples you'll see that is very easy to use our Connector.
 
-We got documentation on out to access the data sample fields in Section 6.4 'Data Access API' of the
+We got documentation on how to access the data sample fields in Section 6.4 'Data Access API' of the
 [RTI Prototyper Getting Started Guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_Prototyper_GettingStarted.pdf)  
 
 ### Getting started with nodejs
