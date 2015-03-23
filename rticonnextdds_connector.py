@@ -19,9 +19,25 @@ import platform
 
 bits   = platform.machine();
 osname = platform.system();
-arch = "x64Darwin12clang4.1";
-post = "dylib";
-libname = 'librti_dds_connector'
+
+if "64" in bits:
+	if "Linux" in osname:
+		arch = "x64Linux2.6gcc4.4.5"
+		libname = "librti_dds_connector"
+		post = "so"
+	elif "Darwin" in osname:
+		arch = "x64Darwin12clang4.1"
+		libname = "librti_dds_connector"
+		post = "dylib"
+	else:
+		print "platfrom not yet supported"
+else:
+	if "Linux" in osname:
+		arch = "i86Linux3.xgcc4.6.3"
+		libname = "librti_dds_connector"
+		post = "so"
+	else:
+		print "platfrom not yet supported"
 
 path = os.path.dirname(os.path.realpath(__file__))
 path = path + "/lib/" + arch + "/";
