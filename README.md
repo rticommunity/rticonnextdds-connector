@@ -2,7 +2,7 @@ rticonnextdds-connector
 =======
 
 ### RTI Connext DDS Connector
-RTI Connext DDS Connector, or shortly `RTI Connector', is a quick and easy
+RTI Connext DDS Connector, or 'RTI Connector' for short, is a quick and easy
 way to access the power and the functionalities of [RTI Connext DDS](http://www.rti.com/products/index.html).
 It is based on [XML App Creation](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
 
@@ -13,6 +13,8 @@ a quick way to script tests and interact with DDS using different scripting lang
 It can be used to quickly create tests for your distributed system and, thanks
 to the binding with scripting languages and the use of XML, to easily integrate
 with tons of other available technologies.
+
+The RTI Connector library is provided in binary form for selected architectures. Scripting language bindings and examples are provided in source format. 
 
 ### Language Support
 
