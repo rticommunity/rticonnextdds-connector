@@ -1,7 +1,7 @@
 rticonnextdds-connector
 =======
 
-### RTI Connector for DDS Connector
+### RTI Connector for Connext DDS
 RTI Connector for Connext DDS is a quick and easy way to access the power and 
 functionality of [RTI Connext DDS](http://www.rti.com/products/index.html).
 It is based on [XML App Creation](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
