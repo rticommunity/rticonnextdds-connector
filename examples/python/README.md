@@ -1,4 +1,4 @@
-rticonnextdds-connector: python
+rticonnextdds-connector: Python
 ========
 
 ### Installation and Platform support
