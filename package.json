@@ -1,5 +1,4 @@
-{
-  "name": "dds",
+
   "version": "0.1.0",
   "description": "javascript binding for the RTI CONNEXT DDS CONNECTOR",
   "main": "rticonnextdds-connector.js",
@@ -9,7 +8,8 @@
   "files" : [
     "rticonnextdds-connector.js", 
     "lib",
-    "examples"
+    "examples/nodejs",
+    "examples/nodered"
   ],
   "repository": {
     "type": "git",
