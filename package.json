@@ -34,7 +34,7 @@
   "author": "Gianpiero Napoli <gianpiero@rti.com>",
   "license": "See License File",
   "bugs": {
-    "url": "https://github.com/gianpiero/rticonnextdds-connector/issues"
+    "url": "https://github.com/rticommunity/rticonnextdds-connector/issues"
   },
-  "homepage": "https://github.com/gianpiero/rticonnextdds-connector"
+  "homepage": "https://github.com/rticommunity/rticonnextdds-connector"
 }
