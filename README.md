@@ -55,7 +55,7 @@ We have documentation on how to access the data sample fields in Section 6.4 'Da
 Be sure you have all the tools to work with nodejs. Then invoke:
 
 ``` bash
-$ npm install dds
+$ npm install rticonnextdds-connector
 ```
 
 When that is done, cd into your node_modules directory and have a look to the [examples/nodejs/README.md](examples/nodejs/README.md)
