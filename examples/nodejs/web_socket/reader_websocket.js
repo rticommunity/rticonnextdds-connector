@@ -55,9 +55,6 @@ connector.on('on_data_available',
            var jsonObj = input.samples.getJSON(i);
            console.log(JSON.stringify(jsonObj));
            io.sockets.emit('shape', jsonObj);
-           if (jsonObj.x>4000) {
-             connector.removeAllListeners('on_data_available');
-           }
         }
    }
 });
