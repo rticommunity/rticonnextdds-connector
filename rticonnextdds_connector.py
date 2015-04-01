@@ -16,6 +16,7 @@ import os
 import sys
 import weakref
 import platform
+import json 
 
 bits   = platform.machine();
 osname = platform.system();
@@ -87,6 +88,10 @@ rtin_RTIDDSConnector_getStringFromSamples = rti.RTIDDSConnector_getStringFromSam
 rtin_RTIDDSConnector_getStringFromSamples.restype = ctypes.c_char_p
 rtin_RTIDDSConnector_getStringFromSamples.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p]
 
+rtin_RTIDDSConnector_getJSONSample = rti.RTIDDSConnector_getJSONSample
+rtin_RTIDDSConnector_getJSONSample.restype = ctypes.c_char_p
+rtin_RTIDDSConnector_getJSONSample.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_int]
+
 #Python Class Definition
 
 class Samples:
@@ -105,6 +110,9 @@ class Samples:
 	def getString(self, index, fieldName):
 		return rtin_RTIDDSConnector_getStringFromSamples(self.input.connector.native,self.input.name,index,fieldName);
 
+	def getDictionary(self,index):
+		jsonStr = rtin_RTIDDSConnector_getJSONSample(self.input.connector.native,self.input.name,index);
+		return json.loads(jsonStr)
 
 class Infos:
 	def __init__(self,input):
