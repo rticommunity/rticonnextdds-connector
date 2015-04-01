@@ -26,9 +26,10 @@ for i in range(1,500):
 	numOfSamples = input.samples.getLength();
 	for j in range (1, numOfSamples+1):
 		if input.infos.isValid(j):
-			x = input.samples.getNumber(j, "x");
-			y = input.samples.getNumber(j, "y");
-			size = input.samples.getNumber(j, "shapesize");
+                        sample = input.samples.getDictionary(j); #this gives you a dictionary 
+                        x = sample['x']; #you can access the dictionary...
+			y = sample['y'];
+			size = input.samples.getNumber(j, "shapesize"); #or, if you need a single field, you can just access the field directly
 			color = input.samples.getString(j, "color");
 			toPrint = "Received x: " + repr(x) + " y: " + repr(y) + " size: " + repr(size) + " color: " + repr(color);
 			print toPrint;
