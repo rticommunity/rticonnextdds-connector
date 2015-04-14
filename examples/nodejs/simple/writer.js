@@ -26,5 +26,5 @@ for (;;) {
     output.instance.setString("color", "BLUE");
     console.log("Writing...");
     output.write();
-    sleep.usleep(1000);
+    // sleep.usleep(1000);
 }
