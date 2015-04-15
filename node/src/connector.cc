@@ -15,16 +15,15 @@ NAN_METHOD(connector_new) {
   // argument sanity check replace by returning undefined
   assert(args.Length() == 2);
 
+  // char *configName, *fileName;
+
   //create object handler for rti_connector struct.
   ObjectHandle<rti_connector>* conn = new ObjectHandle<rti_connector>("rti_connector");
 
-  v8::String::Utf8Value cName(args[0]);
-  std::string configName(*cName, cName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value configName(args[0]->ToString());
+  v8::String::Utf8Value fileName(args[1]->ToString());
 
-  v8::String::Utf8Value fName(args[1]);
-  std::string fileName(*fName, fName.length()); //replace with memory allocated extraction
-
-  conn->pointer = RTIDDSConnector_new(configName.c_str(), fileName.c_str());
+  conn->pointer = RTIDDSConnector_new(*configName, *fileName);
 
   //This is just for my sanity:
   assert(conn->pointer != NULL);
@@ -60,13 +59,12 @@ NAN_METHOD(reader_take) {
 
   ObjectHandle<rti_connector>* conn = ObjectHandle<rti_connector>::Unwrap(args[0]);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value readerName(args[1]->ToString());
 
   //Please don't let it be:
   assert(conn->pointer != NULL);
 
-  RTIDDSConnector_take(conn->pointer, readerName.c_str());
+  RTIDDSConnector_take(conn->pointer, *readerName);
 
   NanReturnUndefined();
 }
@@ -81,13 +79,12 @@ NAN_METHOD(reader_read) {
 
   ObjectHandle<rti_connector>* conn = ObjectHandle<rti_connector>::Unwrap(args[0]);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value readerName(args[1]->ToString());
 
   // That wouldn't be good:
   assert(conn->pointer != NULL);
 
-  RTIDDSConnector_read(conn->pointer, readerName.c_str());
+  RTIDDSConnector_read(conn->pointer, *readerName);
 
   NanReturnUndefined();
 }
@@ -106,10 +103,9 @@ NAN_METHOD(writer_write) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value wName(args[1]);
-  std::string writerName(*wName, wName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value writerName(args[1]->ToString());
 
-  RTIDDSConnector_write(conn->pointer, writerName.c_str());
+  RTIDDSConnector_write(conn->pointer, *writerName);
 
   NanReturnUndefined();
 }
@@ -125,20 +121,12 @@ NAN_METHOD(number_into_samples) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value wName(args[1]);
-  std::string writerName(*wName, wName.length()); //replace with memory allocated extraction
-
-  v8::String::Utf8Value fName(args[2]);
-  std::string fieldName(*fName, fName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value writerName(args[1]->ToString());
+  v8::String::Utf8Value fieldName(args[2]->ToString());
 
   double number = args[3]->NumberValue();
 
-  RTIDDSConnector_setNumberIntoSamples(
-    conn->pointer,
-    writerName.c_str(),
-    fieldName.c_str(),
-    number
-  );
+  RTIDDSConnector_setNumberIntoSamples(conn->pointer,*writerName,*fieldName,number);
 
   NanReturnUndefined();
 }
@@ -154,21 +142,11 @@ NAN_METHOD(string_into_samples) {
   //I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value wName(args[1]);
-  std::string writerName(*wName, wName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value writerName(args[1]->ToString());
+  v8::String::Utf8Value fieldName(args[2]->ToString());
+  v8::String::Utf8Value value(args[3]->ToString());
 
-  v8::String::Utf8Value fName(args[2]);
-  std::string fieldName(*fName, fName.length()); //replace with memory allocated extraction
-
-  v8::String::Utf8Value val(args[3]);
-  std::string value(*val, val.length()); //replace with memory allocated extraction
-
-  RTIDDSConnector_setStringIntoSamples(
-    conn->pointer,
-    writerName.c_str(),
-    fieldName.c_str(),
-    value.c_str()
-  );
+  RTIDDSConnector_setStringIntoSamples(conn->pointer,*writerName,*fieldName,*value);
 
   NanReturnUndefined();
 }
@@ -184,20 +162,11 @@ NAN_METHOD(boolean_into_samples) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value wName(args[1]);
-  std::string writerName(*wName, wName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value writerName(args[1]->ToString());
+  v8::String::Utf8Value fieldName(args[2]->ToString());
+  int value = (int)args[3]->BooleanValue();
 
-  v8::String::Utf8Value fName(args[2]);
-  std::string fieldName(*fName, fName.length()); //replace with memory allocated extraction
-
-  bool value = args[3]->BooleanValue();
-
-  RTIDDSConnector_setBooleanIntoSamples(
-    conn->pointer,
-    writerName.c_str(),
-    fieldName.c_str(),
-    (int)value
-  );
+  RTIDDSConnector_setBooleanIntoSamples(conn->pointer,*writerName,*fieldName,value);
 
   NanReturnUndefined();
 }
@@ -213,10 +182,9 @@ NAN_METHOD(samples_length) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value readerName(args[1]->ToString());
 
-  double length = RTIDDSConnector_getSamplesLength(conn->pointer, readerName.c_str());
+  double length = RTIDDSConnector_getSamplesLength(conn->pointer, *readerName);
 
   NanReturnValue(NanNew<Number>(length));
 }
@@ -232,20 +200,11 @@ NAN_METHOD(number_from_samples) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
-
+  v8::String::Utf8Value readerName(args[1]->ToString());
   int index = (int)args[2]->NumberValue();
+  v8::String::Utf8Value fieldName(args[3]->ToString());
 
-  v8::String::Utf8Value fName(args[3]);
-  std::string fieldName(*fName, fName.length()); //replace with memory allocated extraction
-
-  double number = RTIDDSConnector_getNumberFromSamples(
-    conn->pointer,
-    readerName.c_str(),
-    index,
-    fieldName.c_str()
-  );
+  double number = RTIDDSConnector_getNumberFromSamples(conn->pointer,*readerName,index,*fieldName);
 
   NanReturnValue(NanNew<Number>(number));
 }
@@ -261,20 +220,11 @@ NAN_METHOD(boolean_from_samples) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
-
+  v8::String::Utf8Value readerName(args[1]->ToString());
   int index = (int)args[2]->NumberValue();
+  v8::String::Utf8Value fieldName(args[3]->ToString());
 
-  v8::String::Utf8Value fName(args[3]);
-  std::string fieldName(*fName, fName.length()); //replace with memory allocated extraction
-
-  bool boolean = (bool)RTIDDSConnector_getBooleanFromSamples(
-    conn->pointer,
-    readerName.c_str(),
-    index,
-    fieldName.c_str()
-  );
+  bool boolean = (bool)RTIDDSConnector_getBooleanFromSamples(conn->pointer,*readerName,index,*fieldName);
 
   NanReturnValue(NanNew<Boolean>(boolean));
 }
@@ -290,20 +240,11 @@ NAN_METHOD(string_from_samples) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
-
+  v8::String::Utf8Value readerName(args[1]->ToString());
   int index = (int)args[2]->NumberValue();
+  v8::String::Utf8Value fieldName(args[3]->ToString());
 
-  v8::String::Utf8Value fName(args[3]);
-  std::string fieldName(*fName, fName.length()); //replace with memory allocated extraction
-
-  char* string = RTIDDSConnector_getStringFromSamples(
-    conn->pointer,
-    readerName.c_str(),
-    index,
-    fieldName.c_str()
-  );
+  char* string = RTIDDSConnector_getStringFromSamples(conn->pointer,*readerName,index,*fieldName);
 
   NanReturnValue(NanNew<String>(string));
 }
@@ -319,16 +260,10 @@ NAN_METHOD(json_from_samples) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
-
+  v8::String::Utf8Value readerName(args[1]->ToString());
   int index = (int)args[2]->NumberValue();
 
-  char* string = RTIDDSConnector_getJSONSample(
-    conn->pointer,
-    readerName.c_str(),
-    index
-  );
+  char* string = RTIDDSConnector_getJSONSample(conn->pointer,*readerName,index);
 
   NanReturnValue(NanNew<String>(string));
 }
@@ -344,13 +279,9 @@ NAN_METHOD(infos_length) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
+  v8::String::Utf8Value readerName(args[1]->ToString());
 
-  double length = RTIDDSConnector_getInfosLength(
-    conn->pointer,
-    readerName.c_str()
-  );
+  double length = RTIDDSConnector_getInfosLength(conn->pointer,*readerName);
 
   NanReturnValue(NanNew<Number>(length));
 }
@@ -366,20 +297,11 @@ NAN_METHOD(boolean_from_infos) {
   // I can't even:
   assert(conn->pointer != NULL);
 
-  v8::String::Utf8Value rName(args[1]);
-  std::string readerName(*rName, rName.length()); //replace with memory allocated extraction
-
+  v8::String::Utf8Value readerName(args[1]->ToString());
   int index = (int)args[2]->NumberValue();
+  v8::String::Utf8Value value(args[1]->ToString());
 
-  v8::String::Utf8Value val(args[1]);
-  std::string value(*val, val.length()); //replace with memory allocated extraction
-
-  bool boolean = (bool)RTIDDSConnector_getBooleanFromInfos(
-    conn->pointer,
-    readerName.c_str(),
-    index,
-    value.c_str()
-  );
+  bool boolean = (bool)RTIDDSConnector_getBooleanFromInfos(conn->pointer,*readerName,index,*value);
 
   NanReturnValue(NanNew<Boolean>(boolean));
 }

@@ -14,7 +14,7 @@ namespace rti {
   /**
    * A function to use as a JS function that does nothing and returns this
    */
-   static NAN_METHOD(object_new);
+   static inline NAN_METHOD(object_new);
 
    void init_connector(v8::Handle<v8::Object> target);
 

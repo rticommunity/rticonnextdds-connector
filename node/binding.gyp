@@ -13,7 +13,7 @@
         'release%': '<!(uname -r)'
       }],
       ['OS=="mac"', {
-      	'libDir%' : "bin/<(target_arch)<(system)12clang4.1",
+      	'libDir%' : "<(module_root_dir)/bin/<(target_arch)<(system)12clang4.1",
         'rtiLib%': "librti_dds_connector.dylib"
       }],
     ]
@@ -42,7 +42,7 @@
             '-lrti_dds_connector'
           ],
           'library_dirs': [
-            '/Users/bryan/Projects/rticonnextdds-connector/node/bin/x64Darwin12clang4.1',
+            '<(libDir)',
           ],
         },
       }]

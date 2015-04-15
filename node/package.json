@@ -4,7 +4,7 @@
   "description": "JavaScript (Node.js) binding for the RTI Connector for Connext DDS",
   "main": "lib/rtiddsconnector.js",
   "scripts": {
-    "test": "echo \"test\""
+    "install": "node-gyp configure build"
   },
   "repository": {
     "type": "git",

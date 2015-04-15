@@ -17,11 +17,18 @@ for (;;) {
     }
   }
   i = i + 1;
+
+  if(i === 10) {
+    break;
+  }
   output.instance.setNumber("x",i);
   output.instance.setNumber("y",i*2);
   output.instance.setNumber("shapesize",30);
   output.instance.setString("color", "REEDHARRY");
   console.log("Writing...", i);
   output.write();
-  // sleep.sleep(2);
+  sleep.sleep(2);
 }
+
+console.log('deleting connector');
+connector.delete();
