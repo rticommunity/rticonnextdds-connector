@@ -12,10 +12,9 @@ NAN_METHOD(rti::object_new) {
 NAN_METHOD(connector_new) {
   NanScope();
 
-  // argument sanity check replace by returning undefined
-  assert(args.Length() == 2);
-
-  // char *configName, *fileName;
+  //ArgumentCheck(expected, received, ...)
+  // ArgumentCheck(2, args.Length(), NODE_STRING, NODE_STRING);
+  RDC_THROW_EXCEPTION(args.Length() == 2, "connector_new expects 2 arguments");
 
   //create object handler for rti_connector struct.
   ObjectHandle<rti_connector>* conn = new ObjectHandle<rti_connector>("rti_connector");
@@ -26,7 +25,7 @@ NAN_METHOD(connector_new) {
   conn->pointer = RTIDDSConnector_new(*configName, *fileName);
 
   //This is just for my sanity:
-  assert(conn->pointer != NULL);
+  NULL_POINTER_EXCEPTION(conn->pointer != NULL);
 
   NanReturnValue(conn->object);
 }
@@ -34,16 +33,17 @@ NAN_METHOD(connector_new) {
 NAN_METHOD(connector_delete) {
   NanScope();
 
-  // argument sanity check replace by returning undefined
-  assert(args.Length() == 1);
+  RDC_THROW_EXCEPTION(args.Length() == 1, "connector_delete expects 1 argument");
 
   ObjectHandle<rti_connector>* conn = ObjectHandle<rti_connector>::Unwrap(args[0]);
 
   //Oh god no:
-  assert(conn->pointer != NULL);
+  NULL_POINTER_EXCEPTION(conn->pointer != NULL);
 
   RTIDDSConnector_delete(conn->pointer);
 
+  // now we can delete the pointer;
+  delete conn->pointer;
   conn->pointer = NULL;
 
   NanReturnUndefined();
@@ -52,17 +52,16 @@ NAN_METHOD(connector_delete) {
 NAN_METHOD(reader_take) {
   NanScope();
 
-  // argument sanity check replace by returning undefined
-  assert(args.Length() == 2);
-  assert(args[0]->IsObject());
-  assert(args[1]->IsString());
+  RDC_THROW_EXCEPTION(args.Length() == 2, "reader_take expects 2 arguments");
+  RDC_THROW_EXCEPTION(args[0]->IsObject(), "arg[1] must be an object");
+  RDC_THROW_EXCEPTION(args[1]->IsString(), "arg[2] must be a string");
 
   ObjectHandle<rti_connector>* conn = ObjectHandle<rti_connector>::Unwrap(args[0]);
 
   v8::String::Utf8Value readerName(args[1]->ToString());
 
   //Please don't let it be:
-  assert(conn->pointer != NULL);
+  NULL_POINTER_EXCEPTION(conn->pointer != NULL);
 
   RTIDDSConnector_take(conn->pointer, *readerName);
 
@@ -72,17 +71,16 @@ NAN_METHOD(reader_take) {
 NAN_METHOD(reader_read) {
   NanScope();
 
-  // argument sanity check replace by returning undefined
-  assert(args.Length() == 2);
-  assert(args[0]->IsObject());
-  assert(args[1]->IsString());
+  RDC_THROW_EXCEPTION(args.Length() == 2, "reader_take expects 2 arguments");
+  RDC_THROW_EXCEPTION(args[0]->IsObject(), "arg[1] must be an object");
+  RDC_THROW_EXCEPTION(args[1]->IsString(), "arg[2] must be a string");
 
   ObjectHandle<rti_connector>* conn = ObjectHandle<rti_connector>::Unwrap(args[0]);
 
   v8::String::Utf8Value readerName(args[1]->ToString());
 
   // That wouldn't be good:
-  assert(conn->pointer != NULL);
+  NULL_POINTER_EXCEPTION(conn->pointer != NULL);
 
   RTIDDSConnector_read(conn->pointer, *readerName);
 
@@ -94,9 +92,9 @@ NAN_METHOD(writer_write) {
   NanScope();
 
   // argument sanity check replace by returning undefined
-  assert(args.Length() == 2);
-  assert(args[0]->IsObject());
-  assert(args[1]->IsString());
+  RDC_THROW_EXCEPTION(args.Length() == 2, "writer_write expects 2 arguments");
+  RDC_THROW_EXCEPTION(args[0]->IsObject(), "arg[1] must be an object");
+  RDC_THROW_EXCEPTION(args[1]->IsString(), "arg[2] must be a string");
 
   ObjectHandle<rti_connector>* conn = ObjectHandle<rti_connector>::Unwrap(args[0]);
 

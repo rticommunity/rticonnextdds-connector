@@ -42,7 +42,7 @@
             '-lrti_dds_connector'
           ],
           'library_dirs': [
-            '<(libDir)',
+            '<(module_root_dir)/bin/<(target_arch)<(system)12clang4.1',
           ],
         },
       }]

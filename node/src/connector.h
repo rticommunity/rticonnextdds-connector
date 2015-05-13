@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdio.h>
 #include <string>
 #include <node.h>
 #include <node_object_wrap.h>
@@ -9,7 +10,22 @@
 
 using namespace v8;
 
+const bool EXPRESSION_OK = true;
+
+#define RDC_THROW_EXCEPTION(expression, message) if(expression != EXPRESSION_OK) {\
+  printf(message);\
+  NanReturnUndefined();\
+}
+
+#define NULL_POINTER_EXCEPTION(expression) {\
+  RDC_THROW_EXCEPTION(expression, "Connector->pointer is NULL");\
+}
+
 namespace rti {
+
+  // void ArgumentCheck(int expected, int received, ...) {
+  //   va_list ap
+  // }
 
   /**
    * A function to use as a JS function that does nothing and returns this
@@ -58,6 +74,10 @@ namespace rti {
          */
         char* GetName() {
           return *(v8::String::Utf8Value(name_));
+        }
+
+        rti_connector* GetPointer() {
+          return pointer;
         }
 
       protected:
