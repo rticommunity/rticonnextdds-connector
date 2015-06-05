@@ -64,6 +64,9 @@ rtin_RTIDDSConnector_read.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
 rtin_RTIDDSConnector_take = rti.RTIDDSConnector_take
 rtin_RTIDDSConnector_take.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
 
+rtin_RTIDDSConnector_wait = rti.RTIDDSConnector_wait
+rtin_RTIDDSConnector_wait.argtypes = [ctypes.c_void_p, ctypes.c_int]
+
 rtin_RTIDDSConnector_getInfosLength = rti.RTIDDSConnector_getInfosLength
 rtin_RTIDDSConnector_getInfosLength.restype = ctypes.c_double
 rtin_RTIDDSConnector_getInfosLength.argtypes = [ctypes.c_void_p,ctypes.c_char_p]
@@ -136,6 +139,9 @@ class Input:
 
 	def take(self):
 		rtin_RTIDDSConnector_take(self.connector.native,self.name);
+
+        def wait(self,timeout):
+		rtin_RTIDDSConnector_wait(self.connector.native,timeout);
 
 class Instance:
 	def __init__(self, output):
