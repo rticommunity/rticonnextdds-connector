@@ -18,7 +18,7 @@ import weakref
 import platform
 import json 
 
-bits   = platform.machine();
+(bits, linkage)  = platform.architecture();
 osname = platform.system();
 
 if "64" in bits:
