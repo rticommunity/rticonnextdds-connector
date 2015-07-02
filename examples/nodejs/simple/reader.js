@@ -1,6 +1,6 @@
 /*****************************************************************************
-*    (c) 2005-2015 Copyright, Real-Time Innovations, All rights reserved.    * 
-*                                                                            * 
+*    (c) 2005-2015 Copyright, Real-Time Innovations, All rights reserved.    *
+*                                                                            *
 * RTI grants Licensee a license to use, modify, compile, and create          *
 * derivative works of the Software.  Licensee has the right to distribute    *
 * object form only for use with RTI products. The Software is provided       *
@@ -12,14 +12,14 @@
 ******************************************************************************/
 
 var sleep = require('sleep');
-var rti   = require('rticonnextdds-connector');
+var rti   = require('../../../node/rticonnextdds-connector');
 
 var connector = new rti.Connector("MyParticipantLibrary::Zero",__dirname + "/../ShapeExample.xml");
 var input = connector.getInput("MySubscriber::MySquareReader");
 
 for (;;) {
     console.log("Waiting for samples...");
-    input.take();
+    input.read();
     for (i=1; i <= input.samples.getLength(); i++) {
       if (input.infos.isValid(i)) {
         console.log(JSON.stringify(input.samples.getJSON(i)));

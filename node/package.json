@@ -2,16 +2,10 @@
   "name": "rticonnextdds-connector",
   "version": "0.1.2",
   "description": "JavaScript (Node.js) binding for the RTI Connector for Connext DDS",
-  "main": "rticonnextdds-connector.js",
+  "main": "lib/rtiddsconnector.js",
   "scripts": {
-    "test": "echo \"test\""
+    "install": "node-gyp configure build"
   },
-  "files": [
-    "rticonnextdds-connector.js",
-    "lib",
-    "examples/nodejs",
-    "examples/nodered"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/rticommunity/rticonnextdds-connector.git"
@@ -22,7 +16,7 @@
     "nan": "^1.7.0",
     "sleep": "*",
     "socket.io": "*",
-    "util": "*"
+    "util": "^0.10.3"
   },
   "keywords": [
     "rti",

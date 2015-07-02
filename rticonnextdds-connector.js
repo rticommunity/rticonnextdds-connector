@@ -1,7 +1,7 @@
 /******************************************************************************
 * (c) 2005-2015 Copyright, Real-Time Innovations.  All rights reserved.       *
 * No duplications, whole or partial, manual or electronic, may be made        *
-* without express written permission.  Any such copies, or revisions thereof, * 
+* without express written permission.  Any such copies, or revisions thereof, *
 * must display this notice unaltered.                                         *
 * This code contains trade secrets of Real-Time Innovations, Inc.             *
 ******************************************************************************/
@@ -9,7 +9,7 @@
 var os = require('os');
 var ffi = require("ffi");
 var util = require('util');
-EventEmitter = require('events').EventEmitter
+EventEmitter = require('events').EventEmitter;
 
 var LIB_FULL_PATH = "";
 
@@ -69,7 +69,7 @@ function Samples(input) {
   this.getBoolean = function(index, fieldName) {
     return rtin.RTIDDSConnector_getBooleanFromSamples(input.connector.native,input.name,index,fieldName);
   }
-  
+
   this.getString = function(index, fieldName) {
     return rtin.RTIDDSConnector_getStringFromSamples(input.connector.native,input.name,index,fieldName);
   }
@@ -82,7 +82,7 @@ function Samples(input) {
 
 function Infos(input) {
 
-  this.getLength = function() { 
+  this.getLength = function() {
     return rtin.RTIDDSConnector_getInfosLength(input.connector.native,input.name);
   }
 
@@ -147,7 +147,7 @@ function Instance(output) {
          console.log('Nothing to do for key: ' + key + ' of value: ' + value);
       }
       //console.log(key + ' = ' + value);
-    }  
+    }
   }
 
   this.setFromJSON = function(jsonObj) {
@@ -173,7 +173,7 @@ function Connector(configName,fileName) {
   this.delete = function() {
     return rtin.RTIDDSConnector_delete(this.native);
   }
- 
+
   this.getInput = function(inputName) {
     return new Input(this,inputName);
   }
@@ -202,8 +202,8 @@ function Connector(configName,fileName) {
         onDataAvailable(this);
       }
     }
-  } 
- 
+  }
+
   this.on('newListener', newListerCallBack);
 
   var removeListenerCallBack = function(eventName, fnListener) {
