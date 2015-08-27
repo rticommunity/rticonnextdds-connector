@@ -20,6 +20,7 @@ import json
 
 (bits, linkage)  = platform.architecture();
 osname = platform.system();
+isArm = os.uname()[4].startswith("arm");
 
 if "64" in bits:
 	if "Linux" in osname:
@@ -33,7 +34,11 @@ if "64" in bits:
 	else:
 		print "platfrom not yet supported"
 else:
-	if "Linux" in osname:
+	if isArm:
+		arch = "armv6vfphLinux3.xgcc4.7.2"
+		libname = "librti_dds_connector"
+		post = "so"
+	elif "Linux" in osname:
 		arch = "i86Linux3.xgcc4.6.3"
 		libname = "librti_dds_connector"
 		post = "so"
