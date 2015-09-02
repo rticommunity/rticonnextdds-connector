@@ -18,8 +18,7 @@
 		<qos_profile name="DefaultProfile" is_default_qos="true">
 			<participant_qos>
 				<transport_builtin>
-					<!-- <mask>UDPV4 | SHMEM</mask>-->
-				    <mask> SHMEM</mask>
+				    <mask>UDPV4 | SHMEM</mask>
 				</transport_builtin>
 
 				<!-- Turn on monitoring -->
