@@ -1,5 +1,5 @@
 {
-  "name" : "rticonnextdds-connector", 
+  "name" : "rticonnextdds-connector",
   "version": "0.1.2",
   "description": "JavaScript (Node.js) binding for the RTI Connector for Connext DDS",
   "main": "rticonnextdds-connector.js",
@@ -7,7 +7,7 @@
     "test": "echo \"test\""
   },
   "files" : [
-    "rticonnextdds-connector.js", 
+    "rticonnextdds-connector.js",
     "lib",
     "examples/nodejs",
     "examples/nodered"
@@ -18,10 +18,16 @@
   },
   "dependencies" : {
     "util" : "*",
-    "ffi" : "*", 
+    "ffi" : "*",
     "sleep" : "*",
     "events" : "*",
     "socket.io" : "*"
+  },
+  "node-red": {
+    "nodes": {
+      "rti-connector": "examples/nodered/rti/RTIConnector.js",
+      "rti-connector-out": "examples/nodered/rti/RTIConnectorOut.js"
+    }
   },
   "keywords": [
     "rti",
