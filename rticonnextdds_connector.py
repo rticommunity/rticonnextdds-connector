@@ -20,7 +20,7 @@ import json
 
 (bits, linkage)  = platform.architecture();
 osname = platform.system();
-isArm = os.uname()[4].startswith("arm");
+isArm = platform.uname()[4].startswith("arm");
 
 if "64" in bits:
 	if "Linux" in osname:
