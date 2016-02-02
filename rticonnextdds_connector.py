@@ -44,7 +44,7 @@ else:
 		post = "so"
 	elif "Windows" in osname:
 		arch = "i86Win32VS2010"
-		libname = "brti_dds_connector"
+		libname = "rti_dds_connector"
 		post = "dll"
 	else:
 		print "platfrom not yet supported"
