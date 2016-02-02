@@ -42,11 +42,15 @@ else:
 		arch = "i86Linux3.xgcc4.6.3"
 		libname = "librti_dds_connector"
 		post = "so"
+	elif "Windows" in osname:
+		arch = "i86Win32VS2010"
+		libname = "brti_dds_connector"
+		post = "dll"
 	else:
 		print "platfrom not yet supported"
 
 path = os.path.dirname(os.path.realpath(__file__))
-path = path + "/lib/" + arch + "/";
+path = path + os.sep + "lib" + os.sep + arch + os.sep;
 libname = libname + "." + post
 rti = ctypes.CDLL(os.path.join(path, libname), ctypes.RTLD_GLOBAL)
 
