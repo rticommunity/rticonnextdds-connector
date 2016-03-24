@@ -20,8 +20,8 @@ for i in range(1,500):
 	numOfSamples = input.samples.getLength();
 	for j in range (1, numOfSamples+1):
 		if input.infos.isValid(j):
-                        sample = input.samples.getDictionary(j); #this gives you a dictionary
-                        x = sample['x']; #you can access the dictionary...
+			sample = input.samples.getDictionary(j); #this gives you a dictionary
+			x = sample['x']; #you can access the dictionary...
 			y = sample['y'];
 			size = input.samples.getNumber(j, "shapesize"); #or, if you need a single field, you can just access the field directly
 			color = input.samples.getString(j, "color");
