@@ -1,7 +1,7 @@
 /******************************************************************************
 * (c) 2005-2015 Copyright, Real-Time Innovations.  All rights reserved.       *
 * No duplications, whole or partial, manual or electronic, may be made        *
-* without express written permission.  Any such copies, or revisions thereof, * 
+* without express written permission.  Any such copies, or revisions thereof, *
 * must display this notice unaltered.                                         *
 * This code contains trade secrets of Real-Time Innovations, Inc.             *
 ******************************************************************************/
@@ -24,10 +24,18 @@ if (os.arch()=='x64') {
     default:
       console.log(os.platform() + ' not yet supported');
   }
-} else {
+} else if (os.arch() == 'ia32') {
   switch (os.platform()) {
     case 'linux':
       LIB_FULL_PATH = __dirname + '/lib/i86Linux3.xgcc4.6.3/librti_dds_connector.so';
+      break;
+    default:
+      console.log(os.platform() + ' not yet supported');
+  }
+} else if (os.arch() == 'arm') {
+  switch (os.platform()) {
+    case 'linux':
+      LIB_FULL_PATH = __dirname + '/lib/armv6vfphLinux3.xgcc4.7.2/librti_dds_connector.so';
       break;
     default:
       console.log(os.platform() + ' not yet supported');
@@ -69,7 +77,7 @@ function Samples(input) {
   this.getBoolean = function(index, fieldName) {
     return rtin.RTIDDSConnector_getBooleanFromSamples(input.connector.native,input.name,index,fieldName);
   }
-  
+
   this.getString = function(index, fieldName) {
     return rtin.RTIDDSConnector_getStringFromSamples(input.connector.native,input.name,index,fieldName);
   }
@@ -82,7 +90,7 @@ function Samples(input) {
 
 function Infos(input) {
 
-  this.getLength = function() { 
+  this.getLength = function() {
     return rtin.RTIDDSConnector_getInfosLength(input.connector.native,input.name);
   }
 
@@ -147,7 +155,7 @@ function Instance(output) {
          console.log('Nothing to do for key: ' + key + ' of value: ' + value);
       }
       //console.log(key + ' = ' + value);
-    }  
+    }
   }
 
   this.setFromJSON = function(jsonObj) {
@@ -173,7 +181,7 @@ function Connector(configName,fileName) {
   this.delete = function() {
     return rtin.RTIDDSConnector_delete(this.native);
   }
- 
+
   this.getInput = function(inputName) {
     return new Input(this,inputName);
   }
@@ -202,8 +210,8 @@ function Connector(configName,fileName) {
         onDataAvailable(this);
       }
     }
-  } 
- 
+  }
+
   this.on('newListener', newListerCallBack);
 
   var removeListenerCallBack = function(eventName, fnListener) {
