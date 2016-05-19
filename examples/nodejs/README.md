@@ -9,6 +9,7 @@ If you still have trouble visit the [RTI Community forum](https://community.rti.
 In this directory you can find 3 sets of examples
 
  * **simple**: shows how to write samples, how to read/take, and how to use event based reading
+ * **transform**: show how to write a simple transformation using the connector. It is also a good place to look for understanding how to use the setFromJSON and getJSON APIs to interact with samples and instances.
  * **web_http**: shows how an http client can request DDS data using REST
  * **web_socket**: shows how to push DDS data to a browser through [socket.io](https://github.com/Automattic/socket.io)
 
@@ -73,7 +74,6 @@ fields, check Section 6.4 'Data Access API' of the
 output.setFromJSON(jsonObj)
 ```
 
-**WARNING**: This second way is not well supported/tested. For example array and sequences are not supported yet.
 
 #### reading/taking data
 To read/take samples first we have to get a reference to the input port:

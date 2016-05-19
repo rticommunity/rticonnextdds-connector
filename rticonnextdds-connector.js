@@ -60,6 +60,7 @@ var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_take": [ "void", ["pointer", "string"]],
 "RTIDDSConnector_wait": [ "int", ["pointer", "int"]],
 "RTIDDSConnector_getJSONSample": [ "string", ["pointer", "string", "int"]],
+"RTIDDSConnector_setJSONInstance": [ "void", ["pointer", "string", "string"]],
 "RTIDDSConnector_delete": [ "void", ["pointer"]],
 });
 
@@ -130,37 +131,10 @@ function Instance(output) {
     rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,fieldName,value);
   }
 
-  var setFromJSONI = function(prefix,jsonObj) {
-    for (var key in jsonObj) {
-      var value = jsonObj[key];
-      if (typeof(value) == "string") {
-        console.log('set ' + prefix+key + ' to ' + value);
-        rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,prefix+key,value);
-      } else if (typeof(value) == "number") {
-        console.log('set ' + prefix+key + ' to ' + value);
-        rtin.RTIDDSConnector_setNumberIntoSamples(output.connector.native,output.name,prefix+key,value);
-      } else if (typeof(value) == "boolean") {
-        console.log('set ' + prefix+key + ' to ' + value);
-        rtin.RTIDDSConnector_setBooleanIntoSamples(output.connector.native,output.name,prefix+key,value);
-      } else if (typeof(value) == "object") {
-        oldprefix = prefix;
-        if (prefix.length > 0) {
-          prefix = prefix + '.';
-          lengthAdded = lengthAdded + 1;
-        }
-        prefix = prefix + key + '.';
-        setFromJSONI(prefix, value);
-        prefix = oldprefix;
-      } else {
-         console.log('Nothing to do for key: ' + key + ' of value: ' + value);
-      }
-      //console.log(key + ' = ' + value);
-    }
+  this.setFromJSON = function(jsonObj) {
+    rtin.RTIDDSConnector_setJSONInstance(output.connector.native,output.name, JSON.stringify(jsonObj));
   }
 
-  this.setFromJSON = function(jsonObj) {
-    setFromJSONI("",jsonObj);
-  }
 }
 
 
