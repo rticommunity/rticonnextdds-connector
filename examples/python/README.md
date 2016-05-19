@@ -50,7 +50,16 @@ output.write();
 ```
 
 #### setting the instance's fields:
-The content of an instance can be set:
+The content of an instance can be set using a dictionary that matches the original type, or field by field:
+
+* **Using a dictionary**:
+
+```py
+#assuming that sample is a dictionary containing
+#an object of the same type of the output.instance:
+
+output.instance.setDictionary(sample);
+```
 
  * **Field by field**:
 
@@ -101,7 +110,23 @@ The read/take operation can return multiple samples. So we have to iterate on an
 ```
 
 #### accessing samples fields after a read/take
-A `read()` or `take()` operation can return multiple samples. They are stored in an array.
+A `read()` or `take()` operation can return multiple samples. They are stored in an array. Every time you try to access a specific sample you have to specify an index (j in the example below).
+
+You can access the date by getting a copy in a dictionary object or you can access each field individually:
+
+ * **Using a dictionary**:
+
+```py
+ numOfSamples = input.samples.getLength();
+ for j in range (1, numOfSamples+1):
+     if input.infos.isValid(j):
+         sample = input.samples.getDictionary(j);
+         #print the whole sample
+         print sample;
+         #or print a single element
+         print sample['x'];
+ }
+```
 
  * **Field by field**:
 
