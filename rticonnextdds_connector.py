@@ -22,6 +22,23 @@ import json
 osname = platform.system();
 isArm = platform.uname()[4].startswith("arm");
 
+def fromcstring(s):
+	return s
+
+def tocstring(s):
+	return s
+
+def tocstring3(s):
+	return s.encode('utf8')
+
+def fromcstring3(s):
+	return s.decode('utf8')
+
+if sys.version_info[0] == 3 :
+	tocstring = tocstring3
+	fromcstring = fromcstring3
+
+
 if "64" in bits:
 	if "Linux" in osname:
 		arch = "x64Linux2.6gcc4.4.5"
@@ -32,7 +49,7 @@ if "64" in bits:
 		libname = "librti_dds_connector"
 		post = "dylib"
 	else:
-		print "platfrom not yet supported"
+		print("platfrom not yet supported")
 else:
 	if isArm:
 		arch = "armv6vfphLinux3.xgcc4.7.2"
@@ -47,7 +64,7 @@ else:
 		libname = "rti_dds_connector"
 		post = "dll"
 	else:
-		print "platfrom not yet supported"
+		print("platfrom not yet supported")
 
 path = os.path.dirname(os.path.realpath(__file__))
 path = path + os.sep + "lib" + os.sep + arch + os.sep;
@@ -116,30 +133,30 @@ class Samples:
 		self.input = input;
 
 	def getLength(self):
-		return int(rtin_RTIDDSConnector_getSamplesLength(self.input.connector.native,self.input.name));
+		return int(rtin_RTIDDSConnector_getSamplesLength(self.input.connector.native,tocstring(self.input.name)));
 
 	def getNumber(self, index, fieldName):
-		return rtin_RTIDDSConnector_getNumberFromSamples(self.input.connector.native,self.input.name,index,fieldName);
+		return rtin_RTIDDSConnector_getNumberFromSamples(self.input.connector.native,tocstring(self.input.name),index,tocstring(fieldName));
 
 	def getBoolean(self, index, fieldName):
-		return rtin_RTIDDSConnector_getBooleanFromSamples(self.input.connector.native,self.input.name,index,fieldName);
+		return rtin_RTIDDSConnector_getBooleanFromSamples(self.input.connector.native,tocstring(self.input.name),index,tocstring(fieldName));
 
 	def getString(self, index, fieldName):
-		return rtin_RTIDDSConnector_getStringFromSamples(self.input.connector.native,self.input.name,index,fieldName);
+		return fromcstring(rtin_RTIDDSConnector_getStringFromSamples(self.input.connector.native,tocstring(self.input.name),index,tocstring(fieldName)));
 
 	def getDictionary(self,index):
-		jsonStr = rtin_RTIDDSConnector_getJSONSample(self.input.connector.native,self.input.name,index);
-		return json.loads(jsonStr)
+		jsonStr = rtin_RTIDDSConnector_getJSONSample(self.input.connector.native,tocstring(self.input.name),index);
+		return json.loads(fromcstring(jsonStr))
 
 class Infos:
 	def __init__(self,input):
 		self.input = input;
 
 	def getLength(self):
-		return int(rtin_RTIDDSConnector_getInfosLength(self.input.connector.native,self.input.name));
+		return int(rtin_RTIDDSConnector_getInfosLength(self.input.connector.native,tocstring(self.input.name)));
 
 	def isValid(self, index):
-		return rtin_RTIDDSConnector_getBooleanFromInfos(self.input.connector.native,self.input.name,index,'valid_data');
+		return rtin_RTIDDSConnector_getBooleanFromInfos(self.input.connector.native,tocstring(self.input.name),index,tocstring('valid_data'));
 
 class Input:
 	def __init__(self, connector, name):
@@ -149,12 +166,12 @@ class Input:
 		self.infos = Infos(self);
 
 	def read(self):
-		rtin_RTIDDSConnector_read(self.connector.native,self.name);
+		rtin_RTIDDSConnector_read(self.connector.native,tocstring(self.name));
 
 	def take(self):
-		rtin_RTIDDSConnector_take(self.connector.native,self.name);
+		rtin_RTIDDSConnector_take(self.connector.native,tocstring(self.name));
 
-        def wait(self,timeout):
+	def wait(self,timeout):
 		return rtin_RTIDDSConnector_wait(self.connector.native,timeout);
 
 class Instance:
@@ -162,17 +179,17 @@ class Instance:
 		self.output = output;
 
 	def setNumber(self, fieldName, value):
-		rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
 
 	def setBoolean(self,fieldName, value):
-		rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
 
 	def setString(self, fieldName, value):
-		rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),tocstring(value));
 
 	def setDictionary(self,dictionary):
 		jsonStr = json.dumps(dictionary)
-		rtin_RTIDDSConnector_setJSONInstance(self.output.connector.native,self.output.name,jsonStr);
+		rtin_RTIDDSConnector_setJSONInstance(self.output.connector.native,tocstring(self.output.name),tocstring(jsonStr));
 
 
 class Output:
@@ -182,11 +199,11 @@ class Output:
 		self.instance = Instance(self);
 
 	def write(self):
-		return rtin_RTIDDSConnector_write(self.connector.native,self.name);
+		return rtin_RTIDDSConnector_write(self.connector.native,tocstring(self.name));
 
 class Connector:
 	def __init__(self, configName, fileName):
-		self.native = rtin_RTIDDSConnector_new(configName, fileName,None);
+		self.native = rtin_RTIDDSConnector_new(tocstring(configName), tocstring(fileName),None);
 
 	def getOutput(self, outputName):
 		return Output(self,outputName);
