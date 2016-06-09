@@ -37,28 +37,6 @@
 				</property>
 				 End Monitoring -->
 			</participant_qos>
-			<datawriter_qos>
-				<reliability>
-					<kind> RELIABLE_RELIABILITY_QOS </kind>
-				</reliability>
-				<history>
-					<kind> KEEP_ALL_HISTORY_QOS </kind>
-				</history>
-				<durability>
-					<kind> TRANSIENT_LOCAL_DURABILITY_QOS </kind>
-				</durability>
-			</datawriter_qos>
-			<datareader_qos>
-				<reliability>
-					<kind> RELIABLE_RELIABILITY_QOS </kind>
-				</reliability>
-				<history>
-					<kind> KEEP_ALL_HISTORY_QOS </kind>
-				</history>
-				<durability>
-					<kind> TRANSIENT_LOCAL_DURABILITY_QOS </kind>
-				</durability>
-			</datareader_qos>
 		</qos_profile>
 	</qos_library>
 
@@ -108,4 +86,3 @@
 
 		  </domain_participant>
    </participant_library>
-</dds>
