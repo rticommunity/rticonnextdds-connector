@@ -56,7 +56,7 @@ rti = ctypes.CDLL(os.path.join(path, libname), ctypes.RTLD_GLOBAL)
 
 rtin_RTIDDSConnector_new = rti.RTIDDSConnector_new
 rtin_RTIDDSConnector_new.restype = ctypes.c_void_p
-rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p]
+rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p, ctypes.c_void_p]
 
 rtin_RTIDDSConnector_setNumberIntoSamples = rti.RTIDDSConnector_setNumberIntoSamples
 rtin_RTIDDSConnector_setNumberIntoSamples.argtypes = [ctypes.c_void_p, ctypes.c_char_p,ctypes.c_char_p,ctypes.c_double]
@@ -186,7 +186,7 @@ class Output:
 
 class Connector:
 	def __init__(self, configName, fileName):
-		self.native = rtin_RTIDDSConnector_new(configName, fileName);
+		self.native = rtin_RTIDDSConnector_new(configName, fileName,None);
 
 	def getOutput(self, outputName):
 		return Output(self,outputName);
