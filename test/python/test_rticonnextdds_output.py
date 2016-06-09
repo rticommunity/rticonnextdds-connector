@@ -6,11 +6,10 @@ class TestOutput:
   All methods: setNumber, setBoolean,  setString, setDictionary on Instance and 
   write fail
   """
-  #@pytest.mark.xfail
-  #def test_invalid_DW(self,connector):
-  #  invalid_DW = "InvalidDW"
-  #  with pytest.raises(ValueError):
-  #    op= connector.getOutput(invalid_DW)
+  def test_invalid_DW(self,connector):
+    invalid_DW = "InvalidDW"
+    with pytest.raises(ValueError):
+      op= connector.getOutput(invalid_DW)
     
   # TODO: No exception is thrown when a non-existent field is accessed
   def test_setNumber_on_nonexistant_field(self,out,capfd):
