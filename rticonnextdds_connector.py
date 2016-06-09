@@ -58,6 +58,14 @@ rtin_RTIDDSConnector_new = rti.RTIDDSConnector_new
 rtin_RTIDDSConnector_new.restype = ctypes.c_void_p
 rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p]
 
+rtin_RTIDDSConnector_getWriter= rti.RTIDDSConnector_getWriter
+rtin_RTIDDSConnector_getWriter.restype= ctypes.c_void_p 
+rtin_RTIDDSConnector_getWriter.argtypes=[ ctypes.c_void_p,ctypes.c_char_p ]
+
+rtin_RTIDDSConnector_getReader= rti.RTIDDSConnector_getReader
+rtin_RTIDDSConnector_getReader.restype= ctypes.c_void_p 
+rtin_RTIDDSConnector_getReader.argtypes=[ ctypes.c_void_p,ctypes.c_char_p ]
+
 rtin_RTIDDSConnector_setNumberIntoSamples = rti.RTIDDSConnector_setNumberIntoSamples
 rtin_RTIDDSConnector_setNumberIntoSamples.argtypes = [ctypes.c_void_p, ctypes.c_char_p,ctypes.c_char_p,ctypes.c_double]
 rtin_RTIDDSConnector_setBooleanIntoSamples = rti.RTIDDSConnector_setBooleanIntoSamples
@@ -145,6 +153,9 @@ class Input:
 	def __init__(self, connector, name):
 		self.connector = connector;
 		self.name = name;
+		self.native= rtin_RTIDDSConnector_getReader(self.connector.native,self.name)
+ 		if self.native == None:
+			raise ValueError("Invalid Subscription::DataReader name")
 		self.samples = Samples(self);
 		self.infos = Infos(self);
 
@@ -179,6 +190,9 @@ class Output:
 	def __init__(self, connector, name):
 		self.connector = connector;
 		self.name = name;
+		self.native= rtin_RTIDDSConnector_getWriter(self.connector.native,self.name)
+ 		if self.native ==None:
+			raise ValueError("Invalid Publication::DataWriter name")
 		self.instance = Instance(self);
 
 	def write(self):
@@ -187,6 +201,8 @@ class Output:
 class Connector:
 	def __init__(self, configName, fileName):
 		self.native = rtin_RTIDDSConnector_new(configName, fileName);
+		if self.native == None:
+			raise ValueError("Invalid participant profile, xml path or xml profile")
 
 	def getOutput(self, outputName):
 		return Output(self,outputName);

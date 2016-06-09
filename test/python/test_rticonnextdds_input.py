@@ -9,7 +9,6 @@ class TestInput:
   All functions on input.infos: getLength and isValid will fail
   """
 
-  #@pytest.mark.xfail
   def test_invalid_DR(self,connector):
     invalid_DR = "InvalidDR"
     with pytest.raises(ValueError):
