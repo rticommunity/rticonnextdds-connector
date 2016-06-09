@@ -4,12 +4,6 @@ import rticonnextdds_connector as rti
 
 class TestDataFlow:
 
-  def test_inp_exists(self,inp):
-    assert inp!=None and isinstance(inp,rti.Input) 
-
-  def test_out_exists(self,out):
-    assert out!=None and isinstance(out,rti.Output) 
-
   def test_dataflow_with_read(self,inp,out):
     msg={"x":1,"y":1,"color":"BLUE","shapesize":5}
     out.instance.setDictionary(msg)

@@ -56,7 +56,7 @@ rti = ctypes.CDLL(os.path.join(path, libname), ctypes.RTLD_GLOBAL)
 
 rtin_RTIDDSConnector_new = rti.RTIDDSConnector_new
 rtin_RTIDDSConnector_new.restype = ctypes.c_void_p
-rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p]
+rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p,ctypes.c_void_p]
 
 rtin_RTIDDSConnector_getWriter= rti.RTIDDSConnector_getWriter
 rtin_RTIDDSConnector_getWriter.restype= ctypes.c_void_p 
@@ -200,8 +200,8 @@ class Output:
 
 class Connector:
 	def __init__(self, configName, fileName):
-		self.native = rtin_RTIDDSConnector_new(configName, fileName);
-		if self.native == None:
+		self.native = rtin_RTIDDSConnector_new(configName, fileName,None);
+                if self.native == None:
 			raise ValueError("Invalid participant profile, xml path or xml profile")
 
 	def getOutput(self, outputName):
