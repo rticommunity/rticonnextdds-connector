@@ -26,5 +26,5 @@ for i in range(1,500):
 			size = input.samples.getNumber(j, "shapesize"); #or, if you need a single field, you can just access the field directly
 			color = input.samples.getString(j, "color");
 			toPrint = "Received x: " + repr(x) + " y: " + repr(y) + " size: " + repr(size) + " color: " + repr(color);
-			print toPrint;
+			print(toPrint);
 	time.sleep(2);
