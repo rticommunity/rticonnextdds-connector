@@ -2,7 +2,7 @@ rticonnextdds-connector
 =======
 
 ### RTI Connector for Connext DDS
-RTI Connector for Connext DDS is a quick and easy way to access the power and 
+RTI Connector for Connext DDS is a quick and easy way to access the power and
 functionality of [RTI Connext DDS](http://www.rti.com/products/index.html).
 It is based on [XML App Creation](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
 
@@ -14,7 +14,7 @@ It can be used to quickly create tests for your distributed system and, thanks
 to the binding with scripting languages and the use of XML, to easily integrate
 with tons of other available technologies.
 
-The RTI Connector library is provided in binary form for selected architectures. Scripting language bindings and examples are provided in source format. 
+The RTI Connector library is provided in binary form for selected architectures. Scripting language bindings and examples are provided in source format.
 
 ### Language Support
 
@@ -28,9 +28,14 @@ RTI Connector API directly in your C app; that's how the RTI Prototyper is
 implemented. Just not ready to release yet...
 
 ### Platform support
-We are building our library for few architectures only. Check them out here. If you need another architecture
+We are building our library for few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture
 feel free to ask on the [RTI Community Forum](https://community.rti.com/forums/technical-questions)
 
+If you want to check the version of the libraries you can run the following command:
+
+``` bash
+strings librti_dds_connector.dylib | grep BUILD
+```
 
 ### What is this git repository
 It is our way to make the connector technology available to you!
@@ -40,7 +45,7 @@ architectures.
 Also, for Node.js users, we will use this repo for the npm registry.
 
 ### Support
-This is **not** an official RTI product, so is **not** officially supported. This is early access technology. We'd love your feedback. Please visit the [RTI Community Forum](https://community.rti.com/forums/technical-questions) where fellow users and RTI engineers can help you. 
+This is **not** an official RTI product, so is **not** officially supported. This is early access technology. We'd love your feedback. Please visit the [RTI Community Forum](https://community.rti.com/forums/technical-questions) where fellow users and RTI engineers can help you.
 
 ### Documentation
 We do not have much documentation yet. But we promise you: if you look at the
@@ -66,7 +71,7 @@ Be sure you have python (<3). Then clone this repo:
 $ git clone https://github.com/rticommunity/rticonnextdds-connector.git
 ```
 
-You can also download the [zip file](https://github.com/rticommunity/rticonnextdds-connector/archive/master.zip) 
+You can also download the [zip file](https://github.com/rticommunity/rticonnextdds-connector/archive/master.zip)
 and then unzip it.
 
 When that is done, cd into your new directory and have a look to the [examples/python/README.md](examples/python/README.md)
