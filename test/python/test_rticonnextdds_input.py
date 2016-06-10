@@ -1,28 +1,24 @@
-import pytest
+import pytest,sys,os
+sys.path.append(os.path.dirname(os.path.realpath(__file__))+ "/../../")
+import rticonnextdds_connector as rti
+
 class TestInput:
 
-  # TODO: Input object should not get created if DR name does not exist in XML
-  """
-  All functions like take(),read() will fail except for wait()
-  All functions on input.samples: getLength,getNumber,getString,
-      getBoolean and getDictionary will fail
-  All functions on input.infos: getLength and isValid will fail
-  """
-
-  def test_invalid_DR(self,connector):
+  def test_invalid_DR(self,rtiConnectorFixture):
     invalid_DR = "InvalidDR"
     with pytest.raises(ValueError):
-       connector.getInput(invalid_DR)
+       rtiConnectorFixture.getInput(invalid_DR)
   
-  # TODO: figure out how test the wait function
-#  @pytest.mark.xfail
-#  def test_wait_on_invalid_DR(self,connector):
-#    invalid_DR = "InvalidDR"
-#    inp = connector.getInput(invalid_DR)
-#    with pytest.raises(Exception) as execinfo:
-#      inp.wait(1)
-#
-  #TODO: Address segmentation fault on out of index and 0-index access 
+  def test_creation_DR(self,rtiInputFixture):
+    assert rtiInputFixture!=None and isinstance(rtiInputFixture,rti.Input) \
+      and rtiInputFixture.name == "MySubscriber::MySquareReader" \
+      and isinstance(rtiInputFixture.connector,rti.Connector) \
+      and isinstance(rtiInputFixture.samples,rti.Samples) \
+      and isinstance(rtiInputFixture.infos,rti.Infos)
+
+  # TODO: figure out how to test the wait function
+
+  # TODO: Address segmentation fault on out of index and 0-index access 
   """
   Segmentation fault occurs when 0-index or out-of-bound access is made 
   on infos and samples: 
