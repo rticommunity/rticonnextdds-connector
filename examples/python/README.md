@@ -105,7 +105,7 @@ The read/take operation can return multiple samples. So we have to iterate on an
             size = input.samples.getNumber(j, "shapesize");
             color = input.samples.getString(j, "color");
             toPrint = "Received x: " + repr(x) + " y: " + repr(y) + " size: " + repr(size) + " color: " + repr(color);
-            print toPrint;
+            print(toPrint);
 }
 ```
 
@@ -122,9 +122,9 @@ You can access the date by getting a copy in a dictionary object or you can acce
      if input.infos.isValid(j):
          sample = input.samples.getDictionary(j);
          #print the whole sample
-         print sample;
+         print(sample);
          #or print a single element
-         print sample['x'];
+         print(sample['x']);
  }
 ```
 
@@ -139,7 +139,7 @@ You can access the date by getting a copy in a dictionary object or you can acce
          size = input.samples.getNumber(j, "shapesize");
          color = input.samples.getString(j, "color");
          toPrint = "Received x: " + repr(x) + " y: " + repr(y) + " size: " + repr(size) + " color: " + repr(color);
-         print toPrint;
+         print(toPrint);
  }
 ```
 
