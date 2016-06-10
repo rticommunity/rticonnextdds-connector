@@ -24,5 +24,15 @@ class TestConnector:
     with pytest.raises(ValueError):
       connector = rti.Connector(participant_profile,invalid_xml)
   
-  def test_connector_creation(self,connector):
-    assert connector!=None and isinstance(connector,rti.Connector)
+  def test_connector_creation(self,rtiConnectorFixture):
+    assert rtiConnectorFixture!=None and isinstance(rtiConnectorFixture,\
+      rti.Connector)
+  
+  def test_multiple_connector_creation(self):
+    connectors = []
+    xml_path= os.path.join(os.path.dirname(os.path.realpath(__file__)),
+      "../xml/ShapeExample.xml") 
+    participant_profile="MyParticipantLibrary::Zero"
+    for i in range (0,5):
+     connectors.append(rti.Connector(participant_profile,xml_path))
+    assert all( x!=None and isinstance(x,rti.Connector) for x in connectors) 

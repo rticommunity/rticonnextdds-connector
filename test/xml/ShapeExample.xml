@@ -70,6 +70,7 @@
 			<member name="x" id="1" type="long"/>
 			<member name="y" id="2" type="long"/>
 			<member name="shapesize" id="3" type="long"/>
+			<member name="z" id="4" type="boolean"/>
 		</struct>
 		<enum name="ShapeFillKind" extensibility="extensible">
 			<enumerator name="SOLID_FILL" value="0"/>
@@ -78,8 +79,8 @@
 			<enumerator name="VERTICAL_HATCH_FILL" value="3"/>
 		</enum>
 		<struct name="ShapeTypeExtended" baseType="ShapeType" extensibility="extensible">
-			<member name="fillKind" id="4" type="nonBasic" nonBasicTypeName="ShapeFillKind"/>
-			<member name="angle" id="5" type="float"/>
+			<member name="fillKind" id="5" type="nonBasic" nonBasicTypeName="ShapeFillKind"/>
+			<member name="angle" id="6" type="float"/>
 		</struct>
     </types>
 

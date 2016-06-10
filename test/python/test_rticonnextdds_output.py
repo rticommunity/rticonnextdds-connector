@@ -1,78 +1,127 @@
-import pytest
+import pytest,sys,os
+sys.path.append(os.path.dirname(os.path.realpath(__file__))+ "/../../")
+import rticonnextdds_connector as rti
+
 class TestOutput:
 
-  # TODO: Output object should not get created if DW name does not exist in XML
-  """
-  All methods: setNumber, setBoolean,  setString, setDictionary on Instance and 
-  write fail
-  """
-  def test_invalid_DW(self,connector):
+  def test_invalid_DW(self,rtiConnectorFixture):
     invalid_DW = "InvalidDW"
     with pytest.raises(ValueError):
-      op= connector.getOutput(invalid_DW)
+      op= rtiConnectorFixture.getOutput(invalid_DW)
+ 
+  def test_creation_DW(self,rtiOutputFixture):
+    assert isinstance(rtiOutputFixture,rti.Output) \
+      and rtiOutputFixture.name == "MyPublisher::MySquareWriter" \
+      and isinstance(rtiOutputFixture.connector,rti.Connector) \
+      and isinstance(rtiOutputFixture.instance, rti.Instance)
     
+class TestInstance:
+
+  def test_instance_creation(self,rtiOutputFixture):
+    assert rtiOutputFixture.instance!=None and \
+      isinstance(rtiOutputFixture.instance, rti.Instance)
+
   # TODO: No exception is thrown when a non-existent field is accessed
-  def test_setNumber_on_nonexistant_field(self,out,capfd):
-    non_existant_field="invalid_field"
-    out.instance.setNumber(non_existant_field,1)
+  """
+  An AttributeError must be propagated on setNumber,setString & setBoolean
+  KeyError must be propagated on setDictionary with invalid fields 
+  """
+  def test_setNumber_on_nonexistent_field(self,rtiOutputFixture,capfd):
+    non_existent_field="invalid_field"
+    rtiOutputFixture.instance.setNumber(non_existent_field,1)
     out,err = capfd.readouterr()
     assert "RTILuaDynamicData_set:!get kind failed" in out
 
-  def test_setString_on_nonexistant_field(self,out,capfd):
-    non_existant_field="invalid_field"
-    out.instance.setString(non_existant_field,"1")
+  def test_setString_on_nonexistent_field(self,rtiOutputFixture,capfd):
+    non_existent_field="invalid_field"
+    rtiOutputFixture.instance.setString(non_existent_field,"1")
     out,err = capfd.readouterr()
     assert "RTILuaDynamicData_set:!get kind failed" in out
 
-  def test_setBoolean_on_nonexistant_field(self,out,capfd):
-    non_existant_field="invalid_field"
-    out.instance.setBoolean(non_existant_field,True)
+  def test_setBoolean_on_nonexistent_field(self,rtiOutputFixture,capfd):
+    non_existent_field="invalid_field"
+    rtiOutputFixture.instance.setBoolean(non_existent_field,True)
     out,err = capfd.readouterr()
     assert "RTILuaDynamicData_set:!get kind failed" in out
 
-  def test_setDictionary_with_nonexistant_fields(self,out,capfd):
-    invalid_dictionary= {"non_existant_field":"value"}
-    out.instance.setDictionary(invalid_dictionary)
+  def test_setDictionary_with_nonexistent_fields(self,rtiOutputFixture,capfd):
+    invalid_dictionary= {"non_existent_field":"value"}
+    rtiOutputFixture.instance.setDictionary(invalid_dictionary)
     out,err = capfd.readouterr()
     assert "RTILuaJsonHelper_parse_json_node:!get kind failed" in out
 
-  # TODO: Should user be notified/warned about type incompatibility
   @pytest.mark.xfail
-  def test_setNumber_with_Boolean_value(self,out):
+  # Implicit type conversion from Boolean to number 
+  def test_setNumber_with_Boolean(self,rtiOutputFixture):
     number_field="x"
-    with pytest.raises(Exception) as execinfo:
-      out.instance.setNumber(number_field,True)
-    print("\nException of type:"+str(execinfo.type)+ "\nvalue:"+str(execinfo.value))
-    print("Traceback:"+str(execinfo.traceback))
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setNumber(number_field,True)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
-  # TODO: ctypes exception is not propagated via the connector
-  def test_setNumber_with_String_value(self,out):
+  def test_setNumber_with_String(self,rtiOutputFixture):
     number_field="x"
-    with pytest.raises(Exception) as execinfo:
-      out.instance.setNumber(number_field,"str")
-    print("\nException of type:"+str(execinfo.type)+ "\nvalue:"+str(execinfo.value))
-    print("\nTraceback:"+str(execinfo.traceback))
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setNumber(number_field,"str")
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
  
+  def test_setNumber_with_Dictionary(self,rtiOutputFixture):
+    number_field="x"
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setNumber(number_field,{"x":1})
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
-  def test_setString_with_Boolean_value(self,out):
+  def test_setString_with_Boolean(self,rtiOutputFixture):
     string_field="color"
-    with pytest.raises(Exception) as execinfo:
-      out.instance.setString(string_field,True)
-    print("\nException of type:"+str(execinfo.type)+ "\nvalue:"+str(execinfo.value))
-    print("Traceback:"+str(execinfo.traceback))
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setString(string_field,True)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
-  def test_setString_with_Number_value(self,out):
+  def test_setString_with_Number(self,rtiOutputFixture):
     string_field="color"
-    with pytest.raises(Exception) as execinfo:
-      out.instance.setString(string_field,55.55)
-    print("\nException of type:"+str(execinfo.type)+ "\nvalue:"+str(execinfo.value))
-    print("\nTraceback:"+str(execinfo.traceback))
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setString(string_field,55.55)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
   
-  # TODO: implement tests for setBoolean for types String,Number
+  def test_setString_with_Dictionary(self,rtiOutputFixture):
+    string_field="color"
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setString(string_field,{"color":1})
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
+
+
+  def test_setBoolean_with_String(self,rtiOutputFixture):
+    boolean_field="z"
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setBoolean(boolean_field,"str")
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
+
+  @pytest.mark.xfail
+  # Implicit type conversion from number to Boolean 
+  def test_setBoolean_with_Number(self,rtiOutputFixture):
+    boolean_field="z"
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setBoolean(boolean_field,55.55)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
+  
+  def test_setBoolean_with_Dictionary(self,rtiOutputFixture):
+    boolean_field="z"
+    with pytest.raises(TypeError) as execinfo:
+      rtiOutputFixture.instance.setBoolean(boolean_field,{"color":1})
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   # TODO: A dictionary with incompatible types can be set!!!
-  def test_setDictionary_with_incompatible_types(self,out,capfd):
+  @pytest.mark.xfail
+  def test_setDictionary_with_incompatible_types(self,rtiOutputFixture,capfd):
     dict_with_incompatible_types={"color":1,"x":"str"}
-    out.instance.setDictionary(dict_with_incompatible_types)
+    rtiOutputFixture.instance.setDictionary(dict_with_incompatible_types)
     out,err = capfd.readouterr()
     assert 0

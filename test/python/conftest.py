@@ -3,7 +3,7 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__))+ "/../../")
 import rticonnextdds_connector as rti
 
 @pytest.fixture(scope="session")
-def connector(request):
+def rtiConnectorFixture(request):
   xml_path= os.path.join(os.path.dirname(os.path.realpath(__file__)),
     "../xml/ShapeExample.xml") 
   participant_profile="MyParticipantLibrary::Zero"
@@ -16,11 +16,11 @@ def connector(request):
   return rti_connector
 
 @pytest.fixture(scope="session")
-def out(connector):
+def rtiOutputFixture(rtiConnectorFixture):
   DW="MyPublisher::MySquareWriter"
-  return connector.getOutput(DW)
+  return rtiConnectorFixture.getOutput(DW)
 
 @pytest.fixture(scope="session")
-def inp(connector):
+def rtiInputFixture(rtiConnectorFixture):
   DR="MySubscriber::MySquareReader"
-  return connector.getInput(DR)
+  return rtiConnectorFixture.getInput(DR)
