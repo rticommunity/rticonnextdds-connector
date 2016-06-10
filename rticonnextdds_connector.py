@@ -173,18 +173,29 @@ class Instance:
 		self.output = output;
 
 	def setNumber(self, fieldName, value):
-		rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+                try: 
+		  rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+                except ctypes.ArgumentError as e:
+			raise TypeError("field:{0} should be of type Numeric"\
+				.format(fieldName))
 
 	def setBoolean(self,fieldName, value):
-		rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		try:
+		  rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		except ctypes.ArgumentError as e:
+			raise TypeError("field:{0} should be of type Boolean"\
+				.format(fieldName))
 
 	def setString(self, fieldName, value):
-		rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		try:
+		  rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,self.output.name,fieldName,value);
+		except ctypes.ArgumentError as e:
+			raise TypeError("field:{0} should be of type String"\
+				.format(fieldName))
 
 	def setDictionary(self,dictionary):
 		jsonStr = json.dumps(dictionary)
 		rtin_RTIDDSConnector_setJSONInstance(self.output.connector.native,self.output.name,jsonStr);
-
 
 class Output:
 	def __init__(self, connector, name):
