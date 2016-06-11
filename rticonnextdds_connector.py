@@ -29,10 +29,16 @@ def tocstring(s):
 	return s
 
 def tocstring3(s):
-	return s.encode('utf8')
+	try:
+		return s.encode('utf8')
+	except AttributeError as e:
+		raise
 
 def fromcstring3(s):
-	return s.decode('utf8')
+	try:
+		return s.decode('utf8')
+	except AttributeError as e:
+		raise
 
 if sys.version_info[0] == 3 :
 	tocstring = tocstring3
@@ -170,8 +176,8 @@ class Input:
 	def __init__(self, connector, name):
 		self.connector = connector;
 		self.name = name;
-		self.native= rtin_RTIDDSConnector_getReader(self.connector.native,self.name)
- 		if self.native ==None:
+		self.native= rtin_RTIDDSConnector_getReader(self.connector.native,tocstring(self.name))
+		if self.native == None:
 			raise ValueError("Invalid Subscription::DataReader name")
 		self.samples = Samples(self);
 		self.infos = Infos(self);
@@ -190,25 +196,24 @@ class Instance:
 		self.output = output;
 
 	def setNumber(self, fieldName, value):
-                try:
-		  rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
+		try:
+			rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
 		except ctypes.ArgumentError as e:
 			raise TypeError("field:{0} should be of type Numeric"\
 				.format(fieldName))
 
 	def setBoolean(self,fieldName, value):
-                try:
-		  rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
+		try:
+			rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
 		except ctypes.ArgumentError as e:
 			raise TypeError("field:{0} should be of type Boolean"\
 				.format(fieldName))
 
 	def setString(self, fieldName, value):
-                try:
-		  rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),tocstring(value));
-		except ctypes.ArgumentError as e:
-			raise TypeError("field:{0} should be of type String"\
-				.format(fieldName))
+		try:
+			rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),tocstring(value));
+		except AttributeError as e:
+			raise
 
 	def setDictionary(self,dictionary):
 		jsonStr = json.dumps(dictionary)
@@ -219,8 +224,8 @@ class Output:
 	def __init__(self, connector, name):
 		self.connector = connector;
 		self.name = name;
-		self.native= rtin_RTIDDSConnector_getWriter(self.connector.native,self.name)
- 		if self.native ==None:
+		self.native= rtin_RTIDDSConnector_getWriter(self.connector.native,tocstring(self.name))
+		if self.native ==None:
 			raise ValueError("Invalid Publication::DataWriter name")
 		self.instance = Instance(self);
 
@@ -230,7 +235,7 @@ class Output:
 class Connector:
 	def __init__(self, configName, fileName):
 		self.native = rtin_RTIDDSConnector_new(tocstring(configName), tocstring(fileName),None);
-                if self.native == None:
+		if self.native == None:
 			raise ValueError("Invalid participant profile, xml path or xml profile")
 
 	def getOutput(self, outputName):
