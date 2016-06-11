@@ -212,8 +212,9 @@ class Instance:
 	def setString(self, fieldName, value):
 		try:
 			rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),tocstring(value));
-		except AttributeError as e:
-			raise
+		except AttributeError | ctypes.ArgumentError as e:
+			raise TypeError("field:{0} should be of type String"\
+				.format(fieldName))
 
 	def setDictionary(self,dictionary):
 		jsonStr = json.dumps(dictionary)

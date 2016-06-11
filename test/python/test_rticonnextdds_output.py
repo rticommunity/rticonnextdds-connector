@@ -79,21 +79,21 @@ class TestInstance:
 
   def test_setString_with_Boolean(self,rtiOutputFixture):
     string_field="color"
-    with pytest.raises(AttributeError) as execinfo:
+    with pytest.raises(TypeError) as execinfo:
       rtiOutputFixture.instance.setString(string_field,True)
     print("\nException of type:"+str(execinfo.type)+ \
       "\nvalue:"+str(execinfo.value))
 
   def test_setString_with_Number(self,rtiOutputFixture):
     string_field="color"
-    with pytest.raises(AttributeError) as execinfo:
+    with pytest.raises(TypeError) as execinfo:
       rtiOutputFixture.instance.setString(string_field,55.55)
     print("\nException of type:"+str(execinfo.type)+ \
       "\nvalue:"+str(execinfo.value))
   
   def test_setString_with_Dictionary(self,rtiOutputFixture):
     string_field="color"
-    with pytest.raises(AttributeError) as execinfo:
+    with pytest.raises(TypeError) as execinfo:
       rtiOutputFixture.instance.setString(string_field,{"color":1})
     print("\nException of type:"+str(execinfo.type)+ \
       "\nvalue:"+str(execinfo.value))
