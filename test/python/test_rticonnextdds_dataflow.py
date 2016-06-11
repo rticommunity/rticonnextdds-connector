@@ -45,16 +45,19 @@ class TestRead:
       and shapesize == testMsg['shapesize']
 
   ## TODO: accessing non-existent field should throw an exception
+  @pytest.mark.xfail
   def test_getNumber_for_nonexistent_field(self,capfd,rtiInputFixture,testMsg):
     x = rtiInputFixture.samples.getNumber(1,"invalid_field")
     out,err=capfd.readouterr()
     assert "DynamicData_get:!get kind failed" in out
 
+  @pytest.mark.xfail
   def test_getString_for_nonexistent_field(self,capfd,rtiInputFixture,testMsg):
     x = rtiInputFixture.samples.getString(1,"invalid_field")
     out,err=capfd.readouterr()
     assert "DynamicData_get:!get kind failed" in out
 
+  @pytest.mark.xfail
   def test_getBoolean_for_nonexistent_field(self,capfd,rtiInputFixture,testMsg):
     x = rtiInputFixture.samples.getBoolean(1,"invalid_field")
     out,err=capfd.readouterr()
