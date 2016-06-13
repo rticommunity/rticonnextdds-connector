@@ -10,7 +10,7 @@ class TestInput:
   .. todo:: 
  
        * Move :func:`rticonnextdds_connector.Input.wait` to 
-         :class:`rticonnextdds_connector.Connector` and test it 
+         :class:`rticonnextdds_connector.Connector` 
 
   """
 

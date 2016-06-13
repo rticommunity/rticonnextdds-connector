@@ -43,7 +43,9 @@ class TestDataflow:
     """
     return {"x":1,"y":1,"z":True,"color":"BLUE","shapesize":5}
 
-  @pytest.fixture(autouse=True,params=["read","take"])
+  @pytest.fixture(autouse=True,params=[{"wait":True,"method":"read"},
+    {"wait":True,"method":"take"},{"wait":False,"method":"read"},
+    {"wait":False,"method":"take"}])
   def sendTestMsg(self,request,rtiInputFixture,rtiOutputFixture,testMsg):
     """
     An `autouse <https://pytest.org/latest/fixture.html#autouse-fixtures-xunit-setup-on-steroids>`_ 
@@ -53,10 +55,13 @@ class TestDataflow:
     First any pre-existing messages in the middleware cache are taken and then the Output object
     sends one test message to the Input object. This fixture is 
     `parameterized <https://pytest.org/latest/fixture.html#parametrizing-a-fixture>`_, 
-    so that each test is executed twice- first, where the Input object uses 
-    :func:`rticonnextdds_connector.Input.read` method to obtain the sent test message; 
-    and second, where the Input object uses :func:`rticonnextdds_connector.Input.take` 
-    method to obtain the sent message.
+    so that each test is executed four times- first, where the Input object waits for 10 seconds
+    for data and uses :func:`rticonnextdds_connector.Input.read` method to obtain the sent test message; 
+    second, where the Input object waits for 10 seconds for data to arrive and 
+    uses :func:`rticonnextdds_connector.Input.take` method to obtain the sent message; third, where Input
+    object does not wait but uses :func:`rticonnextdds_connector.Input.read` method to obtain the sent message; 
+    and finally, where Input object does not wait and uses 
+    :func:`rticonnextdds_connector.Input.take` method to obtain the sent message.
 
     :param rtiInputFixture: :func:`conftest.rtiInputFixture`
     :type rtiInputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
@@ -70,13 +75,21 @@ class TestDataflow:
     rtiInputFixture.take()
     rtiOutputFixture.instance.setDictionary(testMsg)
     rtiOutputFixture.write()
-    # loop to allow sometime for discovery of Input and Output objects
-    for i in range(1,20):
-        time.sleep(.5)
-        retrieve_func= getattr(rtiInputFixture,request.param)
-        retrieve_func() 
-        if rtiInputFixture.samples.getLength() > 0:
-          break
+    wait=request.param.get('wait')
+    method=request.param.get('method')
+
+    if wait:
+       rtiInputFixture.wait(10)
+       retrieve_func= getattr(rtiInputFixture,method)
+       retrieve_func() 
+    else:
+      # loop to allow sometime for discovery of Input and Output objects
+      for i in range(1,20):
+          time.sleep(.5)
+          retrieve_func= getattr(rtiInputFixture,method)
+          retrieve_func() 
+          if rtiInputFixture.samples.getLength() > 0:
+            break
 
   def test_samples_getLength(self,rtiInputFixture):
     """
