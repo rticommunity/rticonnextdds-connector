@@ -11,7 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   connector_api.rst
    test_setup.rst
    testing_api.rst
 
