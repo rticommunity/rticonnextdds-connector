@@ -14,6 +14,9 @@ To run the tests for python binding of **rticonnextdds_connector**:
   
    ``py.test ./test/python/test_rticonnextdds_input.py``
 
+**Note:** Some tests are marked to fail with ``@pytest.mark.xfail`` annotation either because those tests are expected to fail due to implicit type conversion or because the functionality being tested is not yet supported by the python connector library. These tests will be reported as ``xfail``.
+
+
 All the tests are documented in their respective source files following the [docstrings](https://www.python.org/dev/peps/pep-0257/)
 convention. [Sphinx apidoc](http://www.sphinx-doc.org/en/stable/man/sphinx-apidoc.html) can be used for automatically generating the test API documentation. 
 
