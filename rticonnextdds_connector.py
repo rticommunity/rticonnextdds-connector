@@ -197,21 +197,21 @@ class Instance:
 
 	def setNumber(self, fieldName, value):
 		try:
-		rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
+			rtin_RTIDDSConnector_setNumberIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
 		except ctypes.ArgumentError as e:
 			raise TypeError("field:{0} should be of type Numeric"\
 				.format(fieldName))
 
 	def setBoolean(self,fieldName, value):
 		try:
-		rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
+			rtin_RTIDDSConnector_setBooleanIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),value);
 		except ctypes.ArgumentError as e:
 			raise TypeError("field:{0} should be of type Boolean"\
 				.format(fieldName))
 
 	def setString(self, fieldName, value):
 		try:
-		rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),tocstring(value));
+			rtin_RTIDDSConnector_setStringIntoSamples(self.output.connector.native,tocstring(self.output.name),tocstring(fieldName),tocstring(value));
 		except AttributeError | ctypes.ArgumentError as e:
 			raise TypeError("field:{0} should be of type String"\
 				.format(fieldName))
