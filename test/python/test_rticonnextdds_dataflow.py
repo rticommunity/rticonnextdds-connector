@@ -172,8 +172,10 @@ class TestDataflow:
     """
     with pytest.raises(AttributeError) as execinfo:
       x = rtiInputFixture.samples.getNumber(1,"invalid_field")
+    print("\nException of type:"+str(execinfo.type)+\
+      "\nvalue:"+str(execinfo.value))
 
-  @pytest.mark.xfail
+  @pytest.mark.xfail(sys.version_info < (3,0), reason="for python >= 3, fromcstring raises AttributeError when decode is called on NoneType returned by rtin_RTIDDSConnector_getStringFromSamples on nonexistent field")
   def test_getString_for_nonexistent_field(self,rtiInputFixture,testMsg):
     """
     This function tests that an ``AttributeError`` is raised when a non-existent field
@@ -188,6 +190,8 @@ class TestDataflow:
     """
     with pytest.raises(AttributeError) as execinfo:
       x = rtiInputFixture.samples.getString(1,"invalid_field")
+    print("\nException of type:"+str(execinfo.type)+\
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
   def test_getBoolean_for_nonexistent_field(self,rtiInputFixture,testMsg):
@@ -204,3 +208,5 @@ class TestDataflow:
     """
     with pytest.raises(AttributeError) as execinfo:
       x = rtiInputFixture.samples.getBoolean(1,"invalid_field")
+    print("\nException of type:"+str(execinfo.type)+\
+      "\nvalue:"+str(execinfo.value))

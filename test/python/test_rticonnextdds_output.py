@@ -19,8 +19,10 @@ class TestOutput:
 
     """
     invalid_DW = "InvalidDW"
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as execinfo:
       op= rtiConnectorFixture.getOutput(invalid_DW)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
  
   def test_creation_DW(self,rtiOutputFixture):
     """
@@ -88,6 +90,8 @@ class TestInstance:
     non_existent_field="invalid_field"
     with pytest.raises(AttributeError) as execinfo:
       rtiOutputFixture.instance.setNumber(non_existent_field,1)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
   def test_setString_on_nonexistent_field(self,rtiOutputFixture):
@@ -105,6 +109,8 @@ class TestInstance:
     non_existent_field="invalid_field"
     with pytest.raises(AttributeError) as execinfo:
       rtiOutputFixture.instance.setString(non_existent_field,"1")
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
   def test_setBoolean_on_nonexistent_field(self,rtiOutputFixture):
@@ -122,6 +128,8 @@ class TestInstance:
     non_existent_field="invalid_field"
     with pytest.raises(AttributeError) as execinfo:
       rtiOutputFixture.instance.setBoolean(non_existent_field,True)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
   def test_setDictionary_with_nonexistent_fields(self,rtiOutputFixture):
@@ -139,6 +147,8 @@ class TestInstance:
     invalid_dictionary= {"non_existent_field":"value"}
     with pytest.raises(KeyError) as execinfo:
       rtiOutputFixture.instance.setDictionary(invalid_dictionary)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
   # Implicit type conversion from Boolean to number 
