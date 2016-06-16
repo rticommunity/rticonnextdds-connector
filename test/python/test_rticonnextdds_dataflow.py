@@ -158,7 +158,7 @@ class TestDataflow:
       and shapesize == testMsg['shapesize']
 
   @pytest.mark.xfail
-  def test_getNumber_for_nonexistent_field(self,capfd,rtiInputFixture,testMsg):
+  def test_getNumber_for_nonexistent_field(self,rtiInputFixture,testMsg):
     """
     This function tests that an ``AttributeError`` is raised when a non-existent field
     is accessed with :func:`rticonnextdds_connector.Samples.getNumber`
@@ -167,17 +167,16 @@ class TestDataflow:
     :type rtiInputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
     :param testMsg: :func:`testMsg`
     :type testMsg: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
 
     .. note: This test is marked to fail as this case is not handled yet.
     """
-    x = rtiInputFixture.samples.getNumber(1,"invalid_field")
-    out,err=capfd.readouterr()
-    assert "DynamicData_get:!get kind failed" in out
+    with pytest.raises(AttributeError) as execinfo:
+      x = rtiInputFixture.samples.getNumber(1,"invalid_field")
+    print("\nException of type:"+str(execinfo.type)+\
+      "\nvalue:"+str(execinfo.value))
 
-  @pytest.mark.xfail
-  def test_getString_for_nonexistent_field(self,capfd,rtiInputFixture,testMsg):
+  @pytest.mark.xfail(sys.version_info < (3,0), reason="for python >= 3, fromcstring raises AttributeError when decode is called on NoneType returned by rtin_RTIDDSConnector_getStringFromSamples on nonexistent field")
+  def test_getString_for_nonexistent_field(self,rtiInputFixture,testMsg):
     """
     This function tests that an ``AttributeError`` is raised when a non-existent field
     is accessed with :func:`rticonnextdds_connector.Samples.getString`
@@ -186,17 +185,16 @@ class TestDataflow:
     :type rtiInputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
     :param testMsg: :func:`testMsg`
     :type testMsg: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
 
     .. note: This test is marked to fail as this case is not handled yet.
     """
-    x = rtiInputFixture.samples.getString(1,"invalid_field")
-    out,err=capfd.readouterr()
-    assert "DynamicData_get:!get kind failed" in out
+    with pytest.raises(AttributeError) as execinfo:
+      x = rtiInputFixture.samples.getString(1,"invalid_field")
+    print("\nException of type:"+str(execinfo.type)+\
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
-  def test_getBoolean_for_nonexistent_field(self,capfd,rtiInputFixture,testMsg):
+  def test_getBoolean_for_nonexistent_field(self,rtiInputFixture,testMsg):
     """
     This function tests that an ``AttributeError`` is raised when a non-existent field
     is accessed with :func:`rticonnextdds_connector.Samples.getBoolean`
@@ -205,11 +203,10 @@ class TestDataflow:
     :type rtiInputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
     :param testMsg: :func:`testMsg`
     :type testMsg: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
   
     .. note: This test is marked to fail as this case is not handled yet.
     """
-    x = rtiInputFixture.samples.getBoolean(1,"invalid_field")
-    out,err=capfd.readouterr()
-    assert "DynamicData_get:!get kind failed" in out
+    with pytest.raises(AttributeError) as execinfo:
+      x = rtiInputFixture.samples.getBoolean(1,"invalid_field")
+    print("\nException of type:"+str(execinfo.type)+\
+      "\nvalue:"+str(execinfo.value))

@@ -19,8 +19,10 @@ class TestOutput:
 
     """
     invalid_DW = "InvalidDW"
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as execinfo:
       op= rtiConnectorFixture.getOutput(invalid_DW)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
  
   def test_creation_DW(self,rtiOutputFixture):
     """
@@ -73,7 +75,7 @@ class TestInstance:
       isinstance(rtiOutputFixture.instance, rti.Instance)
 
   @pytest.mark.xfail
-  def test_setNumber_on_nonexistent_field(self,rtiOutputFixture,capfd):
+  def test_setNumber_on_nonexistent_field(self,rtiOutputFixture):
     """
     This function tests that an ``AttributeError`` is raised when
     :func:`rticonnextdds_connector.Instance.setNumber` is called 
@@ -81,19 +83,18 @@ class TestInstance:
 
     :param rtiOutputFixture: :func:`conftest.rtiOutputFixture`
     :type rtiOutputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
 
     .. note:: This test is marked to fail as this case is not handled yet.
 
     """
     non_existent_field="invalid_field"
-    rtiOutputFixture.instance.setNumber(non_existent_field,1)
-    out,err = capfd.readouterr()
-    assert "RTILuaDynamicData_set:!get kind failed" in out
+    with pytest.raises(AttributeError) as execinfo:
+      rtiOutputFixture.instance.setNumber(non_existent_field,1)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
-  def test_setString_on_nonexistent_field(self,rtiOutputFixture,capfd):
+  def test_setString_on_nonexistent_field(self,rtiOutputFixture):
     """
     This function tests that an ``AttributeError`` is raised when
     :func:`rticonnextdds_connector.Instance.setString` is called 
@@ -101,19 +102,18 @@ class TestInstance:
 
     :param rtiOutputFixture: :func:`conftest.rtiOutputFixture`
     :type rtiOutputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
 
     .. note:: This test is marked to fail as this case is not handled yet.
 
     """
     non_existent_field="invalid_field"
-    rtiOutputFixture.instance.setString(non_existent_field,"1")
-    out,err = capfd.readouterr()
-    assert "RTILuaDynamicData_set:!get kind failed" in out
+    with pytest.raises(AttributeError) as execinfo:
+      rtiOutputFixture.instance.setString(non_existent_field,"1")
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
-  def test_setBoolean_on_nonexistent_field(self,rtiOutputFixture,capfd):
+  def test_setBoolean_on_nonexistent_field(self,rtiOutputFixture):
     """
     This function tests that an ``AttributeError`` is raised when
     :func:`rticonnextdds_connector.Instance.setBoolean` is called 
@@ -121,19 +121,18 @@ class TestInstance:
 
     :param rtiOutputFixture: :func:`conftest.rtiOutputFixture`
     :type rtiOutputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
 
     .. note:: This test is marked to fail as this case is not handled yet.
 
     """
     non_existent_field="invalid_field"
-    rtiOutputFixture.instance.setBoolean(non_existent_field,True)
-    out,err = capfd.readouterr()
-    assert "RTILuaDynamicData_set:!get kind failed" in out
+    with pytest.raises(AttributeError) as execinfo:
+      rtiOutputFixture.instance.setBoolean(non_existent_field,True)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
-  def test_setDictionary_with_nonexistent_fields(self,rtiOutputFixture,capfd):
+  def test_setDictionary_with_nonexistent_fields(self,rtiOutputFixture):
     """
     This function tests that a ``KeyError`` is raised when
     :func:`rticonnextdds_connector.Instance.setDictionary` is called 
@@ -141,16 +140,15 @@ class TestInstance:
 
     :param rtiOutputFixture: :func:`conftest.rtiOutputFixture`
     :type rtiOutputFixture: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
-    :param capfd: `capfd fixture <https://pytest.org/latest/capture.html>`_
-    :type capfd: `pytest.fixture <https://pytest.org/latest/builtin.html#_pytest.python.fixture>`_
 
     .. note:: This test is marked to fail as this case is not handled yet.
 
     """
     invalid_dictionary= {"non_existent_field":"value"}
-    rtiOutputFixture.instance.setDictionary(invalid_dictionary)
-    out,err = capfd.readouterr()
-    assert "RTILuaJsonHelper_parse_json_node:!get kind failed" in out
+    with pytest.raises(KeyError) as execinfo:
+      rtiOutputFixture.instance.setDictionary(invalid_dictionary)
+    print("\nException of type:"+str(execinfo.type)+ \
+      "\nvalue:"+str(execinfo.value))
 
   @pytest.mark.xfail
   # Implicit type conversion from Boolean to number 
@@ -270,7 +268,6 @@ class TestInstance:
     print("\nException of type:"+str(execinfo.type)+ \
       "\nvalue:"+str(execinfo.value))
 
-  @pytest.mark.xfail
   # Implicit type conversion from number to Boolean 
   def test_setBoolean_with_Number(self,rtiOutputFixture):
     """
