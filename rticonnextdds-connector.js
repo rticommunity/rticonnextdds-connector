@@ -43,7 +43,7 @@ if (os.arch()=='x64') {
 }
 
 var rtin = ffi.Library(LIB_FULL_PATH, {
-"RTIDDSConnector_new": [ "pointer", ["string", "string"]],
+"RTIDDSConnector_new": [ "pointer", ["string", "string", "pointer"]],
 "RTIDDSConnector_getSamplesLength": [ "double", ["pointer", "string"]],
 "RTIDDSConnector_getInfosLength": [ "double", ["pointer", "string"]],
 "RTIDDSConnector_setNumberIntoSamples": [ "void", ["pointer", "string", "string", "double"]],
@@ -62,6 +62,8 @@ var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_getJSONSample": [ "string", ["pointer", "string", "int"]],
 "RTIDDSConnector_setJSONInstance": [ "void", ["pointer", "string", "string"]],
 "RTIDDSConnector_delete": [ "void", ["pointer"]],
+"RTIDDSConnector_getWriter": [ "pointer", ["pointer","string"]],
+"RTIDDSConnector_getReader": [ "pointer", ["pointer","string"]],
 });
 
 
@@ -104,6 +106,11 @@ function Infos(input) {
 function Input(connector,name) {
   this.connector = connector;
   this.name = name;
+  this.native = rtin.RTIDDSConnector_getReader(this.connector.native,
+    this.name);
+  if (this.native.isNull()){
+    throw new Error("Invalid Subscription::DataReader name")
+  }
   this.samples = new Samples(this)
   this.infos = new Infos(this);
 
@@ -128,7 +135,13 @@ function Instance(output) {
   }
 
   this.setString = function(fieldName, value) {
-    rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,fieldName,value);
+    try{
+      rtin.RTIDDSConnector_setStringIntoSamples(output.connector.native,output.name,fieldName,value);
+    }catch(TypeError)
+    {
+      throw Error(util.format("value of field:%s should be of type String."+
+        "Got: %s",fieldName,typeof value))
+    }
   }
 
   this.setFromJSON = function(jsonObj) {
@@ -141,6 +154,11 @@ function Instance(output) {
 function Output(connector,name) {
   this.connector = connector;
   this.name = name;
+  this.native = rtin.RTIDDSConnector_getWriter(this.connector.native,
+    this.name);
+  if (this.native.isNull()){
+    throw new Error("Invalid Publication::DataWriter name")
+  }
   this.instance = new Instance(this)
 
   this.write = function() {
@@ -149,7 +167,10 @@ function Output(connector,name) {
 }
 
 function Connector(configName,fileName) {
-  this.native = rtin.RTIDDSConnector_new(configName,fileName);
+  this.native = rtin.RTIDDSConnector_new(configName,fileName,null);
+  if (this.native.isNull()){
+    throw new Error("Invalid participant profile, xml path or xml profile")
+  } 
   var on_data_available_run = false;
 
   this.delete = function() {
@@ -177,7 +198,7 @@ function Connector(configName,fileName) {
       );
   }
 
-  var newListerCallBack = function(eventName, fnListener) {
+  var newListenerCallBack = function(eventName, fnListener) {
     if (eventName=='on_data_available') {
       if (on_data_available_run == false) {
         on_data_available_run = true;
@@ -186,7 +207,7 @@ function Connector(configName,fileName) {
     }
   }
 
-  this.on('newListener', newListerCallBack);
+  this.on('newListener', newListenerCallBack);
 
   var removeListenerCallBack = function(eventName, fnListener) {
     if (EventEmitter.listenerCount(this, eventName) == 0) {
