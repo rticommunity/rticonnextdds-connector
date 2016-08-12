@@ -1,6 +1,6 @@
 {
   "name": "rticonnextdds-connector",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "JavaScript (Node.js) binding for the RTI Connector for Connext DDS",
   "main": "rticonnextdds-connector.js",
   "scripts": {

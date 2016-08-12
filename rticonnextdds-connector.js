@@ -21,6 +21,9 @@ if (os.arch()=='x64') {
     case 'linux':
       LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librti_dds_connector.so';
       break;
+    case 'win32':
+      LIB_FULL_PATH = __dirname + '/lib/x64Win64VS2013/rti_dds_connector.dll';
+      break;
     default:
       console.log(os.platform() + ' not yet supported');
   }
@@ -28,6 +31,9 @@ if (os.arch()=='x64') {
   switch (os.platform()) {
     case 'linux':
       LIB_FULL_PATH = __dirname + '/lib/i86Linux3.xgcc4.6.3/librti_dds_connector.so';
+      break;
+    case 'win32':
+      LIB_FULL_PATH = __dirname + '/lib/i86Win32VS2010/rti_dds_connector.dll';
       break;
     default:
       console.log(os.platform() + ' not yet supported');
