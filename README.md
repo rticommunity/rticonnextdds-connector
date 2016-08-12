@@ -28,8 +28,10 @@ RTI Connector API directly in your C app; that's how the RTI Prototyper is
 implemented. Just not ready to release yet...
 
 ### Platform support
-We are building our library for few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture. **Windows** is only supported for python as it for now. We plan to support it for nodejs as well in the future.
-feel free to ask on the [RTI Community Forum](https://community.rti.com/forums/technical-questions)
+We are building our library for few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture.
+
+**Windows Note**: For nodejs, we tested on Win10 64 bit. We notice that npm works best with VS Express 2013
+Feel free to ask on the [RTI Community Forum](https://community.rti.com/forums/technical-questions) for more details.
 
 If you want to check the version of the libraries you can run the following command:
 
