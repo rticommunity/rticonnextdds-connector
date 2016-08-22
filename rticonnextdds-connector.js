@@ -92,7 +92,13 @@ function Samples(input) {
   }
 
   this.getJSON = function(index) {
-    return JSON.parse(rtin.RTIDDSConnector_getJSONSample(input.connector.native, input.name, index));
+    var jsonObj;
+    try {
+      jsonObj = JSON.parse(rtin.RTIDDSConnector_getJSONSample(input.connector.native, input.name, index));
+    } catch (err) {
+      throw err;
+    }
+    return jsonObj;
   }
 
 }
