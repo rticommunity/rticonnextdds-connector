@@ -43,10 +43,14 @@
     <!-- types -->
     <types>
 
+        <struct name="InnerStruct" extensibility="extensible">
+            <member name="x" type="long"/>
+        </struct>
 	   	<struct name="ShapeType" extensibility="extensible">
-			<member name="color" stringMaxLength="128" id="0" type="string" key="true"/>
-			<member name="x" id="1" type="long"/>
-            <member sequenceMaxLength="30" id="8" name="aOctetSeq" type="octet"/>
+			<member name="color" stringMaxLength="128" type="string" key="true"/>
+			<member name="x" type="long"/>
+            <member sequenceMaxLength="30" name="aOctetSeq" type="octet"/>
+            <member sequenceMaxLength="3" name="innerStruct" type="nonBasic" nonBasicTypeName="InnerStruct"/>
 		</struct>
 		<enum name="ShapeFillKind" extensibility="extensible">
 			<enumerator name="SOLID_FILL" value="0"/>
@@ -55,8 +59,8 @@
 			<enumerator name="VERTICAL_HATCH_FILL" value="3"/>
 		</enum>
 		<struct name="ShapeTypeExtended" baseType="ShapeType" extensibility="extensible">
-			<member name="fillKind" id="4" type="nonBasic" nonBasicTypeName="ShapeFillKind"/>
-			<member name="angle" id="5" type="float"/>
+			<member name="fillKind" type="nonBasic" nonBasicTypeName="ShapeFillKind"/>
+			<member name="angle" type="float"/>
 		</struct>
     </types>
 
