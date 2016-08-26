@@ -54,6 +54,10 @@ if "64" in bits:
 		arch = "x64Darwin12clang4.1"
 		libname = "librti_dds_connector"
 		post = "dylib"
+	elif "Windows" in osname:
+		arch = "x64Win64VS2013"
+		libname = "rti_dds_connector"
+		post = "dll"
 	else:
 		print("platfrom not yet supported")
 else:
