@@ -82,11 +82,11 @@ rtin_RTIDDSConnector_new.restype = ctypes.c_void_p
 rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p,ctypes.c_void_p]
 
 rtin_RTIDDSConnector_getWriter= rti.RTIDDSConnector_getWriter
-rtin_RTIDDSConnector_getWriter.restype= ctypes.c_void_p 
+rtin_RTIDDSConnector_getWriter.restype= ctypes.c_void_p
 rtin_RTIDDSConnector_getWriter.argtypes=[ ctypes.c_void_p,ctypes.c_char_p ]
 
 rtin_RTIDDSConnector_getReader= rti.RTIDDSConnector_getReader
-rtin_RTIDDSConnector_getReader.restype= ctypes.c_void_p 
+rtin_RTIDDSConnector_getReader.restype= ctypes.c_void_p
 rtin_RTIDDSConnector_getReader.argtypes=[ ctypes.c_void_p,ctypes.c_char_p ]
 
 rtin_RTIDDSConnector_setNumberIntoSamples = rti.RTIDDSConnector_setNumberIntoSamples
@@ -111,6 +111,10 @@ rtin_RTIDDSConnector_wait.argtypes = [ctypes.c_void_p, ctypes.c_int]
 rtin_RTIDDSConnector_getInfosLength = rti.RTIDDSConnector_getInfosLength
 rtin_RTIDDSConnector_getInfosLength.restype = ctypes.c_double
 rtin_RTIDDSConnector_getInfosLength.argtypes = [ctypes.c_void_p,ctypes.c_char_p]
+
+rtin_RTIDDSConnector_clear = rti.RTIDDSConnector_clear
+rtin_RTIDDSConnector_clear.argtypes = [ctypes.c_void_p,ctypes.c_char_p]
+
 
 rtin_RTIDDSConnector_getBooleanFromInfos = rti.RTIDDSConnector_getBooleanFromInfos
 rtin_RTIDDSConnector_getBooleanFromInfos.restype  = ctypes.c_int
@@ -232,6 +236,9 @@ class Output:
 
 	def write(self):
 		return rtin_RTIDDSConnector_write(self.connector.native,tocstring(self.name));
+
+	def clear_members(self):
+		return rtin_RTIDDSConnector_clear(self.connector.native,tocstring(self.name));
 
 class Connector:
 	def __init__(self, configName, fileName):
