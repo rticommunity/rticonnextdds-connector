@@ -12,6 +12,11 @@ var output = connector.getOutput("MyPublisher::MySquareWriter");
 
 var i =0;
 for (;;) {
+    /* We clear the instance associated to this output
+       otherwise the sample will have the values set in the
+       previous iteration
+    */
+    output.clear_members();
     i = i + 1;
     output.instance.setNumber("x",i);
     output.instance.setNumber("y",i*2);

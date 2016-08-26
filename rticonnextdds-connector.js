@@ -52,6 +52,7 @@ var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_new": [ "pointer", ["string", "string", "pointer"]],
 "RTIDDSConnector_getSamplesLength": [ "double", ["pointer", "string"]],
 "RTIDDSConnector_getInfosLength": [ "double", ["pointer", "string"]],
+"RTIDDSConnector_clear": ["void", ["pointer", "string"]],
 "RTIDDSConnector_setNumberIntoSamples": [ "void", ["pointer", "string", "string", "double"]],
 "RTIDDSConnector_getNumberFromSamples": [ "double", ["pointer", "string", "int", "string"]],
 "RTIDDSConnector_getNumberFromInfos": [ "double", ["pointer", "string", "int", "string"]],
@@ -176,13 +177,17 @@ function Output(connector,name) {
   this.write = function() {
     return rtin.RTIDDSConnector_write(this.connector.native,name);
   }
+
+  this.clear_members = function() {
+      return rtin.RTIDDSConnector_clear(this.connector.native,name);
+  }
 }
 
 function Connector(configName,fileName) {
   this.native = rtin.RTIDDSConnector_new(configName,fileName,null);
   if (this.native.isNull()){
     throw new Error("Invalid participant profile, xml path or xml profile")
-  } 
+  }
   var on_data_available_run = false;
 
   this.delete = function() {
