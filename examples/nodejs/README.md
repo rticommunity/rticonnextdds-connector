@@ -63,7 +63,7 @@ output.instance.setNumber("y",2);
 
 The APIs to do that are only 3: `setNumber(fieldName, number);` `setBoolean(fieldName, boolean);` and `setString(fieldName, string);`.
 
-Nested fields can be accessed with the dot notation: `"x.y.z"`, and array with square brakets: `"x.y[1].z"`. For more info on how to access
+Nested fields can be accessed with the dot notation: `"x.y.z"`, and array or sequences with square brakets: `"x.y[1].z"`. For more info on how to access
 fields, check Section 6.4 'Data Access API' of the
 [RTI Prototyper Getting Started Guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_Prototyper_GettingStarted.pdf)
 
