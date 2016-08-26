@@ -32,7 +32,7 @@ for i in range(1,500):
 	output.instance.setNumber("aOctetSeq[2]", 43);
 	if i%2==0:
 		output.instance.setNumber("aOctetSeq[3]", 44);
-	# Here an example on how to set the memebers of a sequence of complex types
+	# Here an example on how to set the members of a sequence of complex types
 	output.instance.setNumber("innerStruct[1].x", i);
 	output.instance.setNumber("innerStruct[2].x", i+1);
 	# Now we write the sample
