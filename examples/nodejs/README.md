@@ -30,6 +30,16 @@ have a look to the [ShapeExample.xml](ShapeExample.xml) file included in this di
 var connector = new rti.Connector("MyParticipantLibrary::Zero","./ShapeExample.xml");
 ```
 
+#### delete a connector
+To destroy all the DDS entities that belong to a connector previously create, you can call the ```delete``` function.
+
+```js
+var connector = new rti.Connector("MyParticipantLibrary::Zero","./ShapeExample.xml");
+...
+...
+connector.delete();
+```
+
 #### write a sample
 To write a sample first we have to get a reference to the output port:
 
