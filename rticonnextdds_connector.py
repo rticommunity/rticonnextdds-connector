@@ -85,6 +85,10 @@ rtin_RTIDDSConnector_new = rti.RTIDDSConnector_new
 rtin_RTIDDSConnector_new.restype = ctypes.c_void_p
 rtin_RTIDDSConnector_new.argtypes = [ctypes.c_char_p,ctypes.c_char_p,ctypes.c_void_p]
 
+rtin_RTIDDSConnector_delete = rti.RTIDDSConnector_delete
+rtin_RTIDDSConnector_delete.restype = ctypes.c_void_p
+rtin_RTIDDSConnector_delete.argtypes = [ctypes.c_void_p]
+
 rtin_RTIDDSConnector_getWriter= rti.RTIDDSConnector_getWriter
 rtin_RTIDDSConnector_getWriter.restype= ctypes.c_void_p
 rtin_RTIDDSConnector_getWriter.argtypes=[ ctypes.c_void_p,ctypes.c_char_p ]
@@ -249,6 +253,9 @@ class Connector:
 		self.native = rtin_RTIDDSConnector_new(tocstring(configName), tocstring(fileName),None);
 		if self.native == None:
 			raise ValueError("Invalid participant profile, xml path or xml profile")
+
+	def delete(self):
+		rtin_RTIDDSConnector_delete(self.native);
 
 	def getOutput(self, outputName):
 		return Output(self,outputName);
