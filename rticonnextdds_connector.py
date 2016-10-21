@@ -262,3 +262,6 @@ class Connector:
 
 	def getInput(self, inputName):
 		return Input(self, inputName);
+
+	def wait(self,timeout):
+		return rtin_RTIDDSConnector_wait(self.native,timeout);
