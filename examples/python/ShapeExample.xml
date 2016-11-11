@@ -15,7 +15,9 @@
 
     <!-- Qos Library -->
 	<qos_library name="QosLibrary">
-		<qos_profile name="DefaultProfile" is_default_qos="true">
+		<qos_profile name="DefaultProfile" 
+				     base_name="BuiltinQosLibExp::Generic.StrictReliable"
+					 is_default_qos="true">
 			<participant_qos>
 				<transport_builtin>
 				    <mask>UDPV4 | SHMEM</mask>
