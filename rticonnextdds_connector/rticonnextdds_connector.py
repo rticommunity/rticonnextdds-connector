@@ -77,7 +77,7 @@ else:
 		print("platfrom not yet supported")
 
 path = os.path.dirname(os.path.realpath(__file__))
-path = path + os.sep + "lib" + os.sep + arch + os.sep;
+path = os.path.join(path, "..", "lib", arch);
 libname = libname + "." + post
 rti = ctypes.CDLL(os.path.join(path, libname), ctypes.RTLD_GLOBAL)
 
