@@ -67,7 +67,7 @@
     <!-- Domain Library -->
     <domain_library name="MyDomainLibrary">
         <domain name="MyDomain" domain_id="0">
-            <register_type name="ShapeType" kind="dynamicData" type_ref="ShapeType" />
+            <register_type name="ShapeType"  type_ref="ShapeType" />
             <topic name="Square"    register_type_ref="ShapeType"/>
 
         </domain>
