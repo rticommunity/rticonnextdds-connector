@@ -10,9 +10,35 @@ In this directory you can find 1 set of examples
 
  * **simple**: shows how to write samples and how to read/take
 
+### Protecting calls to the connector library
+As we already explained in the main README [here](https://github.com/rticommunity/rticonnextdds-connector#threading-model), the user is responsible for protecting calls to the connector. There are many options in python to do so; one is to use the ```threading``` package:
+
+```py
+...
+...
+import threading
+sem = threading.Semaphore();
+...
+...
+#acquire the semaphore
+sem.acquire(True);
+#call to connector APissem.acquire(True);
+input.take();
+numOfSamples = input.samples.getLength();
+...
+...
+#release the semaphore
+sem.release();
+...
+...
+
+```
+
+If you want to have more information on the threading python packages, check out the documentation [here](https://docs.python.org/2/library/threading.html)
+
 ### API Overview:
 #### require the connector library
-If you want to use the `rticonnextdds_connector` you have to import it:
+If you want to use the `rticonnextdds_connector` you have to import it.
 
 ```py
 import rticonnextdds_connector as rti
