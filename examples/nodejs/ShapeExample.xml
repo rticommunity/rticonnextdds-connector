@@ -77,7 +77,7 @@
 
 
     <!-- Participant library -->
-    <participant_library name="MyParticipantLibrary">
+    <domain_participant_library name="MyParticipantLibrary">
       <domain_participant name="Zero" domain_ref="MyDomainLibrary::MyDomain">
 
         <publisher name="MyPublisher">
@@ -89,5 +89,5 @@
         </subscriber>
 
 		  </domain_participant>
-   </participant_library>
+   </domain_participant_library>
 </dds>
