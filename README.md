@@ -42,7 +42,7 @@ strings librti_dds_connector.dylib | grep BUILD
 ### Threading model
 The RTI Connext DDS Connector Native API do not yet implement any mechanism for thread safety. Originally the Connector native code was built to work with RTI DDS Prototyper and Lua. That was a single threaded loop. We then introduced support for javascript and python. For now the responsibility of protecting calls to the Connector are left to the user. This may change in the future.
 In node/javascript this should not be a problem due to the 'callback' style of the language itself.
-In python you will have to protect the calls to the connector if you are using different threads. 
+In python you will have to protect the calls to the connector if you are using different threads. For an example, check the python section [Protecting calls to the connector library](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/python#protecting-calls-to-the-connector-library).
 
 ### What is this git repository
 It is our way to make the connector technology available to you!
