@@ -39,6 +39,11 @@ If you want to check the version of the libraries you can run the following comm
 strings librti_dds_connector.dylib | grep BUILD
 ```
 
+### Threading model
+The RTI Connext DDS Connector Native API do not yet implement any mechanism for thread safety. Originally the Connector native code was built to work with RTI DDS Prototyper and Lua. That was a single threaded loop. We then introduced support for javascript and python. For now the responsibility of protecting calls to the Connector are left to the user. This may change in the future.
+In node/javascript this should not be a problem due to the 'callback' style of the language itself.
+In python you will have to protect the calls to the connector if you are using different threads. 
+
 ### What is this git repository
 It is our way to make the connector technology available to you!
 As of today we included Node.js, Python and Lua (through RTI Prototyper) for few
@@ -47,7 +52,8 @@ architectures.
 Also, for Node.js users, we will use this repo for the npm registry.
 
 ### Support
-This is **not** an official RTI product, so is **not** officially supported. This is early access technology. We'd love your feedback. Please visit the [RTI Community Forum](https://community.rti.com/forums/technical-questions) where fellow users and RTI engineers can help you.
+This is an experimental RTI product. As such we do offer support through the [RTI Community Forum](https://community.rti.com/forums/technical-questions) where fellow users and RTI engineers can help you.
+We'd love your feedback.
 
 ### Documentation
 We do not have much documentation yet. But we promise you: if you look at the
