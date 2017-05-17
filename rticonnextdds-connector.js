@@ -207,10 +207,10 @@ function Connector(configName,fileName) {
           connector.native, -1,
           function(err, res) {
             if (err) throw err;
-            connector.emit("on_data_available");
             if (on_data_available_run == true) {
               onDataAvailable(connector);
             }
+            connector.emit("on_data_available");
           }
       );
   }
