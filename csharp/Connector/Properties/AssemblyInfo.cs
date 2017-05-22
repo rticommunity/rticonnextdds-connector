@@ -1,35 +1,22 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="Real-Time Innovations, Inc">
-//   (c) 2005-2017 Copyright, Real-Time Innovations, Inc. All rights reserved.
+﻿// (c) Copyright, Real-Time Innovations, 2016.
+// All rights reserved.
 //
-//   Permission to modify and use for internal purposes granted.
-//   This software is provided "as is", without warranty, express or implied.
-// </copyright>
-// <author>Benito Palacios Sanchez</author>
-// -----------------------------------------------------------------------
+// No duplications, whole or partial, manual or electronic, may be made
+// without express written permission.  Any such copies, or
+// revisions thereof, must display this notice unaltered.
+// This code contains trade secrets of Real-Time Innovations, Inc.
+using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-// Information about this assembly is defined by the following attributes. 
-// Change them to the values specific to your project.
-
-[assembly: AssemblyTitle("Connector")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("RTI Connext DDS Connector")]
+[assembly: AssemblyDescription(".NET API for RTI Connector")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Real-Time Innovations, Inc")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Real-Time Innovations, Inc")]
+[assembly: AssemblyCompany("Real-Time Innovations, Inc.")]
+[assembly: AssemblyProduct("RTI Connext DDS")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
-// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
-// The form "{Major}.{Minor}.*" will automatically update the build and revision,
-// and "{Major}.{Minor}.{Build}.*" will update just the revision.
-
 [assembly: AssemblyVersion("1.0.*")]
-
-// The following attributes are used to specify the signing key for the assembly, 
-// if desired. See the Mono documentation for more information about signing.
-
-//[assembly: AssemblyDelaySign(false)]
-//[assembly: AssemblyKeyFile("")]
+[assembly: CLSCompliant(true)]
+[assembly: ComVisible(true)]

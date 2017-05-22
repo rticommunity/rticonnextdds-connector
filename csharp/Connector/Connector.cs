@@ -41,6 +41,10 @@ namespace RTI.Connector
             private set;
         }
 
+        internal Interface.Connector InternalConnector {
+            get { return internalConnector; }
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -53,6 +57,8 @@ namespace RTI.Connector
                 return;
 
             Disposed = true;
+            if (freeManagedResources)
+                internalConnector.Dispose();
         }
     }
 }

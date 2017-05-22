@@ -13,11 +13,9 @@ namespace RTI.Connector.Interface
 
     sealed class Connector : IDisposable
     {
-        readonly ConnectorPtr handle;
-
         public Connector(string configName, string configFile)
         {
-            handle = new ConnectorPtr(configName, configFile);
+            Handle = new ConnectorPtr(configName, configFile);
         }
 
         ~Connector()
@@ -26,6 +24,11 @@ namespace RTI.Connector.Interface
         }
 
         public bool Disposed {
+            get;
+            private set;
+        }
+
+        public ConnectorPtr Handle {
             get;
             private set;
         }
@@ -42,11 +45,11 @@ namespace RTI.Connector.Interface
                 return;
 
             Disposed = true;
-            if (freeManagedResources && !handle.IsInvalid)
-                handle.Dispose();
+            if (freeManagedResources && !Handle.IsInvalid)
+                Handle.Dispose();
         }
 
-        sealed class ConnectorPtr : SafeHandle
+        sealed internal class ConnectorPtr : SafeHandle
         {
             public ConnectorPtr(string configName, string configFile)
                 : base(IntPtr.Zero, true)

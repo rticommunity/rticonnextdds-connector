@@ -33,6 +33,10 @@
     <Compile Include="Connector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interface\Connector.cs" />
+    <Compile Include="Writer.cs" />
+    <Compile Include="Interface\Writer.cs" />
+    <Compile Include="Instance.cs" />
+    <Compile Include="Interface\Instance.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
