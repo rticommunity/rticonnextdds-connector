@@ -38,6 +38,8 @@
     <Compile Include="Interface\Writer.cs" />
     <Compile Include="Instance.cs" />
     <Compile Include="Interface\Instance.cs" />
+    <Compile Include="Interface\Reader.cs" />
+    <Compile Include="Reader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
