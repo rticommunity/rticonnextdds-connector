@@ -29,6 +29,31 @@ namespace RTI.Connector.Interface
                 val);
         }
 
+        public void SetBool(string field, bool val)
+        {
+            SafeNativeMethods.RTIDDSConnector_setBooleanIntoSamples(
+                writer.Connector.Handle,
+                writer.EntityName,
+                field,
+                val ? 1 : 0);
+        }
+
+        public void SetString(string field, string val)
+        {
+            SafeNativeMethods.RTIDDSConnector_setStringIntoSamples(
+                writer.Connector.Handle,
+                writer.EntityName,
+                field,
+                val);
+        }
+
+        public void Clear()
+        {
+            SafeNativeMethods.RTIDDSConnector_clear(
+                writer.Connector.Handle,
+                writer.EntityName);
+        }
+
         [SuppressUnmanagedCodeSecurity]
         static class SafeNativeMethods
         {
@@ -38,6 +63,25 @@ namespace RTI.Connector.Interface
                 string entityName,
                 string name,
                 double val);
+
+            [DllImport("librti_dds_connector")]
+            public static extern void RTIDDSConnector_setBooleanIntoSamples(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName,
+                string name,
+                int val);
+
+            [DllImport("librti_dds_connector")]
+            public static extern void RTIDDSConnector_setStringIntoSamples(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName,
+                string name,
+                string val);
+
+            [DllImport("librti_dds_connector")]
+            public static extern void RTIDDSConnector_clear(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
         }
     }
 }

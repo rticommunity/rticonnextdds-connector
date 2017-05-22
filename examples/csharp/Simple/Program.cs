@@ -30,7 +30,13 @@ namespace Simple
             Instance instance = writer.Instance;
             for (int i = 0; i < 5; i++) {
                 Console.WriteLine("Writing sample {0}", i);
+
+                instance.Clear();
                 instance["x"] = i;
+                instance["y"] = i * 2;
+                instance.Set("shapesize", 30);
+                instance.Set("color", "BLUE");
+
                 writer.Write();
                 Thread.Sleep(2000);
             }

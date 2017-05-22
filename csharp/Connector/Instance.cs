@@ -18,10 +18,35 @@ namespace RTI.Connector
             instance = new Interface.Instance(writer.InternalWriter);
         }
 
-        public int this[string field] {
+        public dynamic this[string field] {
             set {
-                instance.SetNumber(field, value);
+                if (value is int)
+                    instance.SetNumber(field, value);
+                else if (value is string)
+                    instance.SetString(field, value);
+                else if (value is bool)
+                    instance.SetBool(field, value);
             }
+        }
+
+        public void Clear()
+        {
+            instance.Clear();
+        }
+
+        public void Set(string field, int value)
+        {
+            instance.SetNumber(field, value);
+        }
+
+        public void Set(string field, bool value)
+        {
+            instance.SetBool(field, value);
+        }
+
+        public void Set(string field, string value)
+        {
+            instance.SetString(field, value);
         }
     }
 }
