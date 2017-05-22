@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "Connector\Connector.csproj", "{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector.UnitTests", "Connector.UnitTests\Connector.UnitTests.csproj", "{A617A32E-0756-4A93-A04D-7F6DFD10835A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A617A32E-0756-4A93-A04D-7F6DFD10835A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A617A32E-0756-4A93-A04D-7F6DFD10835A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A617A32E-0756-4A93-A04D-7F6DFD10835A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A617A32E-0756-4A93-A04D-7F6DFD10835A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
