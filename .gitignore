@@ -54,6 +54,7 @@ docs/_build/
 node_modules/
 
 # CSharp
+*.csproj.user
 *.userprefs
 csharp/packages
 obj/

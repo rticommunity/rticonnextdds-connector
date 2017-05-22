@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple", "Simple.csproj", "{CBB1EEF5-405B-4840-B314-A49C34A0128B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBB1EEF5-405B-4840-B314-A49C34A0128B}.Debug|x86.ActiveCfg = Debug|x86
+		{CBB1EEF5-405B-4840-B314-A49C34A0128B}.Debug|x86.Build.0 = Debug|x86
+		{CBB1EEF5-405B-4840-B314-A49C34A0128B}.Release|x86.ActiveCfg = Release|x86
+		{CBB1EEF5-405B-4840-B314-A49C34A0128B}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
