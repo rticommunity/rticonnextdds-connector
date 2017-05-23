@@ -18,10 +18,13 @@ for i in range(1,500):
 	# otherwise the sample will have the values set in the
 	# previous iteration
 	output.clear_members();
-	# Here an example on how to set a number
-	output.instance.setNumber("x", i);
+	# Here an example on how to set the members of a sequence of complex types
+	output.instance.setNumber("innerStruct[1].x", i);
+	output.instance.setNumber("innerStruct[2].x", i+1);
 	# Here an example on how to set a string
 	output.instance.setString("color", "BLUE");
+	# Here an example on how to set a number
+	output.instance.setNumber("x", i);
 	# Here we are going to set the elements of a sequence.
 	# - the sequence was declared with maxSize 30
 	# - we will always set two elements and..
@@ -32,9 +35,6 @@ for i in range(1,500):
 	output.instance.setNumber("aOctetSeq[2]", 43);
 	if i%2==0:
 		output.instance.setNumber("aOctetSeq[3]", 44);
-	# Here an example on how to set the members of a sequence of complex types
-	output.instance.setNumber("innerStruct[1].x", i);
-	output.instance.setNumber("innerStruct[2].x", i+1);
 	# Now we write the sample
 	output.write();
 	time.sleep(2)
