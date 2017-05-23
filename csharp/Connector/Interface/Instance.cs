@@ -5,7 +5,6 @@
 // without express written permission.  Any such copies, or
 // revisions thereof, must display this notice unaltered.
 // This code contains trade secrets of Real-Time Innovations, Inc.
-using System;
 namespace RTI.Connector.Interface
 {
     using System.Runtime.InteropServices;

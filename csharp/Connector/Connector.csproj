@@ -40,6 +40,9 @@
     <Compile Include="Interface\Instance.cs" />
     <Compile Include="Interface\Reader.cs" />
     <Compile Include="Reader.cs" />
+    <Compile Include="Sample.cs" />
+    <Compile Include="SampleCollection.cs" />
+    <Compile Include="Interface\Sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />

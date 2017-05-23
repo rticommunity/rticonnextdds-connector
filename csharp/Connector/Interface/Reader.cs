@@ -32,6 +32,13 @@ namespace RTI.Connector.Interface
             private set;
         }
 
+        public int GetSamplesLength()
+        {
+            return (int)SafeNativeMethods.RTIDDSConnector_getSamplesLength(
+                Connector.Handle,
+                EntityName);
+        }
+
         public void Read()
         {
             SafeNativeMethods.RTIDDSConnector_read(Connector.Handle, EntityName);
@@ -87,6 +94,11 @@ namespace RTI.Connector.Interface
             public static extern int RTIDDSConnector_wait(
                 Connector.ConnectorPtr connectorHandle,
                 int timeout);
+
+            [DllImport("librti_dds_connector")]
+            public static extern double RTIDDSConnector_getSamplesLength(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
         }
     }
 }

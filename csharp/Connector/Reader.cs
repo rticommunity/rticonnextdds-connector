@@ -15,9 +15,15 @@ namespace RTI.Connector
             InternalReader = new Interface.Reader(
                 connector.InternalConnector,
                 entityName);
+            Samples = new SampleCollection(this);
         }
 
         public string Name {
+            get;
+            private set;
+        }
+
+        public SampleCollection Samples {
             get;
             private set;
         }
