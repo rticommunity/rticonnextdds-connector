@@ -33,6 +33,7 @@
     <Reference Include="rti_dds_connector">
       <HintPath>..\..\..\csharp\Connector\bin\Debug\rti_dds_connector.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

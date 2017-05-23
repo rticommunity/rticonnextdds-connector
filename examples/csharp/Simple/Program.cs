@@ -17,9 +17,14 @@ namespace Simple
         {
             string configPath = "ShapeExample.xml";
             string configName = "MyParticipantLibrary::Zero";
+            bool publishMode = false;
 
-            using (var connector = new Connector(configName, configPath))
-                Publish(connector);
+            using (var connector = new Connector(configName, configPath)) {
+                if (publishMode)
+                    Publish(connector);
+                else
+                    Subscribe(connector);
+            }
         }
 
         static void Publish(Connector connector)
@@ -39,6 +44,32 @@ namespace Simple
 
                 writer.Write();
                 Thread.Sleep(2000);
+            }
+        }
+
+        static void Subscribe(Connector connector)
+        {
+            string readerName = "MySubscriber::MySquareReader";
+            Reader reader = new Reader(connector, readerName);
+
+            for (int count = 0; count < 10; count++) {
+                Console.WriteLine("Waiting 1 second...");
+                Thread.Sleep(1000);
+
+                reader.Take();
+                Console.WriteLine("Received {0} samples", reader.Samples.Count);
+                foreach (Sample sample in reader.Samples) {
+                    if (sample.IsValid) {
+                        Console.WriteLine(
+                            "Received [x={0}, y={1}, size={2}, color={3}]",
+                             sample.GetInt("x"),
+                             sample.GetInt("y"),
+                             sample.Get<int>("shapesize"),
+                             sample.GetString("color"));
+                    } else {
+                        Console.WriteLine("Received metadata");
+                    }
+                }
             }
         }
     }
