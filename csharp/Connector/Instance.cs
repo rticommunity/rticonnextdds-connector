@@ -18,6 +18,7 @@ namespace RTI.Connector
             instance = new Interface.Instance(writer.InternalWriter);
         }
 
+        #if NET40
         public dynamic this[string field] {
             set {
                 if (value is int)
@@ -28,6 +29,7 @@ namespace RTI.Connector
                     instance.SetBool(field, value);
             }
         }
+        #endif
 
         public void Clear()
         {

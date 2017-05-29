@@ -39,6 +39,7 @@ namespace RTI.Connector
             return internalSample.GetStringFromSample(field);
         }
 
+        #if NET40
         public dynamic Get<T>(string field)
         {
             if (typeof(T) == typeof(int))
@@ -50,5 +51,6 @@ namespace RTI.Connector
             else
                 throw new FormatException();
         }
+        #endif
     }
 }

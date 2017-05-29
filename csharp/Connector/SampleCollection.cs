@@ -10,7 +10,7 @@ namespace RTI.Connector
     using System.Collections;
     using System.Collections.Generic;
 
-    public class SampleCollection : IReadOnlyCollection<Sample>
+    public class SampleCollection : IEnumerable<Sample>
     {
         readonly Reader reader;
 
