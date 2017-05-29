@@ -9,8 +9,8 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("RTI Connext DDS Connector")]
-[assembly: AssemblyDescription("Example usage of .NET API Connector")]
+[assembly: AssemblyTitle("RTI Connector C# Simple Example")]
+[assembly: AssemblyDescription("Simple example for .NET API of RTI Connector")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Real-Time Innovations, Inc.")]
 [assembly: AssemblyProduct("RTI Connext DDS")]

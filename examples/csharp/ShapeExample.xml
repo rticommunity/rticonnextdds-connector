@@ -14,14 +14,6 @@
      xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/5.2.3/rti_dds_profiles.xsd"
      version="5.2.3">
 
-    <!-- Qos Library -->
-    <qos_library name="QosLibrary">
-        <qos_profile name="DefaultProfile"
-                     base_name="BuiltinQosLibExp::Generic.StrictReliable"
-                     is_default_qos="true">
-        </qos_profile>
-    </qos_library>
-
     <!-- types -->
     <types>
         <struct name="ShapeType" extensibility="extensible">

@@ -13,49 +13,60 @@ namespace Simple
 
     class MainClass
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
+            if (args.Length == 0 || (args[0] != "pub" && args[0] != "sub")) {
+                Console.WriteLine("USAGE: Simple.exe pub|sub [count=0]");
+                return;
+            }
+
             string configPath = "ShapeExample.xml";
             string configName = "MyParticipantLibrary::Zero";
-            bool publishMode = false;
+            bool publishMode = args[0] == "pub";
+            int count = args.Length > 1 ? Int32.Parse(args[1]) : 0;
 
+            Console.WriteLine("Initializating RTI Connector");
             using (var connector = new Connector(configName, configPath)) {
                 if (publishMode)
-                    Publish(connector);
+                    Publish(connector, count);
                 else
-                    Subscribe(connector);
+                    Subscribe(connector, count);
+
+                Console.WriteLine("Finalizing RTI Connector");
             }
         }
 
-        static void Publish(Connector connector)
+        static void Publish(Connector connector, int count)
         {
             string writerName = "MyPublisher::MySquareWriter";
             Writer writer = new Writer(connector, writerName);
 
             Instance instance = writer.Instance;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < count || count == 0; i++) {
                 Console.WriteLine("Writing sample {0}", i);
 
                 instance.Clear();
-                instance["x"] = i;
-                instance["y"] = i * 2;
+                instance.Set("x", i);
+                instance.Set("y", i * 2);
                 instance.Set("shapesize", 30);
                 instance.Set("color", "BLUE");
 
                 writer.Write();
-                Thread.Sleep(2000);
+                Thread.Sleep(100);
             }
         }
 
-        static void Subscribe(Connector connector)
+        static void Subscribe(Connector connector, int count)
         {
             string readerName = "MySubscriber::MySquareReader";
             Reader reader = new Reader(connector, readerName);
 
-            for (int count = 0; count < 10; count++) {
+            for (int i = 0; i < count || count == 0; i++) {
+                // Poll for samples every second
                 Console.WriteLine("Waiting 1 second...");
                 Thread.Sleep(1000);
 
+                // Take samples. Accesible from Reader.Samples
                 reader.Take();
                 Console.WriteLine("Received {0} samples", reader.Samples.Count);
                 foreach (Sample sample in reader.Samples) {
@@ -64,7 +75,7 @@ namespace Simple
                             "Received [x={0}, y={1}, size={2}, color={3}]",
                              sample.GetInt("x"),
                              sample.GetInt("y"),
-                             sample.Get<int>("shapesize"),
+                             sample.GetInt("shapesize"),
                              sample.GetString("color"));
                     } else {
                         Console.WriteLine("Received metadata");
