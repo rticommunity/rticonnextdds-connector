@@ -8,6 +8,7 @@
 namespace RTI.Connector
 {
     using System;
+    using System.IO;
 
     /// <summary>
     /// RTI Connext DDS Connector.
@@ -23,6 +24,9 @@ namespace RTI.Connector
         /// <param name="configFile">XML configuration file path.</param>
         public Connector(string configName, string configFile)
         {
+            if (!File.Exists(configFile))
+                throw new FileNotFoundException("Configuration file doesn't exist");
+
             ConfigName = configName;
             ConfigFile = configFile;
 
