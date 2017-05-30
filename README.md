@@ -73,7 +73,7 @@ $ npm install rticonnextdds-connector
 
 When that is done, cd into your node_modules directory and have a look to the [examples/nodejs/README.md](examples/nodejs/README.md)
 ### Getting started with python
-Be sure you have python (<3). Then clone this repo:
+Be sure you have python. Then clone this repo:
 
 ``` bash
 $ git clone https://github.com/rticommunity/rticonnextdds-connector.git
