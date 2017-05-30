@@ -7,11 +7,19 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    /// <summary>
+    /// Connector sample writer.
+    /// </summary>
     public class Writer
     {
         readonly Connector connector;
         readonly Interface.Writer writer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Writer"/> class.
+        /// </summary>
+        /// <param name="connector">Parent connector.</param>
+        /// <param name="entityName">Entity name.</param>
         public Writer(Connector connector, string entityName)
         {
             this.connector = connector;
@@ -20,11 +28,19 @@ namespace RTI.Connector
             Instance = new Instance(this);
         }
 
+        /// <summary>
+        /// Gets the entity name.
+        /// </summary>
+        /// <value>The entity name.</value>
         public string Name {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Gets the unique instance associated with this writer.
+        /// </summary>
+        /// <value>The writer instance.</value>
         public Instance Instance {
             get;
             private set;
@@ -34,6 +50,9 @@ namespace RTI.Connector
             get { return writer; }
         }
 
+        /// <summary>
+        /// Write the writer instance.
+        /// </summary>
         public void Write()
         {
             writer.Write();

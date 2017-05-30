@@ -7,6 +7,9 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    /// <summary>
+    /// Writer instance.
+    /// </summary>
     public class Instance
     {
         readonly Writer writer;
@@ -19,6 +22,10 @@ namespace RTI.Connector
         }
 
         #if NET40
+        /// <summary>
+        /// Sets a value to the specified field.
+        /// </summary>
+        /// <param name="field">Field name.</param>
         public dynamic this[string field] {
             set {
                 if (value is int)
@@ -31,21 +38,39 @@ namespace RTI.Connector
         }
         #endif
 
+        /// <summary>
+        /// Clear all the members of this instance.
+        /// </summary>
         public void Clear()
         {
             instance.Clear();
         }
 
+        /// <summary>
+        /// Set the specified number value to a field.
+        /// </summary>
+        /// <param name="field">Field name.</param>
+        /// <param name="value">Value for the field.</param>
         public void Set(string field, int value)
         {
             instance.SetNumber(field, value);
         }
 
+        /// <summary>
+        /// Set the specified boolean value to a field.
+        /// </summary>
+        /// <param name="field">Field name.</param>
+        /// <param name="value">Value for the field.</param>
         public void Set(string field, bool value)
         {
             instance.SetBool(field, value);
         }
 
+        /// <summary>
+        /// Set the specified string value to a field.
+        /// </summary>
+        /// <param name="field">Field name.</param>
+        /// <param name="value">Value for the field.</param>
         public void Set(string field, string value)
         {
             instance.SetString(field, value);

@@ -1,4 +1,4 @@
-﻿// (c) Copyright, Real-Time Innovations, 2016.
+﻿// (c) Copyright, Real-Time Innovations, 2017.
 // All rights reserved.
 //
 // No duplications, whole or partial, manual or electronic, may be made
@@ -13,8 +13,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription(".NET API for RTI Connector")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Real-Time Innovations, Inc.")]
-[assembly: AssemblyProduct("RTI Connext DDS")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("RTI Connext DDS Connector")]
+[assembly: AssemblyCopyright("(c) Copyright, Real-Time Innovations, 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.*")]
