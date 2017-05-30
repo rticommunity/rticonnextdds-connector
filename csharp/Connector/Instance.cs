@@ -21,22 +21,22 @@ namespace RTI.Connector
             instance = new Interface.Instance(writer.InternalWriter);
         }
 
-        #if NET40
         /// <summary>
         /// Sets a value to the specified field.
         /// </summary>
         /// <param name="field">Field name.</param>
-        public dynamic this[string field] {
+        public object this[string field] {
             set {
                 if (value is int)
-                    instance.SetNumber(field, value);
+                    instance.SetNumber(field, (int)value);
                 else if (value is string)
-                    instance.SetString(field, value);
+                    instance.SetString(field, (string)value);
                 else if (value is bool)
-                    instance.SetBool(field, value);
+                    instance.SetBool(field, (bool)value);
+                else
+                    throw new System.FormatException("Unsupported field type");
             }
         }
-        #endif
 
         /// <summary>
         /// Clear all the members of this instance.

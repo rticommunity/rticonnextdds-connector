@@ -60,7 +60,6 @@ namespace RTI.Connector
             return internalSample.GetStringFromSample(field);
         }
 
-        #if NET40
         /// <summary>
         /// Get the specified field value.
         /// </summary>
@@ -69,17 +68,19 @@ namespace RTI.Connector
         /// <typeparam name="T">
         /// The field type. It can be 'int', 'bool' or 'string'.
         /// </typeparam>
-        public dynamic Get<T>(string field)
+        public T Get<T>(string field)
         {
+            object val;
             if (typeof(T) == typeof(int))
-                return GetInt(field);
+                val = GetInt(field);
             else if (typeof(T) == typeof(bool))
-                return GetBool(field);
+                val = GetBool(field);
             else if (typeof(T) == typeof(string))
-                return GetString(field);
+                val = GetString(field);
             else
-                throw new System.FormatException();
+                throw new System.FormatException("Unsupported field type");
+
+            return (T)System.Convert.ChangeType(val, typeof(T));
         }
-        #endif
     }
 }
