@@ -30,10 +30,7 @@ module_dir = 'rticonnextdds_connector'
 setup(
     name=module_dir,
 
-    # Versions should comply with PEP440.  For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
-    # https://packaging.python.org/en/latest/single_source_version.html
-    version='5.2.0',
+    use_scm_version=True,
 
     description='RTI Connector for Connext DDS',
     long_description=long_description,
@@ -93,6 +90,8 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={},
+
+    setup_requires=['setuptools_scm'],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
