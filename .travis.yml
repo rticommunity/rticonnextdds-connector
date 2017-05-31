@@ -9,8 +9,9 @@ os:
     - linux
 deploy:
     provider: pypi
-    user: ...
-    password: ...
+    user: "..."
+    password:
+        secure: "..."
     distributions: "sdist bdist_wheel"
     on:
         tags: true
