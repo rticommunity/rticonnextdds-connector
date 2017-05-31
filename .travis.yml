@@ -1,0 +1,16 @@
+language: python
+python:
+    - 3.5
+script:
+    - pip install .
+    - pip install -r test-requirements.txt
+    - py.test
+os:
+    - linux
+deploy:
+    provider: pypi
+    user: ...
+    password: ...
+    distributions: "sdist bdist_wheel"
+    on:
+        tags: true
