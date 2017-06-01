@@ -79,6 +79,12 @@ Be sure you have python. Then clone this repo:
 $ git clone https://github.com/rticommunity/rticonnextdds-connector.git
 ```
 
+You can also use pip
+
+``` bash
+$ pip install rticonnextdds_connector
+```
+
 You can also download the [zip file](https://github.com/rticommunity/rticonnextdds-connector/archive/master.zip)
 and then unzip it.
 
