@@ -16,7 +16,7 @@ var LIB_FULL_PATH = "";
 if (os.arch()=='x64') {
   switch (os.platform()) {
     case 'darwin':
-      LIB_FULL_PATH = __dirname + '/lib/x64Darwin12clang4.1/librtiddsconnector.dylib';
+      LIB_FULL_PATH = __dirname + '/lib/x64Darwin16clang8.0/librtiddsconnector.dylib';
       break;
     case 'linux':
       LIB_FULL_PATH = __dirname + '/lib/x64Linux2.6gcc4.4.5/librtiddsconnector.so';

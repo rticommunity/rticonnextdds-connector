@@ -51,7 +51,7 @@ if "64" in bits:
 		libname = "librtiddsconnector"
 		post = "so"
 	elif "Darwin" in osname:
-		arch = "x64Darwin12clang4.1"
+		arch = "x64Darwin16clang8.0"
 		libname = "librtiddsconnector"
 		post = "dylib"
 	elif "Windows" in osname:
