@@ -48,30 +48,30 @@ if sys.version_info[0] == 3 :
 if "64" in bits:
 	if "Linux" in osname:
 		arch = "x64Linux2.6gcc4.4.5"
-		libname = "librti_dds_connector"
+		libname = "librtiddsconnector"
 		post = "so"
 	elif "Darwin" in osname:
 		arch = "x64Darwin12clang4.1"
-		libname = "librti_dds_connector"
+		libname = "librtiddsconnector"
 		post = "dylib"
 	elif "Windows" in osname:
 		arch = "x64Win64VS2013"
-		libname = "rti_dds_connector"
+		libname = "rtiddsconnector"
 		post = "dll"
 	else:
 		print("platfrom not yet supported")
 else:
 	if isArm:
 		arch = "armv6vfphLinux3.xgcc4.7.2"
-		libname = "librti_dds_connector"
+		libname = "librtiddsconnector"
 		post = "so"
 	elif "Linux" in osname:
 		arch = "i86Linux3.xgcc4.6.3"
-		libname = "librti_dds_connector"
+		libname = "librtiddsconnector"
 		post = "so"
 	elif "Windows" in osname:
 		arch = "i86Win32VS2010"
-		libname = "rti_dds_connector"
+		libname = "rtiddsconnector"
 		post = "dll"
 	else:
 		print("platfrom not yet supported")

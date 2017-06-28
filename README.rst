@@ -63,7 +63,7 @@ following command:
 
 .. code:: bash
 
-    strings librti_dds_connector.dylib | grep BUILD
+    strings librtiddsconnector.dylib | grep BUILD
 
 Threading model
 ~~~~~~~~~~~~~~~

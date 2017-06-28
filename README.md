@@ -36,7 +36,7 @@ Feel free to ask on the [RTI Community Forum](https://community.rti.com/forums/t
 If you want to check the version of the libraries you can run the following command:
 
 ``` bash
-strings librti_dds_connector.dylib | grep BUILD
+strings librtiddsconnector.dylib | grep BUILD
 ```
 
 ### Threading model
