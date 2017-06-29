@@ -1,0 +1,104 @@
+###############################################################################
+##         (c) Copyright, Real-Time Innovations, All rights reserved.        ##
+##                                                                           ##
+##         Permission to modify and use for internal purposes granted.       ##
+## This software is provided "as is", without warranty, express or implied.  ##
+##                                                                           ##
+###############################################################################
+
+# This Makefile contains the common rules to build for all the architectures.
+# It is included from the architecture-specific Makefile.
+# This Makefile requires the following variables:
+# - ARCH: Architecture to build (for example i86Linux2.6gcc4.1.1)
+#
+# Optional variables:
+# - DEBUG: If set to '1', it turns on debugging information
+# - SHAREDLIB: If set to '1', shared libraries will be used
+# - CC: compiler name. If not set, it will use 'gcc'
+# - CFLAGS: compiler flags: will be appended to $CC command-line
+# - CLD: linker name. If not set, it will use 'gcc'
+# - CLDFLAGS: linker flags: will be inserted at the beginning of CLD cmdline
+# - SYSLIBS: additional system libraries to append to the CLD command-line
+
+
+SHAREDLIB=1
+
+###############################################################################
+# Ensure this Makefile is invoked with the right variable set
+###############################################################################
+ifeq ($(ARCH), )
+all:
+	@echo "***************************************************************"
+	@echo "You cannot use this Makefile directly, instead use the"
+	@echo "architecture-specific Makefile. For example:"
+	@echo "         gmake -f make/Makefile.i86Linux2.6gcc4.1.1"
+	@echo "***************************************************************"
+	@false
+endif
+
+
+# Define the sources and NDDS search path
+INCLUDES = -Isrc -I../../include/
+
+###############################################################################
+# Modify build flags for debug/release
+###############################################################################
+ifeq ($(DEBUG),1)
+CFLAGS += -g -O0
+ifeq ($(SHAREDLIB),1)
+CONNECTORLIBS = -lrtiddsconnectord
+else
+CONNECTORLIBS = -lrtiddsconnectorzd
+endif
+else
+CFLAGS += -O2
+ifeq ($(SHAREDLIB),1)
+CONNECTORLIBS = -lrtiddsconnector
+else
+CONNECTORLIBS = -lrtiddsconnectorz
+endif
+endif
+
+LIBS = -L../../lib/$(ARCH) $(CONNECTORLIBS) $(SYSLIBS)
+
+
+SOURCES = src/main.c
+
+DIRECTORIES   = objs.dir objs/$(ARCH).dir
+EXECUTABLE    = main
+SOURCES_NODIR = $(notdir $(SOURCES))
+OBJECTS       = $(SOURCES_NODIR:%.c=objs/$(ARCH)/%.o)
+
+
+###############################################################################
+# Build Rules
+###############################################################################
+$(ARCH): $(DIRECTORIES) $(OBJECTS) $(EXECUTABLE:%=objs/$(ARCH)/%.o) \
+	       $(EXECUTABLE:%=objs/$(ARCH)/%.out)
+
+objs/$(ARCH)/%.out: objs/$(ARCH)/%.o
+	$(CLD) $(CLDFLAGS) -o $(@:%.out=%) $(OBJECTS) $(LIBS)
+
+objs/$(ARCH)/%.o: src/%.c $(HEADERS)
+	$(CC) $(CFLAGS) -o $@ $(DEFINES) $(INCLUDES) -c $<
+
+
+# Here is how we create those subdirectories automatically.
+%.dir :
+	@echo "Checking directory $*"
+	@if [ ! -d $* ]; then \
+		echo "Making directory $*"; \
+		mkdir -p $* ; \
+	fi;
+
+###############################################################################
+# Clean target: removes the objs dir
+###############################################################################
+clean:
+	@rm -Rf objs/$(ARCH)
+	@echo "Successfully deleted object and executable files for architecture $(ARCH)"
+	@echo "To delete ALL the architectures and any generated file use target 'veryclean'"
+
+veryclean:
+	@rm -Rf objs
+	@echo "Deleted all executables, objects and generated files"
