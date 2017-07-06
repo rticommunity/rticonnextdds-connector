@@ -35,8 +35,10 @@ for i in range(1, 500):
 
             # This is how you get the size of a seqence:
             seqLength = inputDDS.samples.getNumber(j, "aOctetSeq#")
-            print "I received a seqence with " + repr(seqLength) + "elements"
+            # pylint: disable=C0325
+            print("I received a seqence with " + repr(seqLength) + "elements")
 
             # Print the sample
-            print sample
+            # pylint: disable=C0325
+            print(sample)
     sleep(2)

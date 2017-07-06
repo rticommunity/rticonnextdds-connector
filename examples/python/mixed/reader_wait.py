@@ -19,9 +19,11 @@ inputDDS = connector.getInput("MySubscriber::MySquareReader")
 
 for i in range(1, 500):
     timeout = -1
-    print "Calling wait with a timeout of " + repr(timeout)
+    # pylint: disable=C0325
+    print("Calling wait with a timeout of " + repr(timeout))
     ret = connector.wait(timeout)
-    print "The wait returned " + repr(ret)
+    # pylint: disable=C0325
+    print("The wait returned " + repr(ret))
     inputDDS.take()
     numOfSamples = inputDDS.samples.getLength()
     for j in range(1, numOfSamples+1):
@@ -39,8 +41,8 @@ for i in range(1, 500):
 
             # This is how you get the size of a seqence:
             seqLength = inputDDS.samples.getNumber(j, "aOctetSeq#")
-            print "I received a seqence with " + repr(seqLength) + "elements"
+            print("I received a seqence with " + repr(seqLength) + " elements")
 
             # Print the sample
-            print sample
+            print(sample)
     sleep(2)

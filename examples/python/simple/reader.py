@@ -33,5 +33,6 @@ for i in range(1, 500):
             color = inputDDS.samples.getString(j, "color")
             toPrint = "Received x: " + repr(x) + " y: " + repr(y) + \
                       " size: " + repr(size) + " color: " + repr(color)
-            print toPrint
+            # pylint: disable=C0325
+            print(toPrint)
     sleep(2)
