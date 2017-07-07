@@ -1,0 +1,27 @@
+###############################################################################
+##         (c) Copyright, Real-Time Innovations, All rights reserved.        ##
+##                                                                           ##
+##         Permission to modify and use for internal purposes granted.       ##
+## This software is provided "as is", without warranty, express or implied.  ##
+##                                                                           ##
+###############################################################################
+
+# Note:
+# - To use this Makefile, you must have the 'NDDSHOME' environment variable
+#   set to the location of RTI Connext.
+# 
+# - You need to invoke the make command from the root directory of this example.
+
+# Defines required Make variables. They will be used in the Makefile.common
+# to define the rules to define the build process for this application.
+ARCH=i86Linux3.xgcc4.6.3
+
+CC = gcc
+CFLAGS = -DRTI_UNIX -DRTI_LINUX -m32
+CLD = gcc
+CLDFLAGS = -m32
+SYSLIBS = -ldl -lnsl -lm -lpthread -lrt
+
+# The rest of the rules are in the 'Makefile.common'
+include make/Makefile.common
+

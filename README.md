@@ -37,7 +37,7 @@ Feel free to ask on the [RTI Community Forum](https://community.rti.com/forums/t
 If you want to check the version of the libraries you can run the following command:
 
 ``` bash
-strings librti_dds_connector.dylib | grep BUILD
+strings librtiddsconnector.dylib | grep BUILD
 ```
 
 ### Threading model
@@ -74,10 +74,16 @@ $ npm install rticonnextdds-connector
 
 When that is done, cd into your node_modules directory and have a look to the [examples/nodejs/README.md](examples/nodejs/README.md)
 ### Getting started with python
-Be sure you have python (<3). Then clone this repo:
+Be sure you have python. Then clone this repo:
 
 ``` bash
 $ git clone https://github.com/rticommunity/rticonnextdds-connector.git
+```
+
+You can also use pip
+
+``` bash
+$ pip install rticonnextdds_connector
 ```
 
 You can also download the [zip file](https://github.com/rticommunity/rticonnextdds-connector/archive/master.zip)

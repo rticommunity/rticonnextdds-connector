@@ -1,0 +1,99 @@
+
+<!--
+RTI Data Distribution Service Deployment
+-->
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     
+     xsi:noNamespaceSchemaLocation="../../../resource/schema/rti_dds_profiles.xsd"
+     version="5.2.7">
+
+    <!-- Qos Library -->
+	<qos_library name="QosLibrary">
+		<qos_profile name="DefaultProfile" is_default_qos="true">
+			<participant_qos>
+				<transport_builtin>
+					<!-- <mask>UDPV4 | SHMEM</mask>-->
+				    <mask>SHMEM</mask>
+				</transport_builtin>
+
+				<!-- Turn on monitoring -->
+				<!-- Begin Monitoring 
+				<property>
+					<value>
+						<element>
+							<name>rti.monitor.library</name>
+							<value>rtimonitoring</value>
+						</element>
+						<element>
+							<name>rti.monitor.create_function_ptr</name>
+							<value>$(NDDS_MONITOR)</value>
+						</element>
+					</value>
+				</property>
+				 End Monitoring -->
+			</participant_qos>
+		</qos_profile>
+	</qos_library>
+
+    <!-- types -->
+    <types>
+
+       <const name="MAX_LEN" type="long" value="128"/>
+	   
+       <struct name="MyType">
+           <member name="message"  key="true"
+                     type="string"  stringMaxLength="MAX_LEN"/>
+	   </struct>
+    </types>
+    
+    
+    <!-- Domain Library -->
+    <domain_library name="MyDomainLibrary">
+
+        <domain name="MyDomain" domain_id="0">
+            <register_type name="MyType" kind="dynamicData"
+                           type_ref="MyType" />                         
+
+            <topic name="MyTopic"   register_type_ref="MyType"/>
+            
+        </domain>
+
+        <domain name="MyOtherDomain" domain_id="1">
+            <register_type name="MyType" kind="dynamicData"
+                           type_ref="MyType" />
+
+            <topic name="MyTopic"   register_type_ref="MyType"/>
+
+        </domain>
+    </domain_library>
+
+
+    <!-- Participant library -->
+    <participant_library name="MyParticipantLibrary">
+
+
+		<!-- MyDomain -->
+		<domain_participant name="Zero"
+			domain_ref="MyDomainLibrary::MyDomain">
+	
+			<publisher name="MyPublisher">
+				<data_writer name="MyWriter" topic_ref="MyTopic" />
+			</publisher>
+            <subscriber name="MySubscriber">
+                <data_reader name="MyReader" topic_ref="MyTopic" />
+            </subscriber>
+		</domain_participant>
+		
+		<!-- MyOtherDomain -->
+        <domain_participant name="One"
+            domain_ref="MyDomainLibrary::MyOtherDomain">
+            <publisher name="MyPublisher">
+                <data_writer name="MyWriter" topic_ref="MyTopic" />
+            </publisher>    
+            <subscriber name="MySubscriber">
+                <data_reader name="MyReader" topic_ref="MyTopic" />
+            </subscriber>
+        </domain_participant>
+        
+    </participant_library>
+</dds>
