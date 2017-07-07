@@ -72,13 +72,13 @@ namespace RTI.Connector.Interface
         [SuppressUnmanagedCodeSecurity]
         static class SafeNativeMethods
         {
-            [DllImport("rti_dds_connector")]
+            [DllImport("rtiddsconnector")]
             public static extern IntPtr RTIDDSConnector_new(
                 string configName,
                 string configFile,
                 IntPtr config);
 
-            [DllImport("rti_dds_connector")]
+            [DllImport("rtiddsconnector")]
             public static extern void RTIDDSConnector_delete(IntPtr handle);
         }
     }

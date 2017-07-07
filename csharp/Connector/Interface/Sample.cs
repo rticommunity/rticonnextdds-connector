@@ -60,28 +60,28 @@ namespace RTI.Connector.Interface
         [SuppressUnmanagedCodeSecurity]
         static class SafeNativeMethods
         {
-            [DllImport("rti_dds_connector")]
+            [DllImport("rtiddsconnector")]
             public static extern int RTIDDSConnector_getBooleanFromInfos(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
                 int index,
                 string name);
             
-            [DllImport("rti_dds_connector")]
+            [DllImport("rtiddsconnector")]
             public static extern double RTIDDSConnector_getNumberFromSamples(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
                 int index,
                 string name);
             
-            [DllImport("rti_dds_connector")]
+            [DllImport("rtiddsconnector")]
             public static extern int RTIDDSConnector_getBooleanFromSamples(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
                 int index,
                 string name);
 
-            [DllImport("rti_dds_connector")]
+            [DllImport("rtiddsconnector")]
             public static extern string RTIDDSConnector_getStringFromSamples(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
