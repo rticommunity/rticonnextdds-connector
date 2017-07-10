@@ -1,10 +1,11 @@
-"""Reader without using the wait call."""
 ##############################################################################
 # Copyright (c) 2005-2015 Real-Time Innovations, Inc. All rights reserved.
 # Permission to modify and use for internal purposes granted.
 # This software is provided "as is", without warranty, express or implied.
 ##############################################################################
+"""Reader without using the wait call."""
 
+from __future__ import print_function
 from sys import path as sysPath
 from os import path as osPath
 from time import sleep
@@ -35,10 +36,8 @@ for i in range(1, 500):
 
             # This is how you get the size of a seqence:
             seqLength = inputDDS.samples.getNumber(j, "aOctetSeq#")
-            # pylint: disable=C0325
             print("I received a seqence with " + repr(seqLength) + "elements")
 
             # Print the sample
-            # pylint: disable=C0325
             print(sample)
     sleep(2)

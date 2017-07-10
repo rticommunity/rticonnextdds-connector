@@ -1,10 +1,11 @@
-"""Samples's reader."""
 ##############################################################################
 # Copyright (c) 2005-2015 Real-Time Innovations, Inc. All rights reserved.
 # Permission to modify and use for internal purposes granted.
 # This software is provided "as is", without warranty, express or implied.
 ##############################################################################
+"""Samples's reader."""
 
+from __future__ import print_function
 from sys import path as sysPath
 from os import path as osPath
 from time import sleep
@@ -33,6 +34,6 @@ for i in range(1, 500):
             color = inputDDS.samples.getString(j, "color")
             toPrint = "Received x: " + repr(x) + " y: " + repr(y) + \
                       " size: " + repr(size) + " color: " + repr(color)
-            # pylint: disable=C0325
+
             print(toPrint)
     sleep(2)

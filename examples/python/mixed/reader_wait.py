@@ -1,10 +1,11 @@
-"""Reader using the wait call."""
 ##############################################################################
 # Copyright (c) 2005-2015 Real-Time Innovations, Inc. All rights reserved.
 # Permission to modify and use for internal purposes granted.
 # This software is provided "as is", without warranty, express or implied.
 ##############################################################################
+"""Reader using the wait call."""
 
+from __future__ import print_function
 from sys import path as sysPath
 from os import path as osPath
 from time import sleep
@@ -19,10 +20,8 @@ inputDDS = connector.getInput("MySubscriber::MySquareReader")
 
 for i in range(1, 500):
     timeout = -1
-    # pylint: disable=C0325
     print("Calling wait with a timeout of " + repr(timeout))
     ret = connector.wait(timeout)
-    # pylint: disable=C0325
     print("The wait returned " + repr(ret))
     inputDDS.take()
     numOfSamples = inputDDS.samples.getLength()

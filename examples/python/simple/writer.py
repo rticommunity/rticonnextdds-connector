@@ -1,9 +1,9 @@
-"""Samples's writer."""
 ##############################################################################
 # Copyright (c) 2005-2015 Real-Time Innovations, Inc. All rights reserved.
 # Permission to modify and use for internal purposes granted.
 # This software is provided "as is", without warranty, express or implied.
 ##############################################################################
+"""Samples's writer."""
 
 from sys import path as sysPath
 from os import path as osPath

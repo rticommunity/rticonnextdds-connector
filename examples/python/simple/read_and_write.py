@@ -1,9 +1,9 @@
-"""Read a sample and write a new one."""
 ##############################################################################
 # Copyright (c) 2005-2015 Real-Time Innovations, Inc. All rights reserved.
 # Permission to modify and use for internal purposes granted.
 # This software is provided "as is", without warranty, express or implied.
 ##############################################################################
+"""Read a sample and write a new one."""
 
 from sys import path as sysPath
 from os import path as osPath
