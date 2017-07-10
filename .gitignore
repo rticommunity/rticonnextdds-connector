@@ -58,3 +58,5 @@ node_modules/
 *.userprefs
 csharp/packages
 obj/
+StyleCopViolations.xml
+gendarme_report.html

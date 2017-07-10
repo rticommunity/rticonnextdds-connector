@@ -1,0 +1,7 @@
+R: Gendarme.Rules.Naming.AvoidNonAlphanumericIdentifierRule
+# The assembly needs an underscore to have a difference name with the C library
+A: librtiddsconnector_dotnet
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+# I allow this to happen only for constructors
+A: librtiddsconnector_dotnet

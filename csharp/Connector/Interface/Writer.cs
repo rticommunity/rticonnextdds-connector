@@ -11,7 +11,7 @@ namespace RTI.Connector.Interface
     using System.Runtime.InteropServices;
     using System.Security;
 
-    sealed class Writer
+    sealed class Writer : IDisposable
     {
         readonly WriterPtr handle;
 
@@ -20,6 +20,11 @@ namespace RTI.Connector.Interface
             Connector = connector;
             EntityName = entityName;
             handle = new WriterPtr(connector, entityName);
+        }
+
+        ~Writer()
+        {
+            Dispose(false);
         }
 
         public Connector Connector {
@@ -32,9 +37,44 @@ namespace RTI.Connector.Interface
             private set;
         }
 
+        public bool Disposed {
+            get;
+            private set;
+        }
+
         public void Write()
         {
             SafeNativeMethods.RTIDDSConnector_write(Connector.Handle, EntityName);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        void Dispose(bool freeManagedResources)
+        {
+            if (Disposed)
+                return;
+
+            Disposed = true;
+            if (freeManagedResources && !handle.IsInvalid)
+                handle.Dispose();
+        }
+
+        [SuppressUnmanagedCodeSecurity]
+        static class SafeNativeMethods
+        {
+            [DllImport("rtiddsconnector", CharSet = CharSet.Auto)]
+            public static extern IntPtr RTIDDSConnector_getWriter(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
+
+            [DllImport("rtiddsconnector", CharSet = CharSet.Auto)]
+            public static extern void RTIDDSConnector_write(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
         }
 
         sealed class WriterPtr : SafeHandle
@@ -53,20 +93,6 @@ namespace RTI.Connector.Interface
             {
                 return true;
             }
-        }
-
-        [SuppressUnmanagedCodeSecurity]
-        static class SafeNativeMethods
-        {
-            [DllImport("rtiddsconnector")]
-            public static extern IntPtr RTIDDSConnector_getWriter(
-                Connector.ConnectorPtr connectorHandle,
-                string entityName);
-
-            [DllImport("rtiddsconnector")]
-            public static extern void RTIDDSConnector_write(
-                Connector.ConnectorPtr connectorHandle,
-                string entityName);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace RTI.Connector.Interface
                 Handle.Dispose();
         }
 
-        sealed internal class ConnectorPtr : SafeHandle
+        internal sealed class ConnectorPtr : SafeHandle
         {
             public ConnectorPtr(string configName, string configFile)
                 : base(IntPtr.Zero, true)
@@ -72,7 +72,7 @@ namespace RTI.Connector.Interface
         [SuppressUnmanagedCodeSecurity]
         static class SafeNativeMethods
         {
-            [DllImport("rtiddsconnector")]
+            [DllImport("rtiddsconnector", CharSet = CharSet.Auto)]
             public static extern IntPtr RTIDDSConnector_new(
                 string configName,
                 string configFile,

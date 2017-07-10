@@ -7,6 +7,8 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    using System;
+
     /// <summary>
     /// Connector sample reader.
     /// </summary>
@@ -19,6 +21,11 @@ namespace RTI.Connector
         /// <param name="entityName">Entity name.</param>
         public Reader(Connector connector, string entityName)
         {
+            if (connector == null)
+                throw new ArgumentNullException(nameof(connector));
+            if (string.IsNullOrEmpty(entityName))
+                throw new ArgumentNullException(nameof(entityName));
+
             Name = entityName;
             InternalReader = new Interface.Reader(
                 connector.InternalConnector,
@@ -81,6 +88,9 @@ namespace RTI.Connector
         /// <param name="timeoutMillis">Timeout in milliseconds.</param>
         public void WaitForSamples(int timeoutMillis)
         {
+            if (timeoutMillis < 0)
+                throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
+
             InternalReader.WaitForSamples(timeoutMillis);
         }
     }
