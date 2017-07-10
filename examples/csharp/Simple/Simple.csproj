@@ -30,8 +30,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="rtiddsconnector_dotnet">
-      <HintPath>..\..\..\csharp\Connector\bin\Debug\rtiddsconnector_dotnet.dll</HintPath>
+    <Reference Include="librtiddsconnector_dotnet">
+      <HintPath>..\..\..\csharp\Connector\bin\Debug\librtiddsconnector_dotnet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

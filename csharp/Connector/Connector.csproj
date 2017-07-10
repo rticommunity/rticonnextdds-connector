@@ -6,7 +6,7 @@
     <ProjectGuid>{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>RTI.Connector</RootNamespace>
-    <AssemblyName>rtiddsconnector_dotnet</AssemblyName>
+    <AssemblyName>librtiddsconnector_dotnet</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
