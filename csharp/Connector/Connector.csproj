@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>RTI.Connector</RootNamespace>
     <AssemblyName>librtiddsconnector_dotnet</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworks>net20;netstandard1.3;netcoreapp1.1</TargetFrameworks>
     <ReleaseVersion>1.0</ReleaseVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,27 +26,6 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Connector.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interface\Connector.cs" />
-    <Compile Include="Writer.cs" />
-    <Compile Include="Interface\Writer.cs" />
-    <Compile Include="Instance.cs" />
-    <Compile Include="Interface\Instance.cs" />
-    <Compile Include="Interface\Reader.cs" />
-    <Compile Include="Reader.cs" />
-    <Compile Include="Sample.cs" />
-    <Compile Include="SampleCollection.cs" />
-    <Compile Include="Interface\Sample.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

@@ -57,7 +57,6 @@ namespace RTI.Connector.Interface
                 field) != 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
         static class SafeNativeMethods
         {
             [DllImport("rtiddsconnector")]
