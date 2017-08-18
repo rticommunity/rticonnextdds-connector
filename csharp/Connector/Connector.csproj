@@ -5,7 +5,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>RTI.Connector</RootNamespace>
     <AssemblyName>librtiddsconnector_dotnet</AssemblyName>
-    <TargetFrameworks>net20;netstandard1.3;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net20;netstandard1.1;netcoreapp1.0</TargetFrameworks>
     <ReleaseVersion>1.0</ReleaseVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
