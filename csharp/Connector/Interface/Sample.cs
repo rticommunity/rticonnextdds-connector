@@ -23,7 +23,7 @@ namespace RTI.Connector.Interface
 
         public int GetNumberFromSample(string field)
         {
-            return (int)SafeNativeMethods.RTIDDSConnector_getNumberFromSamples(
+            return (int)NativeMethods.RTIDDSConnector_getNumberFromSamples(
                 reader.Connector.Handle,
                 reader.EntityName,
                 index,
@@ -32,7 +32,7 @@ namespace RTI.Connector.Interface
 
         public bool GetBoolFromSample(string field)
         {
-            return SafeNativeMethods.RTIDDSConnector_getBooleanFromSamples(
+            return NativeMethods.RTIDDSConnector_getBooleanFromSamples(
                 reader.Connector.Handle,
                 reader.EntityName,
                 index,
@@ -41,7 +41,7 @@ namespace RTI.Connector.Interface
 
         public string GetStringFromSample(string field)
         {
-            return SafeNativeMethods.RTIDDSConnector_getStringFromSamples(
+            return NativeMethods.RTIDDSConnector_getStringFromSamples(
                 reader.Connector.Handle,
                 reader.EntityName,
                 index,
@@ -50,14 +50,14 @@ namespace RTI.Connector.Interface
 
         public bool GetBoolFromInfo(string field)
         {
-            return SafeNativeMethods.RTIDDSConnector_getBooleanFromInfos(
+            return NativeMethods.RTIDDSConnector_getBooleanFromInfos(
                 reader.Connector.Handle,
                 reader.EntityName,
                 index,
                 field) != 0;
         }
 
-        static class SafeNativeMethods
+        static class NativeMethods
         {
             [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern int RTIDDSConnector_getBooleanFromInfos(

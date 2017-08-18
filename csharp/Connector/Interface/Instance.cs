@@ -21,7 +21,7 @@ namespace RTI.Connector.Interface
 
         public void SetNumber(string field, int val)
         {
-            SafeNativeMethods.RTIDDSConnector_setNumberIntoSamples(
+            NativeMethods.RTIDDSConnector_setNumberIntoSamples(
                 writer.Connector.Handle,
                 writer.EntityName,
                 field,
@@ -30,7 +30,7 @@ namespace RTI.Connector.Interface
 
         public void SetBool(string field, bool val)
         {
-            SafeNativeMethods.RTIDDSConnector_setBooleanIntoSamples(
+            NativeMethods.RTIDDSConnector_setBooleanIntoSamples(
                 writer.Connector.Handle,
                 writer.EntityName,
                 field,
@@ -39,7 +39,7 @@ namespace RTI.Connector.Interface
 
         public void SetString(string field, string val)
         {
-            SafeNativeMethods.RTIDDSConnector_setStringIntoSamples(
+            NativeMethods.RTIDDSConnector_setStringIntoSamples(
                 writer.Connector.Handle,
                 writer.EntityName,
                 field,
@@ -48,12 +48,12 @@ namespace RTI.Connector.Interface
 
         public void Clear()
         {
-            SafeNativeMethods.RTIDDSConnector_clear(
+            NativeMethods.RTIDDSConnector_clear(
                 writer.Connector.Handle,
                 writer.EntityName);
         }
 
-        static class SafeNativeMethods
+        static class NativeMethods
         {
             [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern void RTIDDSConnector_setNumberIntoSamples(

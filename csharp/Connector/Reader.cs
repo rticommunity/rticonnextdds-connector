@@ -14,6 +14,8 @@ namespace RTI.Connector
     /// </summary>
     public class Reader
     {
+        readonly Interface.Reader reader;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Reader"/> class.
         /// </summary>
@@ -27,7 +29,7 @@ namespace RTI.Connector
                 throw new ArgumentNullException(nameof(entityName));
 
             Name = entityName;
-            InternalReader = new Interface.Reader(
+            reader = new Interface.Reader(
                 connector.InternalConnector,
                 entityName);
             Samples = new SampleCollection(this);
@@ -52,8 +54,7 @@ namespace RTI.Connector
         }
 
         internal Interface.Reader InternalReader {
-            get;
-            private set;
+            get { return reader; }
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace RTI.Connector
         /// </remarks>
         public void Read()
         {
-            InternalReader.Read();
+            reader.Read();
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace RTI.Connector
         /// </remarks>
         public void Take()
         {
-            InternalReader.Take();
+            reader.Take();
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace RTI.Connector
             if (timeoutMillis < 0)
                 throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
 
-            InternalReader.WaitForSamples(timeoutMillis);
+            reader.WaitForSamples(timeoutMillis);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace RTI.Connector.Interface
     using System.Runtime.InteropServices;
     using System.Security;
 
-    sealed class Reader : IDisposable
+    sealed class Reader
     {
         readonly ReaderPtr handle;
 
@@ -20,11 +20,6 @@ namespace RTI.Connector.Interface
             Connector = connector;
             EntityName = entityName;
             handle = new ReaderPtr(connector, entityName);
-        }
-
-        ~Reader()
-        {
-            Dispose(false);
         }
 
         public Connector Connector {
@@ -37,50 +32,29 @@ namespace RTI.Connector.Interface
             private set;
         }
 
-        public bool Disposed {
-            get;
-            private set;
-        }
-
         public int GetSamplesLength()
         {
-            return (int)SafeNativeMethods.RTIDDSConnector_getSamplesLength(
+            return (int)NativeMethods.RTIDDSConnector_getSamplesLength(
                 Connector.Handle,
                 EntityName);
         }
 
         public void Read()
         {
-            SafeNativeMethods.RTIDDSConnector_read(Connector.Handle, EntityName);
+            NativeMethods.RTIDDSConnector_read(Connector.Handle, EntityName);
         }
 
         public void Take()
         {
-            SafeNativeMethods.RTIDDSConnector_take(Connector.Handle, EntityName);
+            NativeMethods.RTIDDSConnector_take(Connector.Handle, EntityName);
         }
 
         public void WaitForSamples(int timeoutMillis)
         {
-            SafeNativeMethods.RTIDDSConnector_wait(Connector.Handle, timeoutMillis);
+            NativeMethods.RTIDDSConnector_wait(Connector.Handle, timeoutMillis);
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        void Dispose(bool freeManagedResources)
-        {
-            if (Disposed)
-                return;
-
-            Disposed = true;
-            if (freeManagedResources && !handle.IsInvalid)
-                handle.Dispose();
-        }
-
-        static class SafeNativeMethods
+        static class NativeMethods
         {
             [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern IntPtr RTIDDSConnector_getReader(
@@ -113,7 +87,7 @@ namespace RTI.Connector.Interface
             public ReaderPtr(Connector connector, string entityName)
                 : base(IntPtr.Zero, true)
             {
-                handle = SafeNativeMethods.RTIDDSConnector_getReader(
+                handle = NativeMethods.RTIDDSConnector_getReader(
                     connector.Handle,
                     entityName);
             }

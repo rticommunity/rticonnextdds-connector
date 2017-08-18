@@ -11,7 +11,7 @@ namespace RTI.Connector.Interface
     using System.Runtime.InteropServices;
     using System.Security;
 
-    sealed class Writer : IDisposable
+    sealed class Writer
     {
         readonly WriterPtr handle;
 
@@ -20,11 +20,6 @@ namespace RTI.Connector.Interface
             Connector = connector;
             EntityName = entityName;
             handle = new WriterPtr(connector, entityName);
-        }
-
-        ~Writer()
-        {
-            Dispose(false);
         }
 
         public Connector Connector {
@@ -37,33 +32,12 @@ namespace RTI.Connector.Interface
             private set;
         }
 
-        public bool Disposed {
-            get;
-            private set;
-        }
-
         public void Write()
         {
-            SafeNativeMethods.RTIDDSConnector_write(Connector.Handle, EntityName);
+            NativeMethods.RTIDDSConnector_write(Connector.Handle, EntityName);
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        void Dispose(bool freeManagedResources)
-        {
-            if (Disposed)
-                return;
-
-            Disposed = true;
-            if (freeManagedResources && !handle.IsInvalid)
-                handle.Dispose();
-        }
-
-        static class SafeNativeMethods
+        static class NativeMethods
         {
             [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern IntPtr RTIDDSConnector_getWriter(
@@ -81,7 +55,7 @@ namespace RTI.Connector.Interface
             public WriterPtr(Connector connector, string entityName)
                 : base(IntPtr.Zero, true)
             {
-                handle = SafeNativeMethods.RTIDDSConnector_getWriter(
+                handle = NativeMethods.RTIDDSConnector_getWriter(
                     connector.Handle,
                     entityName);
             }

@@ -22,24 +22,6 @@ namespace RTI.Connector
         }
 
         /// <summary>
-        /// Sets a value to the specified field.
-        /// </summary>
-        /// <param name="field">Field name.</param>
-        /// <returns>Set only indexer, doesn't return anything.</returns>
-        public object this[string field] {
-            set {
-                if (value is int)
-                    instance.SetNumber(field, (int)value);
-                else if (value is string)
-                    instance.SetString(field, (string)value);
-                else if (value is bool)
-                    instance.SetBool(field, (bool)value);
-                else
-                    throw new System.FormatException("Unsupported field type");
-            }
-        }
-
-        /// <summary>
         /// Clear all the members of this instance.
         /// </summary>
         public void Clear()

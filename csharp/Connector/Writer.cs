@@ -7,6 +7,8 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    using System;
+
     /// <summary>
     /// Connector sample writer.
     /// </summary>
@@ -22,6 +24,11 @@ namespace RTI.Connector
         /// <param name="entityName">Entity name.</param>
         public Writer(Connector connector, string entityName)
         {
+            if (connector == null)
+                throw new ArgumentNullException(nameof(connector));
+            if (string.IsNullOrEmpty(entityName))
+                throw new ArgumentNullException(nameof(entityName));
+
             this.connector = connector;
             Name = entityName;
             writer = new Interface.Writer(connector.InternalConnector, entityName);

@@ -54,7 +54,7 @@ namespace RTI.Connector.Interface
             public ConnectorPtr(string configName, string configFile)
                 : base(IntPtr.Zero, true)
             {
-                handle = SafeNativeMethods.RTIDDSConnector_new(
+                handle = NativeMethods.RTIDDSConnector_new(
                     configName,
                     configFile,
                     IntPtr.Zero);
@@ -64,14 +64,14 @@ namespace RTI.Connector.Interface
 
             protected override bool ReleaseHandle()
             {
-                SafeNativeMethods.RTIDDSConnector_delete(handle);
+                NativeMethods.RTIDDSConnector_delete(handle);
                 return true;
             }
         }
 
-        static class SafeNativeMethods
+        static class NativeMethods
         {
-            [DllImport("rtiddsconnector")]
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern IntPtr RTIDDSConnector_new(
                 string configName,
                 string configFile,

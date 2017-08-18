@@ -5,3 +5,17 @@ A: librtiddsconnector_dotnet
 R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
 # I allow this to happen only for constructors
 A: librtiddsconnector_dotnet
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+# Implements the Enumerator interface
+M: System.Boolean RTI.Connector.SampleCollection/SampleEnumerator::MoveNext()
+M: System.Void RTI.Connector.SampleCollection/SampleEnumerator::Reset()
+M: System.Void RTI.Connector.SampleCollection/SampleEnumerator::Dispose()
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+# It's an enumerator implementation, expected.
+M: System.Collections.Generic.IEnumerator`1<RTI.Connector.Sample> RTI.Connector.SampleCollection::GetEnumerator()
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+# We should use RTI instead of Rti for consistency with other RTI C# APIs.
+A: librtiddsconnector_dotnet
