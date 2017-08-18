@@ -24,6 +24,11 @@ namespace RTI.Connector
         /// <param name="configFile">XML configuration file path.</param>
         public Connector(string configName, string configFile)
         {
+            if (string.IsNullOrEmpty(configName))
+                throw new ArgumentNullException(nameof(configName));
+            if (string.IsNullOrEmpty(configFile))
+                throw new ArgumentNullException(nameof(configFile));
+
             ConfigName = configName;
             ConfigFile = configFile;
 
@@ -75,7 +80,7 @@ namespace RTI.Connector
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool freeManagedResources)
+        protected virtual void Dispose(bool freeManagedResources)
         {
             if (Disposed)
                 return;

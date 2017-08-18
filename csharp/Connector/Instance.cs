@@ -25,6 +25,7 @@ namespace RTI.Connector
         /// Sets a value to the specified field.
         /// </summary>
         /// <param name="field">Field name.</param>
+        /// <returns>Set only indexer, doesn't return anything.</returns>
         public object this[string field] {
             set {
                 if (value is int)

@@ -49,7 +49,7 @@ namespace RTI.Connector.Interface
                 Handle.Dispose();
         }
 
-        sealed internal class ConnectorPtr : SafeHandle
+        internal sealed class ConnectorPtr : SafeHandle
         {
             public ConnectorPtr(string configName, string configFile)
                 : base(IntPtr.Zero, true)

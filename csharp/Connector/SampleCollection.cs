@@ -43,64 +43,63 @@ namespace RTI.Connector
         {
             return GetEnumerator();
         }
-    }
-
-    /// <summary>
-    /// Sample collection enumerator for a SampleCollection.
-    /// </summary>
-    public class SampleEnumerator : IEnumerator<Sample>
-    {
-        readonly Reader reader;
-        readonly int count;
-        int index;
-
-        internal SampleEnumerator(Reader reader, int count)
-        {
-            this.reader = reader;
-            this.count = count;
-            index = 0;
-        }
 
         /// <summary>
-        /// Gets the current iterating sample.
+        /// Sample collection enumerator for a SampleCollection.
         /// </summary>
-        /// <value>The current sample.</value>
-        public Sample Current => new Sample(reader, index);
-
-        object IEnumerator.Current => Current;
-
-        /// <summary>
-        /// Advances the enumerator to the next element of the collection.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c>, if the enumerator was successfully advanced to the
-        /// next element; <c>false</c> if the enumerator has passed the end of
-        /// the collection.
-        /// </returns>
-        public bool MoveNext()
+        sealed class SampleEnumerator : IEnumerator<Sample>
         {
-            if (index >= count)
-                return false;
+            readonly Reader reader;
+            readonly int count;
+            int index;
 
-            index++;
-            return true;
-        }
+            internal SampleEnumerator(Reader reader, int count)
+            {
+                this.reader = reader;
+                this.count = count;
+            }
 
-        /// <summary>
-        /// Sets the enumerator to its initial position, which is before the
-        /// first element in the collection.
-        /// </summary>
-        public void Reset()
-        {
-            index = 0;
-        }
+            /// <summary>
+            /// Gets the current iterating sample.
+            /// </summary>
+            /// <value>The current sample.</value>
+            public Sample Current => new Sample(reader, index);
 
-        /// <summary>
-        /// Releases all resource used by the
-        /// <see cref="SampleEnumerator"/> object.
-        /// </summary>
-        public void Dispose()
-        {
+            object IEnumerator.Current => Current;
+
+            /// <summary>
+            /// Advances the enumerator to the next element of the collection.
+            /// </summary>
+            /// <returns>
+            /// <c>true</c>, if the enumerator was successfully advanced to the
+            /// next element; <c>false</c> if the enumerator has passed the end
+            /// of the collection.
+            /// </returns>
+            public bool MoveNext()
+            {
+                if (index >= count)
+                    return false;
+
+                index++;
+                return true;
+            }
+
+            /// <summary>
+            /// Sets the enumerator to its initial position, which is before the
+            /// first element in the collection.
+            /// </summary>
+            public void Reset()
+            {
+                index = 0;
+            }
+
+            /// <summary>
+            /// Releases all resource used by the
+            /// <see cref="SampleEnumerator"/> object.
+            /// </summary>
+            public void Dispose()
+            {
+            }
         }
     }
 }

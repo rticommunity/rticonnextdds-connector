@@ -55,28 +55,28 @@ namespace RTI.Connector.Interface
 
         static class SafeNativeMethods
         {
-            [DllImport("rtiddsconnector")]
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern void RTIDDSConnector_setNumberIntoSamples(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
                 string name,
                 double val);
 
-            [DllImport("rtiddsconnector")]
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern void RTIDDSConnector_setBooleanIntoSamples(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
                 string name,
                 int val);
 
-            [DllImport("rtiddsconnector")]
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern void RTIDDSConnector_setStringIntoSamples(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName,
                 string name,
                 string val);
 
-            [DllImport("rtiddsconnector")]
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern void RTIDDSConnector_clear(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName);

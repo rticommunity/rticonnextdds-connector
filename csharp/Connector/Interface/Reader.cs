@@ -11,7 +11,7 @@ namespace RTI.Connector.Interface
     using System.Runtime.InteropServices;
     using System.Security;
 
-    sealed class Reader
+    sealed class Reader : IDisposable
     {
         readonly ReaderPtr handle;
 
@@ -22,12 +22,22 @@ namespace RTI.Connector.Interface
             handle = new ReaderPtr(connector, entityName);
         }
 
+        ~Reader()
+        {
+            Dispose(false);
+        }
+
         public Connector Connector {
             get;
             private set;
         }
 
         public string EntityName {
+            get;
+            private set;
+        }
+
+        public bool Disposed {
             get;
             private set;
         }
@@ -54,6 +64,50 @@ namespace RTI.Connector.Interface
             SafeNativeMethods.RTIDDSConnector_wait(Connector.Handle, timeoutMillis);
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        void Dispose(bool freeManagedResources)
+        {
+            if (Disposed)
+                return;
+
+            Disposed = true;
+            if (freeManagedResources && !handle.IsInvalid)
+                handle.Dispose();
+        }
+
+        static class SafeNativeMethods
+        {
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern IntPtr RTIDDSConnector_getReader(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
+            
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern void RTIDDSConnector_read(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
+
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern void RTIDDSConnector_take(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
+
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern int RTIDDSConnector_wait(
+                Connector.ConnectorPtr connectorHandle,
+                int timeout);
+
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern double RTIDDSConnector_getSamplesLength(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName);
+        }
+
         sealed class ReaderPtr : SafeHandle
         {
             public ReaderPtr(Connector connector, string entityName)
@@ -70,34 +124,6 @@ namespace RTI.Connector.Interface
             {
                 return true;
             }
-        }
-
-        static class SafeNativeMethods
-        {
-            [DllImport("rtiddsconnector")]
-            public static extern IntPtr RTIDDSConnector_getReader(
-                Connector.ConnectorPtr connectorHandle,
-                string entityName);
-            
-            [DllImport("rtiddsconnector")]
-            public static extern void RTIDDSConnector_read(
-                Connector.ConnectorPtr connectorHandle,
-                string entityName);
-
-            [DllImport("rtiddsconnector")]
-            public static extern void RTIDDSConnector_take(
-                Connector.ConnectorPtr connectorHandle,
-                string entityName);
-
-            [DllImport("rtiddsconnector")]
-            public static extern int RTIDDSConnector_wait(
-                Connector.ConnectorPtr connectorHandle,
-                int timeout);
-
-            [DllImport("rtiddsconnector")]
-            public static extern double RTIDDSConnector_getSamplesLength(
-                Connector.ConnectorPtr connectorHandle,
-                string entityName);
         }
     }
 }
