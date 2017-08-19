@@ -11,8 +11,21 @@
  -->
 
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/5.2.3/rti_dds_profiles.xsd"
-     version="5.2.3">
+     xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/5.3.0/rti_dds_profiles.xsd"
+     version="5.3.0">
+
+    <!-- Qos Library -->
+    <qos_library name="QosLibrary">
+        <qos_profile name="DefaultProfile"
+            base_name="BuiltinQosLibExp::Generic.StrictReliable"
+            is_default_qos="true">
+            <participant_qos>
+                <transport_builtin>
+                    <mask>UDPv4 | SHMEM</mask>
+                </transport_builtin>
+            </participant_qos>
+        </qos_profile>
+    </qos_library>
 
     <!-- types -->
     <types>
