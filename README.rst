@@ -1,8 +1,5 @@
-rticonnextdds-connector
-=======================
-
 RTI Connector for Connext DDS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=============================
 
 RTI Connector for Connext DDS is a quick and easy way to access the
 power and functionality of `RTI Connext
@@ -34,6 +31,9 @@ Language Support
    `ctypes <https://docs.python.org/2/library/ctypes.html>`__ to call
    our native functions; of course everything is hidden in a nice Python
    wrapper.
+- **C#/.NET languages**: we use P/Invoke technology to call the native functions.
+   It works with .NET Standard 1.1, .NET Framework 2.0, .NET Core .1.0 and Mono.
+   It's compatible with Windows, Linux and Mac OS X.
 -  **lua**: we have been supporting Lua in our `RTI
    Prototyper <https://community.rti.com/downloads/experimental/rti-prototyper-with-lua>`__
    for a while now. Check more information on our
@@ -84,7 +84,7 @@ What is this git repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is our way to make the connector technology available to you! As of
-today we included Node.js, Python and Lua (through RTI Prototyper) for
+today we included Node.js, Python, C# and Lua (through RTI Prototyper) for
 few architectures.
 
 Also, for Node.js users, we will use this repo for the npm registry.
@@ -105,7 +105,7 @@ at the examples you'll see that is very easy to use our connector.
 
 For an overview of the API in JavaScript check this
 `page <examples/nodejs/README.md>`__. For the Python version visit this
-`one <examples/python/README.md>`__.
+`one <examples/python/README.md>`__.  For the C# version visit this `one <examples/csharp/README.md>`__.
 
 We have documentation on how to access the data sample fields in Section
 6.4 'Data Access API' of the `RTI Prototyper Getting Started

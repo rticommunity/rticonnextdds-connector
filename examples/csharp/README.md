@@ -12,7 +12,7 @@ In this directory you can find 1 set of examples
 
 ### API Overview:
 #### Import the RTI Connector library
-Import the `rti_connext_dds_dotnet.dll` library to start using *Connector*. The API is under the namespace `RTI.Connector`.
+Import the `librtiddsconnector_dotnet.dll` library to start using *Connector*. The API is under the namespace `RTI.Connector`.
 
 #### Instantiate a new Connector
 To create a new *Connector* you have to pass the path to an XML file and a configuration name. For more information on
@@ -24,7 +24,7 @@ Connector = connector = new Connector("MyParticipantLibrary::Zero", "ShapeExampl
 ```
 
 #### Delete a Connector
-To destroy all the DDS entities that belong to a *Connector* previously created, you can call the `dispose` method. Another option is to use the `using` statement. This is a safer approach since in case of exception it guarantees that the object will be disposed.
+To destroy all the DDS entities that belong to a *Connector* previously created, you can call the `Dispose` method. Another option is to use the `using` statement. This is a safer approach since in case of exception it guarantees that the object will be disposed.
 
 ```csharp
 using (Connector connector = new Connector(configName, configPath)) {
@@ -49,9 +49,6 @@ Instance instance = writer.Instance;
 instance.Set("x", 1);
 instance.Set("color", "BLUE");
 instance.Set("flag", true);
-
-// Another option is to use the indexer and the type is inferred
-instance["y"] = 1;
 ```
 
 and finally, we can write the instance:
@@ -67,7 +64,7 @@ To read samples we need to get the *Reader* defined in the configuration.
 Reader reader = new Reader(connector, "MySubscriber::MySquareReader");
 ```
 
-Then we can call retreive the samples by calling the `Read` or `Take` methods. The former will keep the samples in the internal queue and the latter will remove them.
+Then we can retrieve the samples by calling the `Read` or `Take` methods. The former will keep the samples in the internal queue and the latter will remove them.
 
 To access to the samples we can use the `Samples` property from the *Reader*. This is an `IEnumerable<Sample>` type so we can iterate over them.
 
