@@ -19,13 +19,11 @@ The RTI Connector library is provided in binary form for selected architectures.
 ### Language Support
 
  * **nodejs/javascript**: we use [libffi](https://github.com/node-ffi/node-ffi) to call our library, but we try to hide
-that from you using a nice JavaScript wrapper.
- * **python**: here we use [ctypes](https://docs.python.org/2/library/ctypes.html) to call our native functions; of course everything is hidden in a nice Python wrapper.
- * **lua**: we have been supporting Lua in our [RTI Prototyper](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua) for a while now.
-Check more information on our [blog](http://blogs.rti.com/tag/lua/) or on the [Getting Started Guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_Prototyper_GettingStarted.pdf). Also, stay tuned: a version that can be used directly with the standard Lua interprerter is coming...
- * **C**: for the native code lovers, we have header files so you can call the
-RTI Connector API directly in your C app; that's how the RTI Prototyper is
-implemented. Just not ready to release yet...
+that from you using a nice JavaScript wrapper. We tested with node v8.7.0; it should work also with lower versions.
+ * **python**: here we use [ctypes](https://docs.python.org/2/library/ctypes.html) to call our native functions; of course everything is hidden in a nice Python wrapper. We tested with both python 2.7.14 and python 3.6.3
+ * **lua**: (lua version 5.1) we have been supporting Lua in our [RTI Prototyper](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua) for a while now.
+Check more information on our [blog](http://blogs.rti.com/tag/lua/) or on the [Getting Started Guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_Prototyper_GettingStarted.pdf). Also, stay tuned: a version that can be used directly with the standard Lua interpreter is coming...
+ * **C**: for the native code lovers, we have header files so you can call the RTI Connector API directly in your C app; that's how the RTI Prototyper is implemented. The lua version used is 5.1
 
 ### Platform support
 We are building our library for few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture.
