@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{DECC7DF0-FE72-4549-8FA6-C0897FC4E5E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>RTI.Connector</RootNamespace>
     <AssemblyName>librtiddsconnector_dotnet</AssemblyName>
-    <TargetFrameworks>net20;netstandard1.1;netcoreapp1.0</TargetFrameworks>
+    <TargetFrameworks>net35;netstandard1.1;netcoreapp1.0</TargetFrameworks>
     <ReleaseVersion>1.0</ReleaseVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
@@ -26,13 +25,4 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <StandardHeader IncludeInNewFiles="True" Text="(c) Copyright, Real-Time Innovations, ${Year}.&#xA;All rights reserved.&#xA;&#xA;No duplications, whole or partial, manual or electronic, may be made&#xA;without express written permission.  Any such copies, or&#xA;revisions thereof, must display this notice unaltered.&#xA;This code contains trade secrets of Real-Time Innovations, Inc." />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
 </Project>
