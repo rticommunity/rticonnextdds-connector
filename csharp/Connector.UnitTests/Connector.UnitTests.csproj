@@ -32,4 +32,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Connector\Connector.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="TestConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
