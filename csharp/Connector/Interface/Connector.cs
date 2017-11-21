@@ -9,13 +9,14 @@ namespace RTI.Connector.Interface
 {
     using System;
     using System.Runtime.InteropServices;
-    using System.Security;
 
     sealed class Connector : IDisposable
     {
         public Connector(string configName, string configFile)
         {
             Handle = new ConnectorPtr(configName, configFile);
+            if (Handle.IsInvalid)
+                throw new COMException("Error creating connector");
         }
 
         ~Connector()

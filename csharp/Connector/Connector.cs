@@ -8,7 +8,6 @@
 namespace RTI.Connector
 {
     using System;
-    using System.IO;
 
     /// <summary>
     /// RTI Connext DDS Connector.

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>RTI.Connector.UnitTests</RootNamespace>
+    <AssemblyName>librtiddsconnector_dotnet.UnitTests</AssemblyName>
+    <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework" />
+  </ItemGroup>
+  <ItemGroup>
+      <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
+      <PackageReference Include="NUnit" Version="3.9.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Connector\Connector.csproj" />
+  </ItemGroup>
+</Project>
