@@ -33,6 +33,7 @@ nosetests.xml
 coverage.xml
 testrunner
 TestResult.xml
+coverage-report
 
 # Translations
 *.mo
