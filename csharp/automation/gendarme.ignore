@@ -19,3 +19,7 @@ M: System.Collections.Generic.IEnumerator`1<RTI.Connector.Sample> RTI.Connector.
 R: Gendarme.Rules.Naming.UseCorrectCasingRule
 # We should use RTI instead of Rti for consistency with other RTI C# APIs.
 A: librtiddsconnector_dotnet
+
+R: Gendarme.Rules.Correctness.DisposableFieldsShouldBeDisposedRule
+# Write doesn't own connector object so it shouldn't dispose it.
+T: RTI.Connector.Writer

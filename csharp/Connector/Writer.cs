@@ -12,7 +12,7 @@ namespace RTI.Connector
     /// <summary>
     /// Connector sample writer.
     /// </summary>
-    public class Writer
+    public class Writer : IDisposable
     {
         readonly Connector connector;
         readonly Interface.Writer writer;
@@ -53,6 +53,15 @@ namespace RTI.Connector
             private set;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Writer"/> is disposed.
+        /// </summary>
+        /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
+        public bool Disposed {
+            get;
+            private set;
+        }
+
         internal Interface.Writer InternalWriter {
             get { return writer; }
         }
@@ -62,7 +71,34 @@ namespace RTI.Connector
         /// </summary>
         public void Write()
         {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Writer));
+            if (connector.Disposed)
+                throw new ObjectDisposedException(nameof(connector));
+
             writer.Write();
+        }
+
+        /// <summary>
+        /// Releases all resource used by the <see cref="Writer"/> object.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method doesn't delete the DataWriter.
+        /// </remarks>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool freeManagedResources)
+        {
+            if (Disposed)
+                return;
+
+            Disposed = true;
+            if (freeManagedResources)
+                writer.Dispose();
         }
     }
 }

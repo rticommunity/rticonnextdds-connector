@@ -24,11 +24,6 @@ namespace RTI.Connector.Interface
             Dispose(false);
         }
 
-        public bool Disposed {
-            get;
-            private set;
-        }
-
         public ConnectorPtr Handle {
             get;
             private set;
@@ -42,10 +37,6 @@ namespace RTI.Connector.Interface
 
         void Dispose(bool freeManagedResources)
         {
-            if (Disposed)
-                return;
-
-            Disposed = true;
             if (freeManagedResources && !Handle.IsInvalid)
                 Handle.Dispose();
         }
@@ -66,6 +57,7 @@ namespace RTI.Connector.Interface
             protected override bool ReleaseHandle()
             {
                 NativeMethods.RTIDDSConnector_delete(handle);
+                handle = IntPtr.Zero;
                 return true;
             }
         }

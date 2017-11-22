@@ -40,6 +40,15 @@ namespace RTI.Connector.UnitTests
         }
 
         [Test]
+        public void ConstructorWithInvalidConfigNameThrowsException()
+        {
+            Assert.Throws<COMException>(
+                () => new Connector("InvalidLib::PartPub", TestResources.ConfigPath));
+            Assert.Throws<COMException>(
+                () => new Connector("PartLib::InvalidPart", TestResources.ConfigPath));
+        }
+
+        [Test]
         public void ConstructorWithValidConfigIsSuccessful()
         {
             Connector connector = null;
@@ -62,7 +71,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void ConstructorSetsProperties()
         {
-            using (var connector = CreateConnector()) {
+            using (var connector = TestResources.CreatePublisherConnector()) {
                 Assert.AreEqual(TestResources.PublisherConfig, connector.ConfigName);
                 Assert.AreEqual(TestResources.ConfigPath, connector.ConfigFile);
             }
@@ -71,7 +80,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void DisposeChangesProperty()
         {
-            Connector connector = CreateConnector();
+            Connector connector = TestResources.CreatePublisherConnector();
             Assert.IsFalse(connector.Disposed);
             connector.Dispose();
             Assert.IsTrue(connector.Disposed);
@@ -80,17 +89,10 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void DisposingTwiceDoesNotThrowException()
         {
-            Connector connector = CreateConnector();
+            Connector connector = TestResources.CreatePublisherConnector();
             connector.Dispose();
             Assert.DoesNotThrow(connector.Dispose);
             Assert.IsTrue(connector.Disposed);
-        }
-
-        Connector CreateConnector()
-        {
-            return new Connector(
-                TestResources.PublisherConfig,
-                TestResources.ConfigPath);
         }
     }
 }

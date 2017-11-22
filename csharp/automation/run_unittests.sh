@@ -1,9 +1,5 @@
 #!/bin/bash
 ROOT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
-
-msbuild /v:minimal "${ROOT_DIR}"/Connector.sln
-if [ $? -ne 0 ] ; then exit 3; fi
-
 export LD_LIBRARY_PATH=${ROOT_DIR}/../lib/x64Linux2.6gcc4.4.5
 
 # First for mono / .net framework
