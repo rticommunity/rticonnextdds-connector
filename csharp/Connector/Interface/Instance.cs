@@ -8,7 +8,6 @@
 namespace RTI.Connector.Interface
 {
     using System.Runtime.InteropServices;
-    using System.Security;
 
     sealed class Instance
     {

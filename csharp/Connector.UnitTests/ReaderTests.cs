@@ -152,6 +152,31 @@ namespace RTI.Connector.UnitTests
                 () => reader.WaitForSamples(-10));
         }
 
+        // These tests may block indefinitely so we need the timeout but it's
+        // not available in the NUnit .NET Core version:
+        // https://github.com/nunit/nunit/issues/1638
+#if NET45
+        [Test, Timeout(1000)]
+        public void WaitForSamplesWithZeroTimeOutDoesNotBlock()
+        {
+            Reader reader = new Reader(connector, TestResources.ReaderName);
+            Stopwatch watch = Stopwatch.StartNew();
+            reader.WaitForSamples(0);
+            watch.Stop();
+            Assert.Less(watch.ElapsedMilliseconds, 10);
+        }
+
+        [Test, Timeout(1000)]
+        public void WaitForSamplesCanTimeOut()
+        {
+            Reader reader = new Reader(connector, TestResources.ReaderName);
+            Stopwatch watch = Stopwatch.StartNew();
+            reader.WaitForSamples(100);
+            watch.Stop();
+            Assert.Less(watch.ElapsedMilliseconds, 110);
+        }
+#endif
+
         [Test]
         public void WaitForSamplesAfterDisposeThrowsException()
         {

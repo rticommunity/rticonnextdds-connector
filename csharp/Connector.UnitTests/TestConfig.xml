@@ -36,35 +36,64 @@
         <struct name="ShapeTypeExtended" baseType="ShapeType" extensibility="extensible">
             <member name="fillKind" id="4" type="nonBasic" nonBasicTypeName="ShapeFillKind"/>
             <member name="angle" id="5" type="float"/>
+            <member name="hidden" id="6" type="boolean"/>
         </struct>
     </types>
 
     <!-- Domain Library -->
     <domain_library name="DomainLib">
         <domain name="Domain" domain_id="0">
-            <register_type name="ShapeType" type_ref="ShapeType" />
-            <topic name="Square" register_type_ref="ShapeType"/>
+            <register_type name="ShapeTypeExtended" type_ref="ShapeTypeExtended" />
+            <topic name="Square" register_type_ref="ShapeTypeExtended"/>
         </domain>
     </domain_library>
 
     <!-- Participant library -->
     <domain_participant_library name="PartLib">
+
         <domain_participant name="PartPub" domain_ref="DomainLib::Domain">
             <!-- Reduces the participant shutdown time -->
             <participant_qos>
                 <database>
                     <shutdown_cleanup_period>
                         <sec>0</sec>
-                        <nanosec>10000000</nanosec>
+                        <nanosec>0</nanosec>
                     </shutdown_cleanup_period>
                 </database>
             </participant_qos>
-
             <publisher name="MyPublisher">
                 <data_writer name="MySquareWriter" topic_ref="Square" />
             </publisher>
         </domain_participant>
+
         <domain_participant name="PartSub" domain_ref="DomainLib::Domain">
+            <!-- Reduces the participant shutdown time -->
+            <participant_qos>
+                <database>
+                    <shutdown_cleanup_period>
+                        <sec>0</sec>
+                        <nanosec>0</nanosec>
+                    </shutdown_cleanup_period>
+                </database>
+            </participant_qos>
+            <subscriber name="MySubscriber">
+                <data_reader name="MySquareReader" topic_ref="Square" />
+            </subscriber>
+        </domain_participant>
+
+        <domain_participant name="PartPubSub" domain_ref="DomainLib::Domain">
+            <!-- Reduces the participant shutdown time -->
+            <participant_qos>
+                <database>
+                    <shutdown_cleanup_period>
+                        <sec>0</sec>
+                        <nanosec>0</nanosec>
+                    </shutdown_cleanup_period>
+                </database>
+            </participant_qos>
+            <publisher name="MyPublisher">
+                <data_writer name="MySquareWriter" topic_ref="Square" />
+            </publisher>
             <subscriber name="MySubscriber">
                 <data_reader name="MySquareReader" topic_ref="Square" />
             </subscriber>
