@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Mixed</RootNamespace>
     <AssemblyName>Mixed</AssemblyName>
-    <TargetFrameworks>net20;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net35;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
     <ReleaseVersion>1.0</ReleaseVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
