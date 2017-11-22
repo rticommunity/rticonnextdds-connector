@@ -7,6 +7,7 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    using System;
     using System.Globalization;
     
     /// <summary>
@@ -80,9 +81,9 @@ namespace RTI.Connector
             else if (typeof(T) == typeof(string))
                 val = GetString(field);
             else
-                throw new System.FormatException("Unsupported field type");
+                throw new FormatException("Unsupported field type");
 
-            return (T)System.Convert.ChangeType(
+            return (T)Convert.ChangeType(
                 val,
                 typeof(T),
                 CultureInfo.InvariantCulture);

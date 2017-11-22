@@ -32,7 +32,7 @@ namespace RTI.Connector.UnitTests
         }
 
         [Test]
-        public void SetNonExistingFieldsDoNotThrowsException()
+        public void SetNonExistingFieldsDoNotThrowException()
         {
             // You will see warning messages on the console instead
             Assert.DoesNotThrow(() => instance.Set("fakeInt", 3));

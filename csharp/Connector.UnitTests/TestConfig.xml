@@ -53,7 +53,7 @@
 
         <domain_participant name="PartPub" domain_ref="DomainLib::Domain">
             <!-- Reduces the participant shutdown time -->
-            <participant_qos>
+            <participant_qos base_name="BuiltinQosLibExp::Generic.StrictReliable">
                 <database>
                     <shutdown_cleanup_period>
                         <sec>0</sec>
@@ -62,13 +62,15 @@
                 </database>
             </participant_qos>
             <publisher name="MyPublisher">
-                <data_writer name="MySquareWriter" topic_ref="Square" />
+                <data_writer name="MySquareWriter" topic_ref="Square">
+                    <datawriter_qos base_name="BuiltinQosLibExp::Generic.StrictReliable" />
+                </data_writer>
             </publisher>
         </domain_participant>
 
         <domain_participant name="PartSub" domain_ref="DomainLib::Domain">
             <!-- Reduces the participant shutdown time -->
-            <participant_qos>
+            <participant_qos base_name="BuiltinQosLibExp::Generic.StrictReliable">
                 <database>
                     <shutdown_cleanup_period>
                         <sec>0</sec>
@@ -77,13 +79,15 @@
                 </database>
             </participant_qos>
             <subscriber name="MySubscriber">
-                <data_reader name="MySquareReader" topic_ref="Square" />
+                <data_reader name="MySquareReader" topic_ref="Square" >
+                    <datareader_qos base_name="BuiltinQosLibExp::Generic.StrictReliable" />
+                </data_reader>
             </subscriber>
         </domain_participant>
 
         <domain_participant name="PartPubSub" domain_ref="DomainLib::Domain">
             <!-- Reduces the participant shutdown time -->
-            <participant_qos>
+            <participant_qos base_name="BuiltinQosLibExp::Generic.StrictReliable">
                 <database>
                     <shutdown_cleanup_period>
                         <sec>0</sec>
@@ -92,10 +96,13 @@
                 </database>
             </participant_qos>
             <publisher name="MyPublisher">
-                <data_writer name="MySquareWriter" topic_ref="Square" />
-            </publisher>
+                <data_writer name="MySquareWriter" topic_ref="Square">
+                    <datawriter_qos base_name="BuiltinQosLibExp::Generic.StrictReliable" />
+                </data_writer>            </publisher>
             <subscriber name="MySubscriber">
-                <data_reader name="MySquareReader" topic_ref="Square" />
+                <data_reader name="MySquareReader" topic_ref="Square" >
+                    <datareader_qos base_name="BuiltinQosLibExp::Generic.StrictReliable" />
+                </data_reader>
             </subscriber>
         </domain_participant>
     </domain_participant_library>
