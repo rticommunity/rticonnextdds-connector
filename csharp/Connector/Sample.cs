@@ -7,6 +7,8 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    using System.Globalization;
+    
     /// <summary>
     /// Sample read with a <see cref="Reader"/>.
     /// </summary>
@@ -80,7 +82,10 @@ namespace RTI.Connector
             else
                 throw new System.FormatException("Unsupported field type");
 
-            return (T)System.Convert.ChangeType(val, typeof(T));
+            return (T)System.Convert.ChangeType(
+                val,
+                typeof(T),
+                CultureInfo.InvariantCulture);
         }
     }
 }

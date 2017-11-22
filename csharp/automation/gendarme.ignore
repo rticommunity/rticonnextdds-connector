@@ -21,5 +21,5 @@ R: Gendarme.Rules.Naming.UseCorrectCasingRule
 A: librtiddsconnector_dotnet
 
 R: Gendarme.Rules.Correctness.DisposableFieldsShouldBeDisposedRule
-# Write doesn't own connector object so it shouldn't dispose it.
-T: RTI.Connector.Writer
+# SampleCollection doesn't own Reader object so it shouldn't dispose it.
+T: RTI.Connector.SampleCollection/SampleEnumerator

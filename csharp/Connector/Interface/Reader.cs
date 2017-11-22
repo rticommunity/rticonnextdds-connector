@@ -9,9 +9,8 @@ namespace RTI.Connector.Interface
 {
     using System;
     using System.Runtime.InteropServices;
-    using System.Security;
 
-    sealed class Reader
+    sealed class Reader : IDisposable
     {
         readonly ReaderPtr handle;
 
@@ -52,6 +51,18 @@ namespace RTI.Connector.Interface
         public void WaitForSamples(int timeoutMillis)
         {
             NativeMethods.RTIDDSConnector_wait(Connector.Handle, timeoutMillis);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        void Dispose(bool freeManagedResources)
+        {
+            if (freeManagedResources && !handle.IsInvalid)
+                handle.Dispose();
         }
 
         static class NativeMethods

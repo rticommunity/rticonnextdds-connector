@@ -14,7 +14,6 @@ namespace RTI.Connector
     /// </summary>
     public class Writer : IDisposable
     {
-        readonly Connector connector;
         readonly Interface.Writer writer;
 
         /// <summary>
@@ -29,7 +28,6 @@ namespace RTI.Connector
             if (string.IsNullOrEmpty(entityName))
                 throw new ArgumentNullException(nameof(entityName));
 
-            this.connector = connector;
             Name = entityName;
             writer = new Interface.Writer(connector.InternalConnector, entityName);
             Instance = new Instance(this);
@@ -73,8 +71,6 @@ namespace RTI.Connector
         {
             if (Disposed)
                 throw new ObjectDisposedException(nameof(Writer));
-            if (connector.Disposed)
-                throw new ObjectDisposedException(nameof(connector));
 
             writer.Write();
         }

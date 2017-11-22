@@ -29,6 +29,11 @@ namespace RTI.Connector.Interface
             private set;
         }
 
+        public bool Disposed {
+            get;
+            private set;
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -37,6 +42,7 @@ namespace RTI.Connector.Interface
 
         void Dispose(bool freeManagedResources)
         {
+            Disposed = true;
             if (freeManagedResources && !Handle.IsInvalid)
                 Handle.Dispose();
         }

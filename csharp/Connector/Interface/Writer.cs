@@ -40,6 +40,9 @@ namespace RTI.Connector.Interface
 
         public void Write()
         {
+            if (Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_write(Connector.Handle, EntityName);
         }
 

@@ -12,7 +12,7 @@ namespace RTI.Connector
     /// <summary>
     /// Connector sample reader.
     /// </summary>
-    public class Reader
+    public class Reader : IDisposable
     {
         readonly Interface.Reader reader;
 
@@ -53,6 +53,15 @@ namespace RTI.Connector
             private set;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Reader"/> is disposed.
+        /// </summary>
+        /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
+        public bool Disposed {
+            get;
+            private set;
+        }
+
         internal Interface.Reader InternalReader {
             get { return reader; }
         }
@@ -67,6 +76,9 @@ namespace RTI.Connector
         /// </remarks>
         public void Read()
         {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Reader));
+
             reader.Read();
         }
 
@@ -80,6 +92,9 @@ namespace RTI.Connector
         /// </remarks>
         public void Take()
         {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Reader));
+
             reader.Take();
         }
 
@@ -89,10 +104,34 @@ namespace RTI.Connector
         /// <param name="timeoutMillis">Timeout in milliseconds.</param>
         public void WaitForSamples(int timeoutMillis)
         {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Reader));
             if (timeoutMillis < 0)
                 throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
 
             reader.WaitForSamples(timeoutMillis);
+        }
+
+        /// <summary>
+        /// Releases all resource used by the <see cref="Reader"/> object.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method doesn't delete the DataWriter.
+        /// </remarks>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool freeManagedResources)
+        {
+            if (Disposed)
+                return;
+
+            Disposed = true;
+            if (freeManagedResources)
+                reader.Dispose();
         }
     }
 }
