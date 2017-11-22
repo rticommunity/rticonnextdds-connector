@@ -101,12 +101,15 @@ namespace RTI.Connector
         /// <summary>
         /// Waits until a sample is received or the specified time passed.
         /// </summary>
-        /// <param name="timeoutMillis">Timeout in milliseconds.</param>
+        /// <param name="timeoutMillis">
+        /// Timeout in milliseconds.
+        /// Use -1 to wait indefinitely for samples.
+        /// </param>
         public void WaitForSamples(int timeoutMillis)
         {
             if (Disposed)
                 throw new ObjectDisposedException(nameof(Reader));
-            if (timeoutMillis < 0)
+            if (timeoutMillis < -1)
                 throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
 
             reader.WaitForSamples(timeoutMillis);

@@ -19,6 +19,8 @@ namespace RTI.Connector.Interface
             Connector = connector;
             EntityName = entityName;
             handle = new ReaderPtr(connector, entityName);
+            if (handle.IsInvalid)
+                throw new COMException("Error creating reader");
         }
 
         public Connector Connector {
@@ -40,16 +42,25 @@ namespace RTI.Connector.Interface
 
         public void Read()
         {
+            if (Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_read(Connector.Handle, EntityName);
         }
 
         public void Take()
         {
+            if (Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_take(Connector.Handle, EntityName);
         }
 
         public void WaitForSamples(int timeoutMillis)
         {
+            if (Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_wait(Connector.Handle, timeoutMillis);
         }
 
