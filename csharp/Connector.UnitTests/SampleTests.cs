@@ -386,6 +386,99 @@ namespace RTI.Connector.UnitTests
             Assert.Throws<ObjectDisposedException>(() => sample.GetAs<MyStructType>());
         }
 
+        [Test]
+        public void SetInstanceFieldDoesNotCleanJsonObj()
+        {
+            writer.Instance.Set("shapesize", 10);
+            MyClassType obj = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+            writer.Instance.SetFrom(obj);
+            writer.Instance.Set("x", 5);
+            writer.Instance.Set("y", 4);
+            writer.Write();
+
+            Assert.IsTrue(connector.WaitForSamples(1000));
+            reader.Take();
+            Sample sample = samples.Single();
+
+            Assert.AreEqual("test", sample.Get<string>("color"));
+            Assert.AreEqual(5, sample.Get<int>("x"));
+            Assert.AreEqual(true, sample.Get<bool>("hidden"));
+            Assert.AreEqual(4, sample.Get<int>("y"));
+            Assert.AreEqual(10, sample.Get<int>("shapesize"));
+        }
+
+        [Test]
+        public void SetJsonObjDoesNotResetInstance()
+        {
+            writer.Instance.Set("shapesize", 10);
+            writer.Instance.Set("x", 5);
+            writer.Instance.Set("y", 4);
+            MyClassType obj = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+            writer.Instance.SetFrom(obj);
+            writer.Write();
+
+            Assert.IsTrue(connector.WaitForSamples(1000));
+            reader.Take();
+            Sample sample = samples.Single();
+
+            Assert.AreEqual("test", sample.Get<string>("color"));
+            Assert.AreEqual(3, sample.Get<int>("x"));
+            Assert.AreEqual(true, sample.Get<bool>("hidden"));
+            Assert.AreEqual(4, sample.Get<int>("y"));
+            Assert.AreEqual(10, sample.Get<int>("shapesize"));
+        }
+
+        [Test]
+        public void SendObjectFromWrite()
+        {
+            MyClassType obj = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+
+            writer.Write(obj);
+            Assert.IsTrue(connector.WaitForSamples(1000));
+            reader.Take();
+            Sample sample = samples.Single();
+
+            Assert.AreEqual("test", sample.Get<string>("color"));
+            Assert.AreEqual(3, sample.Get<int>("x"));
+            Assert.AreEqual(true, sample.Get<bool>("hidden"));
+        }
+
+        [Test]
+        public void SendObjectFromWriteCleansDefaultInstance()
+        {
+            writer.Instance.Set("shapesize", 10);
+            writer.Instance.Set("x", 5);
+            writer.Instance.Set("y", 4);
+            MyClassType obj = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+
+            writer.Write(obj);
+            Assert.IsTrue(connector.WaitForSamples(1000));
+            reader.Take();
+            Sample sample = samples.Single();
+
+            Assert.AreEqual("test", sample.Get<string>("color"));
+            Assert.AreEqual(3, sample.Get<int>("x"));
+            Assert.AreEqual(true, sample.Get<bool>("hidden"));
+            Assert.AreEqual(0, sample.Get<int>("y"));
+            Assert.AreEqual(0, sample.Get<int>("shapesize"));
+        }
+
         // This is just for coverage, all IEnumerable<T> implementations
         // have also the non-generic version, we are testing it here:
         // Helper extension method
@@ -412,7 +505,7 @@ namespace RTI.Connector.UnitTests
 
         void SendAndTakeOrReadObjectSample(object obj, bool take)
         {
-            writer.Instance.Set(obj);
+            writer.Instance.SetFrom(obj);
             writer.Write();
 
             Assert.IsTrue(connector.WaitForSamples(1000));

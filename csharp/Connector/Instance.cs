@@ -62,10 +62,10 @@ namespace RTI.Connector
         }
 
         /// <summary>
-        /// Set instance fields from the object serialized as JSON.
+        /// Set instance fields from the object.
         /// </summary>
         /// <param name="obj">Object to serialize as json for the instance.</param>
-        public void Set(object obj)
+        public void SetFrom(object obj)
         {
             instance.SetJson(JsonConvert.SerializeObject(obj));
         }

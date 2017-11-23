@@ -117,7 +117,7 @@ namespace RTI.Connector.UnitTests
             Assert.Throws<ObjectDisposedException>(() => instance.Set("x", 3));
             Assert.Throws<ObjectDisposedException>(() => instance.Set("color", "BLUE"));
             Assert.Throws<ObjectDisposedException>(() => instance.Set("hidden", false));
-            Assert.Throws<ObjectDisposedException>(() => instance.Set(sample));
+            Assert.Throws<ObjectDisposedException>(() => instance.SetFrom(sample));
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace RTI.Connector.UnitTests
                 x = 3,
                 hidden = true
             };
-            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(() => instance.SetFrom(sample));
             Assert.DoesNotThrow(writer.Write);
         }
 
@@ -147,7 +147,7 @@ namespace RTI.Connector.UnitTests
                 x = 3,
                 hidden = true
             };
-            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(() => instance.SetFrom(sample));
             Assert.DoesNotThrow(writer.Write);
         }
 
@@ -159,7 +159,7 @@ namespace RTI.Connector.UnitTests
                 x = 3,
                 hidden = true
             };
-            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(() => instance.SetFrom(sample));
             Assert.DoesNotThrow(writer.Write);
         }
 
@@ -172,7 +172,7 @@ namespace RTI.Connector.UnitTests
                 { "hidden", true }
             };
 
-            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(() => instance.SetFrom(sample));
             Assert.DoesNotThrow(writer.Write);
         }
 
@@ -183,7 +183,7 @@ namespace RTI.Connector.UnitTests
                 color = 4,
                 x = 3.3,
             };
-            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(() => instance.SetFrom(sample));
             Assert.DoesNotThrow(writer.Write);
         }
 
@@ -194,7 +194,7 @@ namespace RTI.Connector.UnitTests
                 color = "test",
                 Fake = 3,
             };
-            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(() => instance.SetFrom(sample));
             Assert.DoesNotThrow(writer.Write);
         }
     }

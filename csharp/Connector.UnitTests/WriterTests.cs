@@ -94,6 +94,32 @@ namespace RTI.Connector.UnitTests
         }
 
         [Test]
+        public void WriteObjAfterDisposeThrowsException()
+        {
+            Writer writer = new Writer(connector, TestResources.WriterName);
+            writer.Dispose();
+            MyClassType obj = new MyClassType { color = "test", x = 3 };
+            Assert.Throws<ObjectDisposedException>(() => writer.Write(obj));
+        }
+
+        [Test]
+        public void WriteObjWithDisposedConnectorThrowsException()
+        {
+            Writer writer = new Writer(connector, TestResources.WriterName);
+            connector.Dispose();
+            MyClassType obj = new MyClassType { color = "test", x = 3 };
+            Assert.Throws<ObjectDisposedException>(() => writer.Write(obj));
+        }
+
+        [Test]
+        public void WriteObjDoesNotThrowException()
+        {
+            Writer writer = new Writer(connector, TestResources.WriterName);
+            MyClassType obj = new MyClassType { color = "test", x = 3 };
+            Assert.DoesNotThrow(() => writer.Write(obj));
+        }
+
+        [Test]
         public void DisposeChangesProperty()
         {
             Writer writer = new Writer(connector, TestResources.WriterName);

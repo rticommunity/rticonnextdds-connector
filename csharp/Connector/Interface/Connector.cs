@@ -38,9 +38,6 @@ namespace RTI.Connector.Interface
 
         public bool WaitForSamples(int timeoutMillis)
         {
-            if (Disposed)
-                throw new ObjectDisposedException(nameof(Connector));
-
             int retcode = NativeMethods.RTIDDSConnector_wait(Handle, timeoutMillis);
             return retcode != RetCodeTimeOut;
         }

@@ -76,6 +76,24 @@ namespace RTI.Connector
         }
 
         /// <summary>
+        /// Write the specified sample.
+        /// </summary>
+        /// <remarks>
+        /// This method cleans the current instance and sets its fields from
+        /// the object in the argument.
+        /// </remarks>
+        /// <param name="sample">Sample to send.</param>
+        public void Write(object sample)
+        {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Writer));
+
+            Instance.Clear();
+            Instance.SetFrom(sample);
+            writer.Write();
+        }
+
+        /// <summary>
         /// Releases all resource used by the <see cref="Writer"/> object.
         /// </summary>
         /// <remarks>
