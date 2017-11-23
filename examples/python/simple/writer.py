@@ -3,21 +3,23 @@
 # Permission to modify and use for internal purposes granted.
 # This software is provided "as is", without warranty, express or implied.
 ##############################################################################
-import sys
-import os
-filepath = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(filepath + "/../../../");
-import time
+"""Samples's writer."""
+
+from sys import path as sysPath
+from os import path as osPath
+from time import sleep
+filepath = osPath.dirname(osPath.realpath(__file__))
+sysPath.append(filepath + "/../../../")
 import rticonnextdds_connector as rti
 
-connector = rti.Connector("MyParticipantLibrary::Zero", filepath + "/../ShapeExample.xml");
-output    = connector.getOutput("MyPublisher::MySquareWriter")
+connector = rti.Connector("MyParticipantLibrary::Zero",
+                          filepath + "/../ShapeExample.xml")
+outputDDS = connector.getOutput("MyPublisher::MySquareWriter")
 
-for i in range(1,500):
-	output.instance.setNumber("x", i);
-	output.instance.setNumber("y", i*2);
-	output.instance.setNumber("shapesize", 30);
-	output.instance.setString("color", "BLUE");
-	output.write();
-	time.sleep(2)
-
+for i in range(1, 500):
+    outputDDS.instance.setNumber("x", i)
+    outputDDS.instance.setNumber("y", i*2)
+    outputDDS.instance.setNumber("shapesize", 30)
+    outputDDS.instance.setString("color", "BLUE")
+    outputDDS.write()
+    sleep(2)
