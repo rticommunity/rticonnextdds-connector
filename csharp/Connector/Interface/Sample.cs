@@ -7,6 +7,7 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector.Interface
 {
+    using System;
     using System.Runtime.InteropServices;
 
     sealed class Sample
@@ -22,6 +23,9 @@ namespace RTI.Connector.Interface
 
         public int GetNumberFromSample(string field)
         {
+            if (reader.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             return (int)NativeMethods.RTIDDSConnector_getNumberFromSamples(
                 reader.Connector.Handle,
                 reader.EntityName,
@@ -31,6 +35,9 @@ namespace RTI.Connector.Interface
 
         public bool GetBoolFromSample(string field)
         {
+            if (reader.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             return NativeMethods.RTIDDSConnector_getBooleanFromSamples(
                 reader.Connector.Handle,
                 reader.EntityName,
@@ -40,6 +47,9 @@ namespace RTI.Connector.Interface
 
         public string GetStringFromSample(string field)
         {
+            if (reader.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             return NativeMethods.RTIDDSConnector_getStringFromSamples(
                 reader.Connector.Handle,
                 reader.EntityName,
@@ -49,6 +59,9 @@ namespace RTI.Connector.Interface
 
         public string GetJsonFromSample()
         {
+            if (reader.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             return NativeMethods.RTIDDSConnector_getJSONSample(
                 reader.Connector.Handle,
                 reader.EntityName,
@@ -57,6 +70,9 @@ namespace RTI.Connector.Interface
 
         public bool GetBoolFromInfo(string field)
         {
+            if (reader.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             return NativeMethods.RTIDDSConnector_getBooleanFromInfos(
                 reader.Connector.Handle,
                 reader.EntityName,

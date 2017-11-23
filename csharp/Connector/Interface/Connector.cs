@@ -36,7 +36,6 @@ namespace RTI.Connector.Interface
             private set;
         }
 
-
         public bool WaitForSamples(int timeoutMillis)
         {
             if (Disposed)
@@ -90,7 +89,6 @@ namespace RTI.Connector.Interface
 
             [DllImport("rtiddsconnector")]
             public static extern void RTIDDSConnector_delete(IntPtr handle);
-
 
             [DllImport("rtiddsconnector")]
             public static extern int RTIDDSConnector_wait(

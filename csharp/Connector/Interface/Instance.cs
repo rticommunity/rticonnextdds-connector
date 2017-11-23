@@ -7,6 +7,7 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector.Interface
 {
+    using System;
     using System.Runtime.InteropServices;
 
     sealed class Instance
@@ -20,6 +21,9 @@ namespace RTI.Connector.Interface
 
         public void SetNumber(string field, int val)
         {
+            if (writer.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_setNumberIntoSamples(
                 writer.Connector.Handle,
                 writer.EntityName,
@@ -29,6 +33,9 @@ namespace RTI.Connector.Interface
 
         public void SetBool(string field, bool val)
         {
+            if (writer.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_setBooleanIntoSamples(
                 writer.Connector.Handle,
                 writer.EntityName,
@@ -38,6 +45,9 @@ namespace RTI.Connector.Interface
 
         public void SetString(string field, string val)
         {
+            if (writer.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_setStringIntoSamples(
                 writer.Connector.Handle,
                 writer.EntityName,
@@ -47,6 +57,9 @@ namespace RTI.Connector.Interface
 
         public void SetJson(string json)
         {
+            if (writer.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_setJSONInstance(
                 writer.Connector.Handle,
                 writer.EntityName,
@@ -55,6 +68,9 @@ namespace RTI.Connector.Interface
 
         public void Clear()
         {
+            if (writer.Connector.Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
             NativeMethods.RTIDDSConnector_clear(
                 writer.Connector.Handle,
                 writer.EntityName);

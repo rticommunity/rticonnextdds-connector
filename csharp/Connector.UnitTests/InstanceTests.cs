@@ -7,6 +7,7 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector.UnitTests
 {
+    using System;
     using System.Collections.Generic;
     using NUnit.Framework;
 
@@ -104,6 +105,29 @@ namespace RTI.Connector.UnitTests
         }
 
         [Test]
+        public void SetFieldsAfterDisposingConnectorThrowsException()
+        {
+            MyClassType sample = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+
+            connector.Dispose();
+            Assert.Throws<ObjectDisposedException>(() => instance.Set("x", 3));
+            Assert.Throws<ObjectDisposedException>(() => instance.Set("color", "BLUE"));
+            Assert.Throws<ObjectDisposedException>(() => instance.Set("hidden", false));
+            Assert.Throws<ObjectDisposedException>(() => instance.Set(sample));
+        }
+
+        [Test]
+        public void ClearFieldsAfterDisposingConnectorThrowsException()
+        {
+            connector.Dispose();
+            Assert.Throws<ObjectDisposedException>(instance.Clear);
+        }
+
+        [Test]
         public void SetClassObjectWithValidTypesDoesNotThrowException()
         {
             MyClassType sample = new MyClassType {
@@ -144,8 +168,8 @@ namespace RTI.Connector.UnitTests
         {
             var sample = new Dictionary<string, object> {
                 { "color", "test" },
-                { "x", 3},
-                { "hidden", true}
+                { "x", 3 },
+                { "hidden", true }
             };
 
             Assert.DoesNotThrow(() => instance.Set(sample));

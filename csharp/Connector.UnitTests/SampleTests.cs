@@ -61,15 +61,6 @@ namespace RTI.Connector.UnitTests
             Assert.AreEqual(1, count);
         }
 
-        // This is just for coverage, all IEnumerable<T> implementations
-        // have also the non-generic version, we are testing it here:
-        // Helper extension method
-        static IEnumerable NonGenericSampleEnumerable(IEnumerable samples)
-        {
-            foreach (object sample in samples)
-                yield return sample;
-        }
-
         [Test]
         public void ListContainsJustOneSampleWithNormalEnumerator()
         {
@@ -287,8 +278,8 @@ namespace RTI.Connector.UnitTests
         {
             var obj = new Dictionary<string, object> {
                 { "color", "test" },
-                { "x", 3},
-                { "hidden", true}
+                { "x", 3 },
+                { "hidden", true }
             };
 
             SendAndTakeOrReadObjectSample(obj, true);
@@ -335,7 +326,7 @@ namespace RTI.Connector.UnitTests
 
             SendAndTakeOrReadObjectSample(obj, true);
             Sample sample = samples.Single();
-            Assert.Throws<Exception>(
+            Assert.Throws<Newtonsoft.Json.JsonSerializationException>(
                 () => sample.GetAs<MyInvalidClassType>());
         }
 
@@ -357,6 +348,53 @@ namespace RTI.Connector.UnitTests
             Assert.AreEqual(0, received.Fake);
         }
 
+        [Test]
+        public void GetNumberSamplesAfterDisposingConnectorThrowsException()
+        {
+            SendAndTakeOrReadStandardSample(true);
+            connector.Dispose();
+            int count = 0;
+            Assert.Throws<ObjectDisposedException>(() => count = samples.Count);
+            Assert.Throws<ObjectDisposedException>(() => count = samples.Count());
+            Assert.Throws<ObjectDisposedException>(() => samples.Single());
+        }
+
+        [Test]
+        public void GetFieldsAfterDisposingConnectorThrowsException()
+        {
+            SendAndTakeOrReadStandardSample(true);
+            Sample sample = samples.Single();
+            bool validSample = false;
+            connector.Dispose();
+            Assert.Throws<ObjectDisposedException>(() => sample.Get<int>("x"));
+            Assert.Throws<ObjectDisposedException>(() => sample.Get<string>("color"));
+            Assert.Throws<ObjectDisposedException>(() => sample.Get<bool>("hidden"));
+            Assert.Throws<ObjectDisposedException>(() => validSample = sample.IsValid);
+        }
+
+        [Test]
+        public void GetJsonSampleAfterDisposingConnectorThrowsException()
+        {
+            MyClassType obj = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            connector.Dispose();
+            Assert.Throws<ObjectDisposedException>(() => sample.GetAs<MyStructType>());
+        }
+
+        // This is just for coverage, all IEnumerable<T> implementations
+        // have also the non-generic version, we are testing it here:
+        // Helper extension method
+        static IEnumerable NonGenericSampleEnumerable(IEnumerable samples)
+        {
+            foreach (object sample in samples)
+                yield return sample;
+        }
+
         void SendAndTakeOrReadStandardSample(bool take)
         {
             writer.Instance.Set("x", 3);
@@ -365,7 +403,7 @@ namespace RTI.Connector.UnitTests
             writer.Instance.Set("hidden", true);
             writer.Write();
 
-            connector.WaitForSamples(1000);
+            Assert.IsTrue(connector.WaitForSamples(1000));
             if (take)
                 reader.Take();
             else
@@ -377,7 +415,7 @@ namespace RTI.Connector.UnitTests
             writer.Instance.Set(obj);
             writer.Write();
 
-            connector.WaitForSamples(1000);
+            Assert.IsTrue(connector.WaitForSamples(1000));
             if (take)
                 reader.Take();
             else

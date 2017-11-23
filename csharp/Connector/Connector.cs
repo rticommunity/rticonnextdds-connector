@@ -70,7 +70,6 @@ namespace RTI.Connector
             get { return internalConnector; }
         }
 
-
         /// <summary>
         /// Waits until any <see cref="Reader"/> receives at least one sample
         /// or the specific time pass.

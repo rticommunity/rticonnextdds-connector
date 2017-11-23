@@ -96,7 +96,6 @@ namespace RTI.Connector.UnitTests
             Assert.IsTrue(connector.Disposed);
         }
 
-
         [Test]
         public void WaitForSamplesWithNegativeTimeOutThrowsException()
         {
@@ -115,7 +114,7 @@ namespace RTI.Connector.UnitTests
         {
             using (var connector = TestResources.CreatePublisherConnector()) {
                 Stopwatch watch = Stopwatch.StartNew();
-                connector.WaitForSamples(0);
+                Assert.IsFalse(connector.WaitForSamples(0));
                 watch.Stop();
                 Assert.Less(watch.ElapsedMilliseconds, 10);
             }
@@ -126,7 +125,7 @@ namespace RTI.Connector.UnitTests
         {
             using (var connector = TestResources.CreatePublisherConnector()) {
                 Stopwatch watch = Stopwatch.StartNew();
-                connector.WaitForSamples(100);
+                Assert.IsFalse(connector.WaitForSamples(100));
                 watch.Stop();
                 Assert.Less(watch.ElapsedMilliseconds, 110);
                 Assert.Greater(watch.ElapsedMilliseconds, 90);
