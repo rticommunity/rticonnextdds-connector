@@ -3,6 +3,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\csharp\Connector\Connector.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="ShapeExample.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>Simple</RootNamespace>

@@ -9,6 +9,7 @@ In this directory you can find 1 set of examples
 
  * **simple**: shows how to write samples and how to read/take.
  * **mixed**: shows how to write and read samples from complex types like sequences and inner structures.
+ * **objects**: shows how to write and read samples mapped from C# objects like *classes* and *structs*.
 
 ### API Overview:
 #### Import the RTI Connector library
@@ -57,6 +58,34 @@ and finally, we can write the instance:
 writer.Write();
 ```
 
+Alternative, we can fill the *Instance* fields from a C# object like a *class* or *struct*. To do so, we can use the `SetFrom` method from the `Instance` class:
+
+```csharp
+// Set some values to the instance
+instance.Set("x", 2);
+instance.Set("y", 3);
+
+// Overwrite and set values from this object
+MyClass obj = new MyClass {
+    x = 1,
+    color = "BLUE"
+};
+instance.SetFrom(obj);
+
+// write
+writer.Write();
+```
+
+or write directly the object with the `Write(obj)` method from the `Writer`:
+```csharp
+MyClass obj = new MyClass {
+    x = 1,
+    color = "BLUE"
+};
+
+writer.Write(obj);
+```
+
 #### Reading samples
 To read samples we need to get the *Reader* defined in the configuration.
 
@@ -88,4 +117,11 @@ foreach (Sample sample in reader.Samples) {
         Console.WriteLine("Received metadata");
     }
 }
+```
+
+We can also convert the sample into a C# object by using the `GetAs<T>` and `GetAsObject` methods of the sample:
+```csharp
+MyClass sample = sample.GetAs<MyClass>();
+int x = sample.x;
+string color = sample.color;
 ```

@@ -11,7 +11,7 @@ namespace Simple
     using System.Threading;
     using RTI.Connector;
 
-    class MainClass
+    class Program
     {
         public static void Main(string[] args)
         {
@@ -45,6 +45,7 @@ namespace Simple
             for (int i = 0; i < count || count == 0; i++) {
                 Console.WriteLine("Writing sample {0}", i);
 
+                // Optionally, clear the instance field from previous iterations
                 instance.Clear();
                 instance.Set("x", i);
                 instance.Set("y", i * 2);
@@ -74,8 +75,8 @@ namespace Simple
                         Console.WriteLine(
                             "Received [x={0}, y={1}, size={2}, color={3}]",
                              sample.GetInt("x"),
-                             sample.GetInt("y"),
-                             sample.GetInt("shapesize"),
+                             sample.Get<int>("y"),
+                             sample.Get<int>("shapesize"),
                              sample.GetString("color"));
                     } else {
                         Console.WriteLine("Received metadata");
