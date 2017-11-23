@@ -8,7 +8,6 @@
 namespace RTI.Connector.UnitTests
 {
     using System;
-    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using NUnit.Framework;
 
@@ -142,55 +141,6 @@ namespace RTI.Connector.UnitTests
             Reader reader = new Reader(connector, TestResources.ReaderName);
             connector.Dispose();
             Assert.Throws<ObjectDisposedException>(reader.Take);
-        }
-
-        [Test]
-        public void WaitForSamplesWithNegativeTimeOutThrowsException()
-        {
-            Reader reader = new Reader(connector, TestResources.ReaderName);
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () => reader.WaitForSamples(-10));
-        }
-
-        // These tests may block indefinitely so we need the timeout but it's
-        // not available in the NUnit .NET Core version:
-        // https://github.com/nunit/nunit/issues/1638
-#if NET45
-        [Test, Timeout(1000)]
-        public void WaitForSamplesWithZeroTimeOutDoesNotBlock()
-        {
-            Reader reader = new Reader(connector, TestResources.ReaderName);
-            Stopwatch watch = Stopwatch.StartNew();
-            reader.WaitForSamples(0);
-            watch.Stop();
-            Assert.Less(watch.ElapsedMilliseconds, 10);
-        }
-
-        [Test, Timeout(1000)]
-        public void WaitForSamplesCanTimeOut()
-        {
-            Reader reader = new Reader(connector, TestResources.ReaderName);
-            Stopwatch watch = Stopwatch.StartNew();
-            reader.WaitForSamples(100);
-            watch.Stop();
-            Assert.Less(watch.ElapsedMilliseconds, 110);
-        }
-#endif
-
-        [Test]
-        public void WaitForSamplesAfterDisposeThrowsException()
-        {
-            Reader reader = new Reader(connector, TestResources.ReaderName);
-            reader.Dispose();
-            Assert.Throws<ObjectDisposedException>(() => reader.WaitForSamples(0));
-        }
-
-        [Test]
-        public void WaitForSamplesAfterDisposingConnectorThrowsException()
-        {
-            Reader reader = new Reader(connector, TestResources.ReaderName);
-            connector.Dispose();
-            Assert.Throws<ObjectDisposedException>(() => reader.WaitForSamples(0));
         }
     }
 }

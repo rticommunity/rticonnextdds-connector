@@ -8,10 +8,11 @@
 namespace RTI.Connector.UnitTests
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using NUnit.Framework;
 
-    [TestFixture]
+    [TestFixture, SingleThreaded]
     public class ConnectorTests
     {
         [Test]
@@ -93,6 +94,52 @@ namespace RTI.Connector.UnitTests
             connector.Dispose();
             Assert.DoesNotThrow(connector.Dispose);
             Assert.IsTrue(connector.Disposed);
+        }
+
+
+        [Test]
+        public void WaitForSamplesWithNegativeTimeOutThrowsException()
+        {
+            using (var connector = TestResources.CreatePublisherConnector()) {
+                Assert.Throws<ArgumentOutOfRangeException>(
+                    () => connector.WaitForSamples(-10));
+            }
+        }
+
+        // These tests may block indefinitely so we need the timeout but it's
+        // not available in the NUnit .NET Core version:
+        // https://github.com/nunit/nunit/issues/1638
+#if NET45
+        [Test, Timeout(1000)]
+        public void WaitForSamplesWithZeroTimeOutDoesNotBlock()
+        {
+            using (var connector = TestResources.CreatePublisherConnector()) {
+                Stopwatch watch = Stopwatch.StartNew();
+                connector.WaitForSamples(0);
+                watch.Stop();
+                Assert.Less(watch.ElapsedMilliseconds, 10);
+            }
+        }
+
+        [Test, Timeout(1000)]
+        public void WaitForSamplesCanTimeOut()
+        {
+            using (var connector = TestResources.CreatePublisherConnector()) {
+                Stopwatch watch = Stopwatch.StartNew();
+                connector.WaitForSamples(100);
+                watch.Stop();
+                Assert.Less(watch.ElapsedMilliseconds, 110);
+                Assert.Greater(watch.ElapsedMilliseconds, 90);
+            }
+        }
+#endif
+
+        [Test]
+        public void WaitForSamplesAfterDisposeThrowsException()
+        {
+            Connector connector = TestResources.CreatePublisherConnector();
+            connector.Dispose();
+            Assert.Throws<ObjectDisposedException>(() => connector.WaitForSamples(0));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace RTI.Connector.UnitTests
             writer.Instance.Set("hidden", true);
             writer.Write();
 
-            reader.WaitForSamples(1000);
+            connector.WaitForSamples(1000);
             reader.Take();
             samples = reader.Samples;
         }

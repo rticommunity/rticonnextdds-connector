@@ -70,6 +70,29 @@ namespace RTI.Connector
             get { return internalConnector; }
         }
 
+
+        /// <summary>
+        /// Waits until any <see cref="Reader"/> receives at least one sample
+        /// or the specific time pass.
+        /// </summary>
+        /// <param name="timeoutMillis">
+        /// Timeout in milliseconds.
+        /// Use -1 to wait indefinitely for samples.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if a sample was received;
+        /// otherwise if timeout <c>false</c>.
+        /// </returns>
+        public bool WaitForSamples(int timeoutMillis)
+        {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+            if (timeoutMillis < -1)
+                throw new ArgumentOutOfRangeException(nameof(timeoutMillis));
+
+            return InternalConnector.WaitForSamples(timeoutMillis);
+        }
+
         /// <summary>
         /// Releases all resource used by the <see cref="Connector"/> object.
         /// </summary>

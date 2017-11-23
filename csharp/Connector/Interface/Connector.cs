@@ -12,6 +12,8 @@ namespace RTI.Connector.Interface
 
     sealed class Connector : IDisposable
     {
+        const int RetCodeTimeOut = 10;
+
         public Connector(string configName, string configFile)
         {
             Handle = new ConnectorPtr(configName, configFile);
@@ -32,6 +34,16 @@ namespace RTI.Connector.Interface
         public bool Disposed {
             get;
             private set;
+        }
+
+
+        public bool WaitForSamples(int timeoutMillis)
+        {
+            if (Disposed)
+                throw new ObjectDisposedException(nameof(Connector));
+
+            int retcode = NativeMethods.RTIDDSConnector_wait(Handle, timeoutMillis);
+            return retcode != RetCodeTimeOut;
         }
 
         public void Dispose()
@@ -78,6 +90,12 @@ namespace RTI.Connector.Interface
 
             [DllImport("rtiddsconnector")]
             public static extern void RTIDDSConnector_delete(IntPtr handle);
+
+
+            [DllImport("rtiddsconnector")]
+            public static extern int RTIDDSConnector_wait(
+                ConnectorPtr connectorHandle,
+                int timeout);
         }
     }
 }

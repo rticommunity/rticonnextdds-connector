@@ -56,14 +56,6 @@ namespace RTI.Connector.Interface
             NativeMethods.RTIDDSConnector_take(Connector.Handle, EntityName);
         }
 
-        public void WaitForSamples(int timeoutMillis)
-        {
-            if (Connector.Disposed)
-                throw new ObjectDisposedException(nameof(Connector));
-
-            NativeMethods.RTIDDSConnector_wait(Connector.Handle, timeoutMillis);
-        }
-
         public void Dispose()
         {
             Dispose(true);
@@ -92,11 +84,6 @@ namespace RTI.Connector.Interface
             public static extern void RTIDDSConnector_take(
                 Connector.ConnectorPtr connectorHandle,
                 string entityName);
-
-            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
-            public static extern int RTIDDSConnector_wait(
-                Connector.ConnectorPtr connectorHandle,
-                int timeout);
 
             [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern double RTIDDSConnector_getSamplesLength(
