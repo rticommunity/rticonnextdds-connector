@@ -9,6 +9,7 @@ namespace RTI.Connector
 {
     using System;
     using System.Globalization;
+    using Newtonsoft.Json;
     
     /// <summary>
     /// Sample read with a <see cref="Reader"/>.
@@ -87,6 +88,25 @@ namespace RTI.Connector
                 val,
                 typeof(T),
                 CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Get the sample as a deserialized-JSON object.
+        /// </summary>
+        /// <returns>The sample.</returns>
+        public object GetAsObject()
+        {
+            return JsonConvert.DeserializeObject(internalSample.GetJsonFromSample());
+        }
+
+        /// <summary>
+        /// Deserialize the sample from the JSON internal representation.
+        /// </summary>
+        /// <returns>The sample.</returns>
+        /// <typeparam name="T">Type of the sample.</typeparam>
+        public T GetAs<T>()
+        {
+            return JsonConvert.DeserializeObject<T>(internalSample.GetJsonFromSample());
         }
     }
 }

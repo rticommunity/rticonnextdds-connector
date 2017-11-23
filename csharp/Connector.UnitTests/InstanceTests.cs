@@ -7,6 +7,7 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector.UnitTests
 {
+    using System.Collections.Generic;
     using NUnit.Framework;
 
     [TestFixture]
@@ -100,6 +101,77 @@ namespace RTI.Connector.UnitTests
             Assert.DoesNotThrow(() => instance.Set("x", 3));
             Assert.DoesNotThrow(() => instance.Set("color", "BLUE"));
             Assert.DoesNotThrow(() => instance.Set("hidden", false));
+        }
+
+        [Test]
+        public void SetClassObjectWithValidTypesDoesNotThrowException()
+        {
+            MyClassType sample = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(writer.Write);
+        }
+
+        [Test]
+        public void SetStructObjectWithValidTypesDoesNotThrowException()
+        {
+            MyStructType sample = new MyStructType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(writer.Write);
+        }
+
+        [Test]
+        public void SetObjectWithAnonymousTypesDoesNotThrowException()
+        {
+            var sample = new {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(writer.Write);
+        }
+
+        [Test]
+        public void SetDictionaryWithValidTypesDoesNotThrowException()
+        {
+            var sample = new Dictionary<string, object> {
+                { "color", "test" },
+                { "x", 3},
+                { "hidden", true}
+            };
+
+            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(writer.Write);
+        }
+
+        [Test]
+        public void SetClassObjectWithInvalidTypesDoesNotThrowException()
+        {
+            MyInvalidClassType sample = new MyInvalidClassType {
+                color = 4,
+                x = 3.3,
+            };
+            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(writer.Write);
+        }
+
+        [Test]
+        public void SetClassObjectWithMissingTypesDoesNotThrowException()
+        {
+            MyFakeFieldsTypes sample = new MyFakeFieldsTypes {
+                color = "test",
+                Fake = 3,
+            };
+            Assert.DoesNotThrow(() => instance.Set(sample));
+            Assert.DoesNotThrow(writer.Write);
         }
     }
 }

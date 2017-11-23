@@ -9,7 +9,9 @@ namespace RTI.Connector.UnitTests
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using NUnit.Framework;
 
     // Since we are sending and waiting for samples in the same domain and topic
@@ -28,16 +30,10 @@ namespace RTI.Connector.UnitTests
             connector = TestResources.CreatePubSubConnector();
             writer = new Writer(connector, TestResources.WriterName);
             reader = new Reader(connector, TestResources.ReaderName);
-
-            writer.Instance.Set("x", 3);
-            writer.Instance.Set("y", 4);
-            writer.Instance.Set("color", "BLUE");
-            writer.Instance.Set("hidden", true);
-            writer.Write();
-
-            connector.WaitForSamples(1000);
-            reader.Take();
             samples = reader.Samples;
+
+            // Wait for discovery
+            Thread.Sleep(100);
         }
 
         [TearDown]
@@ -51,12 +47,14 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetNumberOfSamplesReturnsValidValue()
         {
+            SendAndTakeOrReadStandardSample(true);
             Assert.AreEqual(1, samples.Count);
         }
 
         [Test]
         public void SampleIteratorContainsOneSample()
         {
+            SendAndTakeOrReadStandardSample(true);
             int count = 0;
             foreach (var sample in samples)
                 count++;
@@ -75,6 +73,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void ListContainsJustOneSampleWithNormalEnumerator()
         {
+            SendAndTakeOrReadStandardSample(true);
             var list = NonGenericSampleEnumerable(samples);
             Assert.AreEqual(1, list.Cast<Sample>().Count());
         }
@@ -82,12 +81,14 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void RecievedSampleIsValid()
         {
+            SendAndTakeOrReadStandardSample(true);
             Assert.IsTrue(samples.Single().IsValid);
         }
 
         [Test]
         public void ReceivedSampleHasValidIntFields()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.AreEqual(3, sample.GetInt("x"));
             Assert.AreEqual(4, sample.GetInt("y"));
@@ -96,6 +97,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void ReceivedSampleHasValidStringField()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.AreEqual("BLUE", sample.GetString("color"));
         }
@@ -103,6 +105,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void ReceivedSampleHasValidBoolField()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.AreEqual(true, sample.GetBool("hidden"));
         }
@@ -110,6 +113,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetGenericReturnsValidValues()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.AreEqual(3, sample.Get<int>("x"));
             Assert.AreEqual(4, sample.Get<int>("y"));
@@ -120,6 +124,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetGenericWithInvalidFormatThrowException()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.Throws<FormatException>(() => sample.Get<double>("x"));
             Assert.Throws<FormatException>(() => sample.Get<decimal>("x"));
@@ -136,6 +141,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetNonExistingFieldsDoesNotThrowException()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.DoesNotThrow(() => sample.GetInt("fakeInt"));
             Assert.DoesNotThrow(() => sample.GetString("fakeString"));
@@ -145,6 +151,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetWrongVariableTypeForIntsDoesNotThrowException()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.DoesNotThrow(() => sample.GetInt("color"));
             Assert.DoesNotThrow(() => sample.GetInt("hidden"));
@@ -155,6 +162,7 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetWrongVariableTypeForStringsDoesNotThrowException()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.DoesNotThrow(() => sample.GetString("x"));
             Assert.DoesNotThrow(() => sample.GetString("hidden"));
@@ -165,11 +173,215 @@ namespace RTI.Connector.UnitTests
         [Test]
         public void GetWrongVariableTypeForBoolsDoesNotThrowException()
         {
+            SendAndTakeOrReadStandardSample(true);
             Sample sample = samples.Single();
             Assert.DoesNotThrow(() => sample.GetBool("x"));
             Assert.DoesNotThrow(() => sample.GetBool("color"));
             Assert.DoesNotThrow(() => sample.GetBool("angle"));
             Assert.DoesNotThrow(() => sample.GetBool("fillKind"));
+        }
+
+        [Test]
+        public void TakeRemovesSamples()
+        {
+            SendAndTakeOrReadStandardSample(true);
+            Assert.AreEqual(1, samples.Count);
+            reader.Take();
+            Assert.AreEqual(0, samples.Count);
+        }
+
+        [Test]
+        public void ReadDoesNotRemoveSamples()
+        {
+            SendAndTakeOrReadStandardSample(false);
+            Assert.AreEqual(1, samples.Count);
+            reader.Read();
+            Assert.AreEqual(1, samples.Count);
+            Assert.AreEqual(4, samples.First().GetInt("y"));
+        }
+
+        [Test]
+        public void TakeAfterReadRemovesSample()
+        {
+            SendAndTakeOrReadStandardSample(false);
+            Assert.AreEqual(1, samples.Count);
+            reader.Take();
+            Assert.AreEqual(1, samples.Count);
+            reader.Take();
+            Assert.AreEqual(0, samples.Count);
+        }
+
+        [Test]
+        public void GetValidObjectSample()
+        {
+            MyClassType obj = new MyClassType {
+                color = "test",
+                x = 3,
+                hidden = true };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            MyClassType received = sample.GetAs<MyClassType>();
+
+            Assert.AreEqual("test", received.color);
+            Assert.AreEqual(3, received.x);
+            Assert.AreEqual(true, received.hidden);
+        }
+
+        [Test]
+        public void GetValidStructSample()
+        {
+            MyStructType obj = new MyStructType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            MyStructType received = sample.GetAs<MyStructType>();
+
+            Assert.AreEqual("test", received.color);
+            Assert.AreEqual(3, received.x);
+            Assert.AreEqual(true, received.hidden);
+        }
+
+        [Test]
+        public void SendClassAndReceiveStructSample()
+        {
+            MyStructType obj = new MyStructType {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            MyClassType received = sample.GetAs<MyClassType>();
+
+            Assert.AreEqual("test", received.color);
+            Assert.AreEqual(3, received.x);
+            Assert.AreEqual(true, received.hidden);
+        }
+
+        [Test]
+        public void SendAnonymousAndReceiveObjectSample()
+        {
+            var obj = new {
+                color = "test",
+                x = 3,
+                hidden = true
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            dynamic received = sample.GetAsObject();
+
+            Assert.AreEqual("test", received.color.Value);
+            Assert.AreEqual(3, received.x.Value);
+            Assert.AreEqual(true, received.hidden.Value);
+        }
+
+        [Test]
+        public void SendDictionaryAndReceiveSample()
+        {
+            var obj = new Dictionary<string, object> {
+                { "color", "test" },
+                { "x", 3},
+                { "hidden", true}
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            var received = sample.GetAs<Dictionary<string, object>>();
+
+            Assert.AreEqual("test", received["color"]);
+            Assert.AreEqual(3, received["x"]);
+            Assert.AreEqual(true, received["hidden"]);
+        }
+
+        [Test]
+        public void GetCompleClassSample()
+        {
+            ComplexType obj = new ComplexType {
+                color = "test",
+                x = 3,
+                angle = 3.14f,
+                hidden = true,
+                list = new[] { 0, 1, 2, 3, 4 },
+                inner = new ComplexType.Inner { z = -1 }
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            ComplexType received = sample.GetAs<ComplexType>();
+
+            Assert.AreEqual("test", received.color);
+            Assert.AreEqual(3, received.x);
+            Assert.AreEqual(true, received.hidden);
+            Assert.AreEqual(3.14f, received.angle);
+            Assert.AreEqual(5, received.list.Length);
+            Assert.AreEqual(3, received.list[3]);
+            Assert.AreEqual(-1, received.inner.z);
+        }
+
+        [Test]
+        public void GetClassWithInvalidFieldsThrowsException()
+        {
+            MyInvalidClassType obj = new MyInvalidClassType {
+                color = 3,
+                x = 3.3,
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            Assert.Throws<Exception>(
+                () => sample.GetAs<MyInvalidClassType>());
+        }
+
+        [Test]
+        public void GetClassWithMissingFieldsIsEmpty()
+        {
+            MyFakeFieldsTypes obj = new MyFakeFieldsTypes {
+                color = "blue",
+                x = 3,
+                Fake = 4,
+            };
+
+            SendAndTakeOrReadObjectSample(obj, true);
+            Sample sample = samples.Single();
+            MyFakeFieldsTypes received = sample.GetAs<MyFakeFieldsTypes>();
+
+            Assert.AreEqual("blue", received.color);
+            Assert.AreEqual(3, received.x);
+            Assert.AreEqual(0, received.Fake);
+        }
+
+        void SendAndTakeOrReadStandardSample(bool take)
+        {
+            writer.Instance.Set("x", 3);
+            writer.Instance.Set("y", 4);
+            writer.Instance.Set("color", "BLUE");
+            writer.Instance.Set("hidden", true);
+            writer.Write();
+
+            connector.WaitForSamples(1000);
+            if (take)
+                reader.Take();
+            else
+                reader.Read();
+        }
+
+        void SendAndTakeOrReadObjectSample(object obj, bool take)
+        {
+            writer.Instance.Set(obj);
+            writer.Write();
+
+            connector.WaitForSamples(1000);
+            if (take)
+                reader.Take();
+            else
+                reader.Read();
         }
     }
 }

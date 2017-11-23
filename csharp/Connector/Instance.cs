@@ -7,6 +7,8 @@
 // This code contains trade secrets of Real-Time Innovations, Inc.
 namespace RTI.Connector
 {
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Writer instance.
     /// </summary>
@@ -57,6 +59,15 @@ namespace RTI.Connector
         public void Set(string field, string value)
         {
             instance.SetString(field, value);
+        }
+
+        /// <summary>
+        /// Set instance fields from the object serialized as JSON.
+        /// </summary>
+        /// <param name="obj">Object to serialize as json for the instance.</param>
+        public void Set(object obj)
+        {
+            instance.SetJson(JsonConvert.SerializeObject(obj));
         }
     }
 }

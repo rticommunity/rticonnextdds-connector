@@ -33,10 +33,15 @@
             <enumerator name="HORIZONTAL_HATCH_FILL" value="2"/>
             <enumerator name="VERTICAL_HATCH_FILL" value="3"/>
         </enum>
+        <struct name="Inner">
+            <member name="z" type="long" />
+        </struct>
         <struct name="ShapeTypeExtended" baseType="ShapeType" extensibility="extensible">
             <member name="fillKind" id="4" type="nonBasic" nonBasicTypeName="ShapeFillKind"/>
             <member name="angle" id="5" type="float"/>
             <member name="hidden" id="6" type="boolean"/>
+            <member name="list" id="7" type="long" arrayDimensions="5" />
+            <member name="inner" id="8" type="nonBasic" nonBasicTypeName="Inner" />
         </struct>
     </types>
 

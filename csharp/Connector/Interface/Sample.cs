@@ -8,7 +8,6 @@
 namespace RTI.Connector.Interface
 {
     using System.Runtime.InteropServices;
-    using System.Security;
 
     sealed class Sample
     {
@@ -46,6 +45,14 @@ namespace RTI.Connector.Interface
                 reader.EntityName,
                 index,
                 field);
+        }
+
+        public string GetJsonFromSample()
+        {
+            return NativeMethods.RTIDDSConnector_getJSONSample(
+                reader.Connector.Handle,
+                reader.EntityName,
+                index);
         }
 
         public bool GetBoolFromInfo(string field)
@@ -86,6 +93,12 @@ namespace RTI.Connector.Interface
                 string entityName,
                 int index,
                 string name);
+
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern string RTIDDSConnector_getJSONSample(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName,
+                int index);
         }
     }
 }

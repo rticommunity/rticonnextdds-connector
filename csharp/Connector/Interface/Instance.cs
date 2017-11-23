@@ -45,6 +45,14 @@ namespace RTI.Connector.Interface
                 val);
         }
 
+        public void SetJson(string json)
+        {
+            NativeMethods.RTIDDSConnector_setJSONInstance(
+                writer.Connector.Handle,
+                writer.EntityName,
+                json);
+        }
+
         public void Clear()
         {
             NativeMethods.RTIDDSConnector_clear(
@@ -74,6 +82,12 @@ namespace RTI.Connector.Interface
                 string entityName,
                 string name,
                 string val);
+
+            [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
+            public static extern void RTIDDSConnector_setJSONInstance(
+                Connector.ConnectorPtr connectorHandle,
+                string entityName,
+                string json);
 
             [DllImport("rtiddsconnector", CharSet = CharSet.Ansi)]
             public static extern void RTIDDSConnector_clear(
