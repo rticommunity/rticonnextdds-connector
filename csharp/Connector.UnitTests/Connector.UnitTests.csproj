@@ -5,6 +5,7 @@
     <RootNamespace>RTI.Connector.UnitTests</RootNamespace>
     <AssemblyName>librtiddsconnector_dotnet.UnitTests</AssemblyName>
     <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +30,7 @@
       <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
       <PackageReference Include="NUnit" Version="3.9.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+      <PackageReference Include="Mono.Cecil" Version="0.10.0-beta6" />
 </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Connector\Connector.csproj" />
