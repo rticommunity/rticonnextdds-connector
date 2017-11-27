@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 15 for Windows Desktop
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "Connector\Connector-VS.csproj", "{DC11EB4C-087F-490E-9E11-D38C46588CF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector.UnitTests", "Connector.UnitTests\Connector-VS.UnitTests.csproj", "{0E1F27CD-4D8A-46AC-8C29-82C75F2DCBFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC11EB4C-087F-490E-9E11-D38C46588CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC11EB4C-087F-490E-9E11-D38C46588CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC11EB4C-087F-490E-9E11-D38C46588CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC11EB4C-087F-490E-9E11-D38C46588CF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E1F27CD-4D8A-46AC-8C29-82C75F2DCBFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1F27CD-4D8A-46AC-8C29-82C75F2DCBFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1F27CD-4D8A-46AC-8C29-82C75F2DCBFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1F27CD-4D8A-46AC-8C29-82C75F2DCBFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3E4A58A-8796-4603-9BE8-5963FB8316B3}
+	EndGlobalSection
+EndGlobal

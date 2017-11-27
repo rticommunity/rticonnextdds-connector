@@ -1,10 +1,8 @@
-rticonnextdds-connector
-=======
+# RTI Connector for Connext DDS
 
-### RTI Connector for Connext DDS
 RTI Connector for Connext DDS is a quick and easy way to access the power and
 functionality of [RTI Connext DDS](http://www.rti.com/products/index.html).
-It is based on [XML App Creation](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
+It is based on [XML App Creation](https://community.rti.com/static/documentation/connext-dds/5.2.3/doc/manuals/connext_dds/xml_application_creation/RTI_ConnextDDS_CoreLibraries_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
 
 RTI Connector was created by the RTI Research Group to quickly and easily develop demos
 and proof of concept. We think that it can be useful for anybody that needs
@@ -21,6 +19,7 @@ The RTI Connector library is provided in binary form for selected architectures.
  * **nodejs/javascript**: we use [libffi](https://github.com/node-ffi/node-ffi) to call our library, but we try to hide
 that from you using a nice JavaScript wrapper. We tested with node v8.7.0; it should work also with lower versions.
  * **python**: here we use [ctypes](https://docs.python.org/2/library/ctypes.html) to call our native functions; of course everything is hidden in a nice Python wrapper. We tested with both python 2.7.14 and python 3.6.3
+ * **C#/.NET languages**: we use P/Invoke technology to call the native functions. It works with .NET Standard 1.1, .NET Framework 3.5, .NET Core .1.0, .NET Core 2.0 and Mono. It's compatible with Windows, Linux and Mac OS X.
  * **lua**: (lua version 5.1) we have been supporting Lua in our [RTI Prototyper](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua) for a while now.
 Check more information on our [blog](http://blogs.rti.com/tag/lua/) or on the [Getting Started Guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_Prototyper_GettingStarted.pdf). Also, stay tuned: a version that can be used directly with the standard Lua interpreter is coming...
  * **C**: for the native code lovers, we have header files so you can call the RTI Connector API directly in your C app; that's how the RTI Prototyper is implemented. The lua version used is 5.1
@@ -44,7 +43,7 @@ In python you will have to protect the calls to the connector if you are using d
 
 ### What is this git repository
 It is our way to make the connector technology available to you!
-As of today we included Node.js, Python and Lua (through RTI Prototyper) for few
+As of today we included Node.js, Python, C# and Lua (through RTI Prototyper) for few
 architectures.
 
 Also, for Node.js users, we will use this repo for the npm registry.
@@ -57,7 +56,7 @@ We'd love your feedback.
 We do not have much documentation yet. But we promise you: if you look at the
 examples you'll see that is very easy to use our connector.
 
-For an overview of the API in JavaScript check this [page](examples/nodejs/README.md). For the Python version visit this [one](examples/python/README.md).
+For an overview of the API in JavaScript check this [page](examples/nodejs/README.md). For the Python version visit this [one](examples/python/README.md). For the C# version visit this [one](examples/csharp/README.md).
 
 We have documentation on how to access the data sample fields in Section 6.4 'Data Access API' of the
 [RTI Prototyper Getting Started Guide](https://community.rti.com/rti-doc/510/ndds.5.1.0/doc/pdf/RTI_CoreLibrariesAndUtilities_Prototyper_GettingStarted.pdf)  
@@ -87,6 +86,28 @@ You can also download the [zip file](https://github.com/rticommunity/rticonnextd
 and then unzip it.
 
 When that is done, cd into your new directory and have a look to the [examples/python/README.md](examples/python/README.md)
+
+### Getting started with .NET
+Make sure you have installed [Mono](http://www.mono-project.com/download/), [.NET Core](https://www.microsoft.com/net/core) or .NET Framework. Then clone the repository and compile the API:
+
+* From terminal:
+
+```bash
+git clone https://github.com/rticommunity/rticonnextdds-connector
+
+# Go to the C# API directory
+cd rticonnextdds-connector/csharp
+
+# To build with .NET Core you need this step too
+cd Connector && dotnet restore && cd ..
+
+# Build by default three targets: .NET Framework 2.0, .NET Standard 1.1 and .NET Core 1.0
+msbuild
+
+```
+
+* From Visual Studio or Monodevelop open *csharp/Connector.sln*.
+
 
 ### License
 With the sole exception of the contents of the "examples" subdirectory, all use of this product is subject to the RTI Software License Agreement included at the top level of this repository. Files within the "examples" subdirectory are licensed as marked within the file.

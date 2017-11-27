@@ -25,12 +25,16 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+.vs
 htmlcov/
 .tox/
 .coverage
 .cache
 nosetests.xml
 coverage.xml
+testrunner
+TestResult.xml
+coverage-report
 
 # Translations
 *.mo
@@ -53,3 +57,10 @@ docs/_build/
 # node.js dependencies 
 node_modules/
 
+# CSharp
+*.csproj.user
+*.userprefs
+csharp/packages
+obj/
+StyleCopViolations.xml
+gendarme_report.html
