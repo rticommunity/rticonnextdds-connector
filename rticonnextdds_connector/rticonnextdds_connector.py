@@ -18,6 +18,7 @@ import weakref
 import platform
 import json
 
+from ctypes import *
 (bits, linkage)  = platform.architecture();
 osname = platform.system();
 isArm = platform.uname()[4].startswith("arm");
@@ -105,7 +106,7 @@ rtin_RTIDDSConnector_setStringIntoSamples = rti.RTIDDSConnector_setStringIntoSam
 rtin_RTIDDSConnector_setStringIntoSamples.argtypes = [ctypes.c_void_p, ctypes.c_char_p,ctypes.c_char_p,ctypes.c_char_p]
 
 rtin_RTIDDSConnector_write = rti.RTIDDSConnector_write
-rtin_RTIDDSConnector_write.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+rtin_RTIDDSConnector_write.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_char_p]
 
 rtin_RTIDDSConnector_read = rti.RTIDDSConnector_read
 rtin_RTIDDSConnector_read.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
@@ -141,16 +142,18 @@ rtin_RTIDDSConnector_getBooleanFromSamples.restype = ctypes.c_int
 rtin_RTIDDSConnector_getBooleanFromSamples.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p]
 
 rtin_RTIDDSConnector_getStringFromSamples = rti.RTIDDSConnector_getStringFromSamples
-rtin_RTIDDSConnector_getStringFromSamples.restype = ctypes.c_char_p
+rtin_RTIDDSConnector_getStringFromSamples.restype = POINTER(c_char)
 rtin_RTIDDSConnector_getStringFromSamples.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p]
 
 rtin_RTIDDSConnector_getJSONSample = rti.RTIDDSConnector_getJSONSample
-rtin_RTIDDSConnector_getJSONSample.restype = ctypes.c_char_p
+rtin_RTIDDSConnector_getJSONSample.restype = POINTER(c_char)
 rtin_RTIDDSConnector_getJSONSample.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_int]
 
 rtin_RTIDDSConnector_setJSONInstance = rti.RTIDDSConnector_setJSONInstance
 rtin_RTIDDSConnector_setJSONInstance.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_char_p]
 
+rtin_RTIDDSConnector_freeString = rti.RTIDDSConnector_freeString
+rtin_RTIDDSConnector_freeString.argtypes = [POINTER(c_char)]
 
 #Python Class Definition
 
@@ -168,11 +171,17 @@ class Samples:
 		return rtin_RTIDDSConnector_getBooleanFromSamples(self.input.connector.native,tocstring(self.input.name),index,tocstring(fieldName));
 
 	def getString(self, index, fieldName):
-		return fromcstring(rtin_RTIDDSConnector_getStringFromSamples(self.input.connector.native,tocstring(self.input.name),index,tocstring(fieldName)));
+		theStrPtr = rtin_RTIDDSConnector_getStringFromSamples(self.input.connector.native,tocstring(self.input.name),index,tocstring(fieldName));
+		theStr = fromcstring(cast(theStrPtr, c_char_p).value);
+		rtin_RTIDDSConnector_freeString(theStrPtr);
+		return theStr;
 
 	def getDictionary(self,index):
-		jsonStr = rtin_RTIDDSConnector_getJSONSample(self.input.connector.native,tocstring(self.input.name),index);
-		return json.loads(fromcstring(jsonStr))
+		jsonStrPtr = rtin_RTIDDSConnector_getJSONSample(self.input.connector.native,tocstring(self.input.name),index);
+		jsonStr = cast(jsonStrPtr, c_char_p).value
+		myDict = json.loads(fromcstring(jsonStr))
+		rtin_RTIDDSConnector_freeString((jsonStrPtr))
+		return myDict;
 
 class Infos:
 	def __init__(self,input):
@@ -243,7 +252,7 @@ class Output:
 		self.instance = Instance(self);
 
 	def write(self):
-		return rtin_RTIDDSConnector_write(self.connector.native,tocstring(self.name));
+		return rtin_RTIDDSConnector_write(self.connector.native,tocstring(self.name), None);
 
 	def clear_members(self):
 		return rtin_RTIDDSConnector_clear(self.connector.native,tocstring(self.name));
