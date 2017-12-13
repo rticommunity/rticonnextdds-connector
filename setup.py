@@ -12,16 +12,44 @@ from codecs import open
 from os import path, walk
 from shutil import copytree
 
+import sys
+import platform
+
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+# Get platform information
+(bits, linkage)  = platform.architecture()
+osname = platform.system()
+isArm = platform.uname()[4].startswith("arm")
 
-# get list of dds lib binaries to include
+if "64" in bits:
+    if "Linux" in osname:
+        arch = "x64Linux2.6gcc4.4.5"
+    elif "Darwin" in osname:
+        arch = "x64Darwin16clang8.0"
+    elif "Windows" in osname:
+        arch = "x64Win64VS2013"
+    else:
+        print("platfrom not yet supported")
+else:
+    if isArm:
+        arch = "armv6vfphLinux3.xgcc4.7.2"
+    elif "Linux" in osname:
+        arch = "i86Linux3.xgcc4.6.3"
+    elif "Windows" in osname:
+        arch = "i86Win32VS2010"
+    else:
+        print("platfrom not yet supported")
+        sys.exit( 1 )
+
+# Create lib file list
+lib_dir = path.join( "lib", arch )
 lib_files = []
-for root, dirs, files in walk('lib'):
+for root, dirs, files in walk(lib_dir):
     for file in files:
         lib_files.append(path.abspath(path.join(root, file)))
 
@@ -97,15 +125,13 @@ setup(
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
-    package_data={
-        module_dir: lib_files
-    },
+    package_data={},
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    data_files=[],
+    data_files=[( lib_dir, lib_files )],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
