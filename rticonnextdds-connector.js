@@ -205,7 +205,10 @@ function Connector(configName,fileName) {
   var on_data_available_run = false;
 
   this.delete = function() {
-    return rtin.RTIDDSConnector_delete(this.native);
+    var rc = rtin.RTIDDSConnector_delete(this.native);
+    this.native = null;
+    return rc;
+
   }
 
   this.getInput = function(inputName) {
@@ -217,16 +220,22 @@ function Connector(configName,fileName) {
   }
 
   var onDataAvailable = function(connector) {
-      var rc = rtin.RTIDDSConnector_wait.async(
-          connector.native, -1,
-          function(err, res) {
-            if (err) throw err;
-            if (on_data_available_run == true) {
-              onDataAvailable(connector);
-            }
-            connector.emit("on_data_available");
-          }
-      );
+      //console.log(connector)
+      if (connector && connector.native != null) {
+          var rc = rtin.RTIDDSConnector_wait.async(
+              connector.native, 1000,
+              function(err, res) {
+                //console.log("wait func called with err " + err + " and res " + res);
+                if (err) throw err;
+                if (on_data_available_run == true) {
+                  onDataAvailable(connector);
+                }
+                if (res != 10/*TIMEOUT*/) {
+                    connector.emit("on_data_available");
+                }
+              }
+          );
+      }
   }
 
   var newListenerCallBack = function(eventName, fnListener) {
