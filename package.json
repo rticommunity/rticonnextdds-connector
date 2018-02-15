@@ -17,6 +17,7 @@
     "url": "https://github.com/rticommunity/rticonnextdds-connector.git"
   },
   "dependencies": {
+    "ref": "*",
     "util": "*",
     "ffi": "*",
     "sleep": "*",
