@@ -62,8 +62,8 @@ var rtin = ffi.Library(LIB_FULL_PATH, {
 "RTIDDSConnector_getBooleanFromSamples": [ "int", ["pointer", "string", "int", "string"]],
 "RTIDDSConnector_getBooleanFromInfos": [ "int", ["pointer", "string", "int", "string"]],
 "RTIDDSConnector_setStringIntoSamples": [ "void", ["pointer", "string", "string", "string"]],
-"RTIDDSConnector_getStringFromSamples": [ "string", ["pointer", "string", "int", "string"]],
-"RTIDDSConnector_getStringFromInfos": [ "string", ["pointer", "string", "int", "string"]],
+"RTIDDSConnector_getStringFromSamples": [ "char *", ["pointer", "string", "int", "string"]],
+"RTIDDSConnector_getStringFromInfos": [ "char *", ["pointer", "string", "int", "string"]],
 "RTIDDSConnector_write": [ "void", ["pointer", "string", "string"]],
 "RTIDDSConnector_read": [ "void", ["pointer", "string"]],
 "RTIDDSConnector_take": [ "void", ["pointer", "string"]],
@@ -95,7 +95,7 @@ function Samples(input) {
     if (!myStr) {
         throw "Error getting the string";
     }
-    var toRet = myStr;
+    var toRet = myStr.readCString();
     rtin.RTIDDSConnector_freeString(myStr);
     return toRet;
   }
