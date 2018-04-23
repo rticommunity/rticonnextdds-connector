@@ -9,6 +9,16 @@ If you still have trouble write on the [RTI Community Forum](https://community.r
 In this directory you can find 1 set of examples
 
  * **simple**: shows how to write samples and how to read/take
+ 
+These examples do not rely on the rticonnextdds_connector module being pip installed first.  Instead they directly load the module and require the repo to be cloned.  
+
+See the following with the following code before the import of rticonnextdds_connector 
+
+from sys import path as sysPath
+from os import path as osPath
+filepath = osPath.dirname(osPath.realpath(__file__))
+sysPath.append(filepath + "/../../../")
+import rticonnextdds_connector as rti
 
 ### Protecting calls to the connector library
 As we already explained in the main README [here](https://github.com/rticommunity/rticonnextdds-connector#threading-model), the user is responsible for protecting calls to the connector. There are many options in python to do so; one is to use the ```threading``` package:
