@@ -1,13 +1,7 @@
 rticonnextdds-connector
 =======
 
-Contents:<br>
-[Getting Started with Node.js](#getting-started-with-node.js)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Node.js Examples README](examples/nodejs/README.md)<br>
-[Getting Started with Python](#getting-started-with-python)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Python Example README](examples/python/README.md)<br>
-[XML Application Creation Getting Started Guide](https://community.rti.com/static/documentation/connext-dds/5.3.1/doc/manuals/connext_dds/xml_application_creation/RTI_ConnextDDS_CoreLibraries_XML_AppCreation_GettingStarted.pdf)<br>
-[Prototyper Getting Started Guide](https://community.rti.com/static/documentation/connext-dds/5.3.1/doc/manuals/connext_dds/prototyper/RTI_ConnextDDS_CoreLibraries_Prototyper_GettingStarted.pdf)<br>
+
 
 
 ### RTI Connector for Connext DDS
@@ -35,10 +29,10 @@ Check more information on our [blog](http://blogs.rti.com/tag/lua/) or in the [G
  * **C**: for the native code lovers, we have header files so you can call the *Connector* API directly in your C application; that's how *Prototyper* is implemented. The Lua version used is 5.1.
 
 ### Platform support
-We are building our library for a few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture, please contact [RTI Support](https://support.rti.com).
+We are building our library for a few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture, please contact your RTI account manager or sales@rti.com.
 
 **Windows Note**: We tested the Node.js/JavaScript Connector on Win10 64 bit. We notice that npm works best with VS Express 2013.
-Feel free to ask questions on the [RTI Community forum](https://community.rti.com/forums/technical-questions) or contact [RTI Support](https://support.rti.com) for more details on Windows and Connector.
+Feel free to ask questions on the [RTI Community forum](https://community.rti.com/forums/technical-questions) for more details on Windows and Connector.
 
 If you want to check the version of the libraries, run the following command:
 
@@ -59,7 +53,7 @@ architectures.
 Also, for Node.js users, we will use this repository for the npm registry.
 
 ### Support
-Ask questions in the [RTI Community forum](https://community.rti.com/forums/technical-questions) or contact [RTI Support](https://support.rti.com).
+This is an experimental RTI product. As such, we offer support through the [RTI Community forum](https://community.rti.com/forums/technical-questions).
 
 ### Documentation
 The best way to learn Connector is to look at the examples and their corresponding README files:
@@ -99,4 +93,4 @@ When the installation is complete, cd into your new directory and have a look at
 ### License
 With the sole exception of the contents of the "examples" subdirectory, all use of this product is subject to the RTI Software License Agreement included at the top level of this repository. Files within the "examples" subdirectory are licensed as marked within the file.
 
-This software is an experimental ("pre-production") product. The Software is provided "as is." with no warranty of any type, including any warranty for fitness for any purpose. RTI is under no obligation to maintain or support the software. RTI shall not be liable for any incidental or consequential damages arising out of the use or inability to use the software.
+This software is an experimental ("pre-production") product. The Software is provided "as is," with no warranty of any type, including any warranty for fitness for any purpose. RTI is under no obligation to maintain or support the software. RTI shall not be liable for any incidental or consequential damages arising out of the use or inability to use the software.

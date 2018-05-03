@@ -73,7 +73,7 @@ RTIDDSConnector_assertCode(connector,NULL,"./Alert.lua",4);
 ```
 
 #### Pass parameters from C to Lua
-Connector offers an API to allow C programs to set values in a Lua table called `CONTEXT`. All you have to do is call the `RTIDDSConnector_set[Number|String|Boolean]IntoContext` API:
+*Connector* offers an API to allow C programs to set values in a Lua table called `CONTEXT`. All you have to do is call the `RTIDDSConnector_set[Number|String|Boolean]IntoContext` API:
 
 ```c
 RTIDDSConnector_setNumberIntoContext(connector,"temp", temp);
@@ -89,7 +89,7 @@ RTIDDSConnector_execute(connector);
 `RTIDDSConnector_execute` will return once the script execution is finished.
 
 
-#### Delete a *onnector*
+#### Delete a *Connector*
 To destroy all the DDS entities that belong to a *Connector* previously created, call the ```RTIDDSConnector_delete``` function.
 
 ```c
