@@ -65,13 +65,19 @@ For information on how to access the data sample fields, see Section 6.4 *Data A
 [RTI Prototyper Getting Started Guide](https://community.rti.com/static/documentation/connext-dds/5.3.1/doc/manuals/connext_dds/prototyper/RTI_ConnextDDS_CoreLibraries_Prototyper_GettingStarted.pdf)  
 
 ### Getting started with Node.js
-Be sure you have all the tools to work with Node.js. Then invoke:
+Be sure you have all the tools to work with Node.js. You need node and npm, node-gyp and python and a c and c++ compiler for some of the  dependencies (like libffi).
+The npm tool downloads the dependencies from the internet, so an internet connection is required.
+
+To install you can invoke:
 
 ``` bash
 $ npm install rticonnextdds-connector
 ```
 
+If your target does not have internet access, you can cross compile the *Connector* on a different machine using, for example ```npm --arch=arm install rticonnextdds-connector``` and then you can copy the output into your target.
+
 When the installation is complete, cd into your node_modules directory and have a look at [examples/nodejs/README.md](examples/nodejs/README.md).
+
 ### Getting started with Python
 Be sure you have Python. Then clone this repository:
 
