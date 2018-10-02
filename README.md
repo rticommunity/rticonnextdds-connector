@@ -1,9 +1,6 @@
 rticonnextdds-connector
 =======
 
-
-
-
 ### RTI Connector for Connext DDS
 *RTI Connector* for Connext DDS is a quick and easy way to access the power and
 functionality of [RTI Connext DDS](http://www.rti.com/products/index.html).
@@ -22,8 +19,9 @@ The *Connector* library is provided in binary form for selected architectures. S
 ### Language Support
 
  * **Node.js/JavaScript**: we use [libffi](https://github.com/node-ffi/node-ffi) to call our library, but we try to hide
-that from you using a nice JavaScript wrapper. We tested our Node.js/JavaScript implementation with node v8.7.0; it should work also with lower versions.
- * **Python**: here we use [ctypes](https://docs.python.org/2/library/ctypes.html) to call our native functions; everything is hidden in a nice Python wrapper. We tested our Python implementation with both Python 2.7.14 and Python 3.6.3
+that from you using a nice JavaScript wrapper. We tested our Node.js/JavaScript implementation with node v8.7.0; it should work also with lower versions. [More info](https://github.com/rticommunity/rticonnextdds-connector-js)
+ * **Python**: here we use [ctypes](https://docs.python.org/2/library/ctypes.html) to call our native functions; everything is hidden in a nice Python wrapper. We tested our Python implementation with both Python 2.7.14 and Python 3.6.3.
+ [More info](https://github.com/rticommunity/rticonnextdds-connector-py)
  * **Lua**: (Lua version 5.1) we have supported Lua in *[RTI Prototyper](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua)* for a while now.
 Check more information on our [blog](https://www.rti.com/blog/topic/lua) or in the [Getting Started Guide](https://community.rti.com/static/documentation/connext-dds/5.3.1/doc/manuals/connext_dds/prototyper/RTI_ConnextDDS_CoreLibraries_Prototyper_GettingStarted.pdf). Also, stay tuned: a version that can be used directly with the standard Lua interpreter is coming.
  * **C**: for the native code lovers, we have header files so you can call the *Connector* API directly in your C application; that's how *Prototyper* is implemented. The Lua version used is 5.1.
@@ -45,50 +43,10 @@ The *Connector* Native API does not yet implement any mechanism for thread safet
 In Node.js/JavaScript, threading should not be a problem due to the 'callback' style of the language itself.
 In Python, you will have to protect the calls to the Connector if you are using different threads. For an example, see [Protecting calls to the Connector library](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/python#protecting-calls-to-the-connector-library) in the Python README.
 
-### What is this git repository
-This git repository is our way to make *Connector* available to you!
-As of today we included Node.js, Python, and Lua (through *Prototyper*) for selected
-architectures.
 
-Also, for Node.js users, we will use this repository for the npm registry.
 
 ### Support
 This is an experimental RTI product. As such, we offer support through the [RTI Community forum](https://community.rti.com/forums/technical-questions).
-
-### Documentation
-The best way to learn Connector is to look at the examples and their corresponding README files:
-
-* For an overview of the Connector API in JavaScript, check this [page](examples/nodejs/README.md).
-* For the Python version, visit this [page](examples/python/README.md).
-
-For information on how to access the data sample fields, see Section 6.4 *Data Access API* of the
-[RTI Prototyper Getting Started Guide](https://community.rti.com/static/documentation/connext-dds/5.3.1/doc/manuals/connext_dds/prototyper/RTI_ConnextDDS_CoreLibraries_Prototyper_GettingStarted.pdf)  
-
-### Getting started with Node.js
-Be sure you have all the tools to work with Node.js. Then invoke:
-
-``` bash
-$ npm install rticonnextdds-connector
-```
-
-When the installation is complete, cd into your node_modules directory and have a look at [examples/nodejs/README.md](examples/nodejs/README.md).
-### Getting started with Python
-Be sure you have Python. Then clone this repository:
-
-``` bash
-$ git clone https://github.com/rticommunity/rticonnextdds-connector.git
-```
-
-You can also use pip:
-
-``` bash
-$ pip install rticonnextdds_connector
-```
-
-Or, you can download the [zip file](https://github.com/rticommunity/rticonnextdds-connector/archive/master.zip)
-and unzip it.
-
-When the installation is complete, cd into your new directory and have a look at [examples/python/README.md](examples/python/README.md).
 
 ### License
 With the sole exception of the contents of the "examples" subdirectory, all use of this product is subject to the RTI Software License Agreement included at the top level of this repository. Files within the "examples" subdirectory are licensed as marked within the file.
