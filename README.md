@@ -18,13 +18,11 @@ The *Connector* library is provided in binary form for selected architectures. S
 
 ### Language Support
 
- * **Node.js/JavaScript**: we use [libffi](https://github.com/node-ffi/node-ffi) to call our library, but we try to hide
-that from you using a nice JavaScript wrapper. We tested our Node.js/JavaScript implementation with node v8.7.0; it should work also with lower versions. [More info](https://github.com/rticommunity/rticonnextdds-connector-js)
- * **Python**: here we use [ctypes](https://docs.python.org/2/library/ctypes.html) to call our native functions; everything is hidden in a nice Python wrapper. We tested our Python implementation with both Python 2.7.14 and Python 3.6.3.
- [More info](https://github.com/rticommunity/rticonnextdds-connector-py)
- * **Lua**: (Lua version 5.1) we have supported Lua in *[RTI Prototyper](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua)* for a while now.
-Check more information on our [blog](https://www.rti.com/blog/topic/lua) or in the [Getting Started Guide](https://community.rti.com/static/documentation/connext-dds/5.3.1/doc/manuals/connext_dds/prototyper/RTI_ConnextDDS_CoreLibraries_Prototyper_GettingStarted.pdf). Also, stay tuned: a version that can be used directly with the standard Lua interpreter is coming.
- * **C**: for the native code lovers, we have header files so you can call the *Connector* API directly in your C application; that's how *Prototyper* is implemented. The Lua version used is 5.1.
+ * **[Node.js/JavaScript](https://github.com/rticommunity/rticonnextdds-connector-js)**
+ * **[Python](https://github.com/rticommunity/rticonnextdds-connector-py)**
+ * **[Go](https://github.com/rticommunity/rticonnextdds-connector-go)**
+ * **[Lua (through RTI Prototyper)](through)**
+ * **[C](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/lua_c_integration)**
 
 ### Platform support
 We are building our library for a few architectures only. Check them out [here](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture, please contact your RTI account manager or sales@rti.com.

@@ -1,6 +1,8 @@
 rticonnextdds-connector: Lua/C Integration
 ========
 
+ For the native code lovers, we have header files so you can call the *Connector* API directly in your C application; that's how *[Prototyper](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua)* is implemented. The Lua version used is 5.1.
+
 ### Installation and platform support
 To compile this example, you will need to clone this repository. You can do that by executing:
 
