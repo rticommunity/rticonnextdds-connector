@@ -20,6 +20,7 @@ The *Connector* library is provided in binary form for selected architectures. S
 
  * **[Node.js/JavaScript](https://github.com/rticommunity/rticonnextdds-connector-js)**
  * **[Python](https://github.com/rticommunity/rticonnextdds-connector-py)**
+ * **[C#](https://github.com/rticommunity/rticonnextdds-connector-cs)**
  * **[Go](https://github.com/rticommunity/rticonnextdds-connector-go)**
  * **[Lua (through RTI Prototyper)](https://community.rti.com/downloads/experimental/rti-prototyper-with-lua)**
  * **[C](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/lua_c_integration)**
