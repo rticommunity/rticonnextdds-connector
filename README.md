@@ -29,7 +29,7 @@ The *Connector* library is provided in binary form for selected architectures. S
 *Connector* is supported on [select architectures](https://github.com/rticommunity/rticonnextdds-connector/tree/master/lib). If you need another architecture, please contact your RTI account manager or sales@rti.com.
 
 **Windows Note**: RTI tested the Node.js/JavaScript Connector on Windows® 10 64-bit. Those tests showed that npm works best with Visual Studio Express 2013.
-Feel free to ask questions on the [RTI Community forum](https://community.rti.com/forums/technical-questions) for more details on Windows and Connector.
+Feel free to ask questions on the [RTI Community forum](https://community.rti.com/forums/technical-questions) for more details on Windows and *Connector*.
 
 To check the version of the libraries, run the following command. For example:
 
