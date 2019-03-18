@@ -38,9 +38,9 @@ strings librtiddsconnector.dylib | grep BUILD
 ```
 
 ### Threading model
-The *Connector* Native API does not yet implement any mechanism for thread safety. Originally the *Connector* native code was built to work with *Prototyper* and Lua. That was a single-threaded loop. RTI then introduced support for JavaScript and Python. For now, the responsibility of protecting calls to the *Connector* is left to you. (In future, thread safety may be added in the native layer.)
+The *Connector* Native API does not yet implement any mechanism for thread safety. Originally the *Connector* native code was built to work with *Prototyper* and Lua. That was a single-threaded loop. RTI then introduced support for JavaScript and Python. For now, you are responsible for protecting calls to *Connector*. (In future, thread safety may be added in the native layer.)
 In Node.js/JavaScript, threading should not be a problem due to the 'callback' style of the language itself.
-In Python, you will have to protect the calls to the Connector if you are using different threads. For an example, see [Protecting calls to the Connector library](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/python#protecting-calls-to-the-connector-library) in the Python README.
+In Python, you will have to protect the calls to *Connector* if you are using different threads. For an example, see [Protecting calls to the Connector library](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/python#protecting-calls-to-the-connector-library) in the Python README.
 
 
 
