@@ -4,7 +4,7 @@ rticonnextdds-connector
 ### RTI Connector for Connext DDS 6.0.0 - Getting Started
 *RTI Connector* for Connext DDS is a quick and easy way to access the power and
 functionality of [RTI Connext DDS](http://www.rti.com/products/index.html).
-It is based on [XML-Based Application Creation](https://community.rti.com/static/documentation/connext-dds/6.0.0/doc/manuals/connext_dds/xml_application_creation/RTI_ConnextDDS_CoreLibraries_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
+It is based on [XML Application Creation](https://community.rti.com/static/documentation/connext-dds/6.0.0/doc/manuals/connext_dds/xml_application_creation/RTI_ConnextDDS_CoreLibraries_XML_AppCreation_GettingStarted.pdf) and Dynamic Data.
 
 *Connector* was created to quickly and easily develop demos
 and proofs of concept. It can be useful for anybody who needs
@@ -38,7 +38,7 @@ strings librtiddsconnector.dylib | grep BUILD
 ```
 
 ### Threading model
-The *Connector* Native API does not yet implement any mechanism for thread safety. Originally the *Connector* native code was built to work with *Prototyper* and Lua. That was a single-threaded loop. RTI then introduced support for JavaScript and Python. For now, you are responsible for protecting calls to *Connector*. (In future, thread safety may be added in the native layer.)
+The *Connector* Native API does not yet implement any mechanism for thread safety. Originally, the *Connector* native code was built to work with *Prototyper* and Lua. That was a single-threaded loop. RTI then introduced support for JavaScript and Python. For now, you are responsible for protecting calls to *Connector*. (In future, thread safety may be added in the native layer.)
 In Node.js/JavaScript, threading should not be a problem due to the 'callback' style of the language itself.
 In Python, you will have to protect the calls to *Connector* if you are using different threads. For an example, see [Protecting calls to the Connector library](https://github.com/rticommunity/rticonnextdds-connector/tree/master/examples/python#protecting-calls-to-the-connector-library) in the Python README.
 
