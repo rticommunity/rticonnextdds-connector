@@ -1,8 +1,8 @@
 rticonnextdds-connector
 =======
 
-*(This repository hosts the common Connector native library. For a complete user guide,
-see the **[Python](https://github.com/rticommunity/rticonnextdds-connector-py)** or
+*(This repository hosts the common Connector native library and shouldn't be cloned.
+See the **[Python](https://github.com/rticommunity/rticonnextdds-connector-py)** or
 **[JavaScript](https://github.com/rticommunity/rticonnextdds-connector-js)** bindings.)*
 
 ### RTI Connector for Connext DDS 6.0.1 - Getting Started
