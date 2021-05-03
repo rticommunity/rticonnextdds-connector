@@ -5,7 +5,7 @@ rticonnextdds-connector
 See the **[Python](https://github.com/rticommunity/rticonnextdds-connector-py)** or
 **[JavaScript](https://github.com/rticommunity/rticonnextdds-connector-js)** bindings.)*
 
-### RTI Connector for Connext DDS 6.0.1 - Getting Started
+### RTI Connector for Connext DDS 6.1.0 - Getting Started
 RTI Connext DDS is a software connectivity framework for real-time distributed applications. 
 It uses the publish-subscribe communications model to make data distribution efficient and robust. 
 At its core is the world’s leading ultra-high performance, distributed networking databus.
