@@ -1,0 +1,35 @@
+version: latest
+
+architectures:
+  linux-arm:
+    name: armv7Linux4gcc7.5.0
+    libs:
+      - libnddsc.so
+      - libnddscore.so
+      - librtiddsconnector.so
+  linux-arm64:
+    name: armv8Linux4gcc7.3.0
+    libs:
+      - libnddsc.so
+      - libnddscore.so
+      - librtiddsconnector.so
+  linux-x64:
+    name: x64Linux3gcc4.8.2
+    libs:
+      - libnddsc.so
+      - libnddscore.so
+      - librtiddsconnector.so
+  osx-x64:
+    name: x64Darwin20clang12.0
+    libs:
+      - libnddsc.dylib
+      - libnddscore.dylib
+      - librtiddsconnector.dylib
+  win-x64:
+    name: x64Win64VS2015
+    libs:
+      - nddsc.dll
+      - nddscore.dll
+      - rtiddsconnector.dll
+      - vcruntime140.dll
+  

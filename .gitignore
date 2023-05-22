@@ -53,3 +53,6 @@ docs/_build/
 # node.js dependencies 
 node_modules/
 
+# Libraries directory
+lib/
+
