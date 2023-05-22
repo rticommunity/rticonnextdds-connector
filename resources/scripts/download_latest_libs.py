@@ -184,10 +184,14 @@ def retrieve_libraries_for_specific_version(
         with zipfile.ZipFile(compressed_file, "r") as zip_file:
             for file in arch_data["libs"]:
                 logging.info(f"   - Extracting {file} ...")
+
+                if "dds" in file:
+                    inner_path = f"rti_connext_dds-{version}/lib/{arch_data['name']}/{file}"
+                else:
+                    inner_path = f"rti_connext_dds-{version}/resource/app/lib/{arch_data['name']}/{file}"
+
                 try:
-                    source = zip_file.open(
-                        f"rti_connext_dds-{version}/lib/{arch_data['name']}/{file}"
-                    )
+                    source = zip_file.open(inner_path)
                 except KeyError:
                     logging.error(
                         f" [Error] Could not extract {file} from the compressed file, please "
