@@ -2,25 +2,25 @@ version: latest
 
 architectures:
   linux-arm:
-    name: armv6vfphLinux3.xgcc4.7.2
+    name: armv7Linux4gcc7.5.0
     libs:
       - libnddsc.so
       - libnddscore.so
       - librtiddsconnector.so
   linux-arm64:
-    name: armv8Linux4.4gcc5.4.0
+    name: armv8Linux4gcc7.3.0
     libs:
       - libnddsc.so
       - libnddscore.so
       - librtiddsconnector.so
   linux-x64:
-    name: x64Linux2.6gcc4.4.5
+    name: x64Linux3gcc4.8.2
     libs:
       - libnddsc.so
       - libnddscore.so
       - librtiddsconnector.so
   osx-x64:
-    name: x64Darwin17clang9.0
+    name: x64Darwin20clang12.0
     libs:
       - libnddsc.dylib
       - libnddscore.dylib
