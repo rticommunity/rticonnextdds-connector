@@ -21,6 +21,7 @@ from urllib.error import HTTPError
 import boto3
 import requests
 import yaml
+from botocore.exceptions import ClientError
 
 
 def get_argument_parser():
@@ -179,6 +180,7 @@ def retrieve_libraries_for_specific_version(
         output_path (Path): Where to download the libs.
     """
     s3 = boto3.client("s3")
+    successful = True
 
     for arch, arch_data in data["architectures"].items():
         logging.info(f" - Downloading minimal package for {arch_data['name']} ...")
@@ -188,7 +190,14 @@ def retrieve_libraries_for_specific_version(
             f"rti_connext_dds-{version}-min-{arch_data['name']}.zip",
         )
 
-        response = s3.get_object(Bucket=storage_url, Key=str(remote_file_path))
+        try:
+            response = s3.get_object(Bucket=storage_url, Key=str(remote_file_path))
+        except ClientError:
+            logging.error(
+                f"[Error] Could not find bundles for architecture {arch_data['name']}"
+            )
+            successful = False
+            continue
         compressed_file = io.BytesIO(response["Body"].read())
 
         logging.info(f"  - Extracting necessary libs...")
@@ -216,6 +225,8 @@ def retrieve_libraries_for_specific_version(
                 with source, target:
                     shutil.copyfileobj(source, target)
 
+    return successful
+
 
 def main():
     args = get_argument_parser().parse_args()
@@ -242,16 +253,16 @@ def main():
         successful = retrieve_latest_libraries(
             data, args.storage_url, libs_dir, version, args.output_path
         )
-
-        if not successful:
-            logging.error("There were some errors downloading the libs!")
-            sys.exit(1)
     else:
         version = data["version"]
 
-        retrieve_libraries_for_specific_version(
+        successful = retrieve_libraries_for_specific_version(
             data, args.storage_url, args.storage_path, version, args.output_path
         )
+
+    if not successful:
+        logging.error("There were some errors downloading the libs!")
+        sys.exit(1)
 
     logging.info("All libraries were retrieved successfully!")
 
