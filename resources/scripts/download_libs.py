@@ -114,11 +114,12 @@ def retrieve_connext_libraries(
             version,
             filename,
         )
-        download_dest = Path("tmp", "connext_bundles", filename)
+        download_dest = Path(f"/tmp/connext_downloads/{filename}")
+        download_dest.parent.mkdir(parents=True, exist_ok=True)
 
         try:
-            with open(download_dest, "wb") as f:
-                s3.download_fileobj(storage_url, remote_file_path, f)
+            with open(download_dest, "wb+") as f:
+                s3.download_fileobj(storage_url, str(remote_file_path), f)
         except ClientError:
             logging.error(
                 f"[Error] Could not find bundles for architecture {arch_data['name']}"
