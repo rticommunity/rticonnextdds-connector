@@ -142,6 +142,7 @@ def retrieve_connext_libraries(
                 logging.error(
                     f"[ERROR] Could not find Connext directory inside {filename}"
                 )
+                successful = False
                 continue
 
             for file in arch_data["libs"]:
