@@ -74,6 +74,13 @@ def create_folder_structure(data: Dict[str, Any], output_path: Path):
 
 
 def get_connext_dds_dir(zip_file: zipfile.ZipFile):
+    """Get the name of the Connext DDS directory from inside a ZIP file.
+
+    Args:
+        zip_file (zipfile.ZipFile): Opened ZIP file from which the Connext directory name will be obtained.
+    Returns:
+        The name of the Connext directory inside the ZIP file.
+    """
     pattern = r"rti_connext_dds-\d+\.\d+\.\d+"
 
     for file_info in zip_file.infolist():
