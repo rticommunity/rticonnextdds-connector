@@ -118,7 +118,7 @@ def retrieve_connext_libraries(
         download_dest.parent.mkdir(parents=True, exist_ok=True)
 
         try:
-            with open(download_dest, "wb+") as f:
+            with open(download_dest, "wb") as f:
                 s3.download_fileobj(storage_url, str(remote_file_path), f)
         except ClientError:
             logging.error(
