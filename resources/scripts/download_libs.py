@@ -114,20 +114,21 @@ def retrieve_connext_libraries(
             version,
             filename,
         )
+        download_dest = Path("tmp", "connext_bundles", filename)
 
         try:
-            response = s3.get_object(Bucket=storage_url, Key=str(remote_file_path))
+            with open(download_dest, "wb") as f:
+                s3.download_fileobj(storage_url, remote_file_path, f)
         except ClientError:
             logging.error(
                 f"[Error] Could not find bundles for architecture {arch_data['name']}"
             )
             successful = False
             continue
-        compressed_file = io.BytesIO(response["Body"].read())
 
         logging.info("  - Extracting necessary libs...")
 
-        with zipfile.ZipFile(compressed_file, "r") as zip_file:
+        with zipfile.ZipFile(download_dest, "r") as zip_file:
             connext_dds_dir = get_connext_dds_dir(zip_file)
 
             if not connext_dds_dir:
