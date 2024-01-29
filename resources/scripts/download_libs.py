@@ -8,7 +8,6 @@
 # inability to use the software.
 
 import argparse
-import io
 import logging
 import re
 import shutil
@@ -143,6 +142,7 @@ def retrieve_connext_libraries(
                 logging.error(
                     f"[ERROR] Could not find Connext directory inside {filename}"
                 )
+                continue
 
             for file in arch_data["libs"]:
                 logging.info(f"   - Extracting {file} ...")
