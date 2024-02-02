@@ -8,18 +8,15 @@
 # inability to use the software.
 
 import argparse
-import io
 import logging
+import re
 import shutil
 import sys
-import urllib.request
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any, Dict
-from urllib.error import HTTPError
 
 import boto3
-import requests
 import yaml
 from botocore.exceptions import ClientError
 
@@ -75,99 +72,31 @@ def create_folder_structure(data: Dict[str, Any], output_path: Path):
         arch_dir.mkdir(exist_ok=True, parents=True)
 
 
-def get_latest_bundles_version(latest_folder: str):
-    """Gets the latest bundles' version from the folder name.
+def get_connext_dds_dir(zip_file: zipfile.ZipFile):
+    """Get the name of the Connext DDS directory from inside a ZIP file.
 
     Args:
-        latest_folder (str): Name of the latest folder.
-
+        zip_file (zipfile.ZipFile): Opened ZIP file from which the Connext directory name will be obtained.
     Returns:
-        The version number of the latest bundles.
+        The name of the Connext directory inside the ZIP file.
     """
-    version = latest_folder.split("_")[1]
+    pattern = r"rti_connext_dds-\d+\.\d+\.\d+"
 
-    return version[0 : version.rfind(".")]
+    for file_info in zip_file.infolist():
+        # Extract the directory name from the file path
+        directory_name = file_info.filename.split("/")[0]
 
+        # Add the directory name to the set (to ensure uniqueness)
+        if re.match(pattern, directory_name):
+            return directory_name
 
-def get_latest_subfolder(storage_url: str, storage_path: str):
-    """Gets the latest subdirectory from the given folder.
-
-    Args:
-        storage_url (str): URL to the storage.
-        storage_path (str): Path from which the latest subdirectory will be extracted.
-
-    Returns:
-        The latest subdirectory from the given `storage_path`.
-    """
-    url = f"{storage_url}/api/storage/{storage_path}"
-    response = requests.get(url)
-    folder = None
-
-    if response.status_code == 200:
-        data = response.json()
-        files = data["children"]
-
-        # Filter out files and get only folders
-        folders = [f["uri"] for f in files if f["folder"]]
-
-        folder = folders[-1].replace("/", "")
-
-    return folder
+    return None
 
 
-def retrieve_latest_libraries(
-    data: Dict[str, Any],
-    storage_url: str,
-    libs_dir: str,
-    version: str,
-    output_path: Path,
-) -> bool:
-    """Download latest libraries from storage.
-
-    Args:
-        data (Dict[str, Any]): Information read from the YAML file.
-        storage_url (str): URL to the storage.
-        libs_dir (str): Directory where latest libraries are stored.
-        version (str): Version number of the latest bundles.
-        output_path (Path): Where to download the libs.
-    Returns:
-        `True` if the operation was successful, `False` otherwise.
-    """
-    successful = True
-
-    for arch, arch_data in data["architectures"].items():
-        for lib in arch_data["libs"]:
-            outer_path = f"{storage_url}/{libs_dir}/staging/connextdds-staging-{arch_data['name']}.tgz"
-
-            if "dds" in lib:
-                inner_path = (
-                    f"licensed/rti_connext_dds-{version}/lib/{arch_data['name']}/{lib}"
-                )
-            # If it's not one of our libs, try to find it in the resource folder (like "vcruntime140.dll")
-            else:
-                inner_path = f"licensed/rti_connext_dds-{version}/resource/app/lib/{arch_data['name']}/{lib}"
-
-            logging.info(f" - Retrieving {lib} ({arch_data['name']}) ...")
-
-            try:
-                urllib.request.urlretrieve(
-                    f"{outer_path}!/{inner_path}",
-                    output_path.joinpath("lib", arch, lib),
-                )
-            except HTTPError:
-                logging.error(
-                    f"[Error] Could not find bundles for architecture {arch_data['name']}"
-                )
-                successful = False
-
-    return successful
-
-
-def retrieve_libraries_for_specific_version(
+def retrieve_connext_libraries(
     data: Dict[str, Any],
     storage_url: str,
     storage_path: str,
-    version: str,
     output_path: Path,
 ):
     """Download libraries for a specific version from the storage.
@@ -181,37 +110,50 @@ def retrieve_libraries_for_specific_version(
     """
     s3 = boto3.client("s3")
     successful = True
+    version = data["version"]
 
     for arch, arch_data in data["architectures"].items():
         logging.info(f" - Downloading minimal package for {arch_data['name']} ...")
+        filename = f"rti_connext_dds-{version}-min-{arch_data['name']}.zip"
         remote_file_path = PurePosixPath(
             storage_path,
             version,
-            f"rti_connext_dds-{version}-min-{arch_data['name']}.zip",
+            filename,
         )
+        download_dest = Path(f"/tmp/connext_downloads/{filename}")
+        download_dest.parent.mkdir(parents=True, exist_ok=True)
 
         try:
-            response = s3.get_object(Bucket=storage_url, Key=str(remote_file_path))
+            with open(download_dest, "wb") as f:
+                s3.download_fileobj(storage_url, str(remote_file_path), f)
         except ClientError:
             logging.error(
                 f"[Error] Could not find bundles for architecture {arch_data['name']}"
             )
             successful = False
             continue
-        compressed_file = io.BytesIO(response["Body"].read())
 
-        logging.info(f"  - Extracting necessary libs...")
+        logging.info("  - Extracting necessary libs...")
 
-        with zipfile.ZipFile(compressed_file, "r") as zip_file:
+        with zipfile.ZipFile(download_dest, "r") as zip_file:
+            connext_dds_dir = get_connext_dds_dir(zip_file)
+
+            if not connext_dds_dir:
+                logging.error(
+                    f"[ERROR] Could not find Connext directory inside {filename}"
+                )
+                successful = False
+                continue
+
             for file in arch_data["libs"]:
                 logging.info(f"   - Extracting {file} ...")
 
                 if "dds" in file:
-                    inner_path = (
-                        f"rti_connext_dds-{version}/lib/{arch_data['name']}/{file}"
-                    )
+                    inner_path = f"{connext_dds_dir}/lib/{arch_data['name']}/{file}"
                 else:
-                    inner_path = f"rti_connext_dds-{version}/resource/app/lib/{arch_data['name']}/{file}"
+                    inner_path = (
+                        f"{connext_dds_dir}/resource/app/lib/{arch_data['name']}/{file}"
+                    )
 
                 try:
                     source = zip_file.open(inner_path)
@@ -239,26 +181,9 @@ def main():
 
     logging.info("Attempting to retrieve Connext native libraries ...")
 
-    if data["version"] == "latest":
-        latest_folder = get_latest_subfolder(args.storage_url, args.storage_path)
-
-        if not latest_folder:
-            sys.exit(
-                "Latest directory not found, make sure the URL to the storage and the Path are valid."
-            )
-
-        version = get_latest_bundles_version(latest_folder)
-        libs_dir = f"{args.storage_path}/{latest_folder}"
-
-        successful = retrieve_latest_libraries(
-            data, args.storage_url, libs_dir, version, args.output_path
-        )
-    else:
-        version = data["version"]
-
-        successful = retrieve_libraries_for_specific_version(
-            data, args.storage_url, args.storage_path, version, args.output_path
-        )
+    successful = retrieve_connext_libraries(
+        data, args.storage_url, args.storage_path, args.output_path
+    )
 
     if not successful:
         logging.error("There were some errors downloading the libs!")
