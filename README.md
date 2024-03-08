@@ -29,7 +29,7 @@ Scripting language bindings and examples are provided in source format.
  * **[JavaScript](https://github.com/rticommunity/rticonnextdds-connector-js)** (Fully supported)
  * **[Go](https://github.com/rticommunity/rticonnextdds-connector-go)** (Experimental support only)
 
-Connector for Python has been deprecated. A new full [Connext Python API](https://community.rti.com/static/documentation/connext-dds/current/doc/api/connext_dds/api_python/index.html) is available. The [Connext 7.2.0 Migration Guide](https://community.rti.com/static/documentation/connext-dds/7.2.0/doc/manuals/migration_guide/) provides guidance to migrate from Connector for Python to the Connext Python API.
+Connector for Python has been deprecated. A new full [Connext Python API](https://community.rti.com/static/documentation/connext-dds/current/doc/api/connext_dds/api_python/index.html) is available. The *Connext* [Migration Guide](https://community.rti.com/static/documentation/connext-dds/current/doc/manuals/migration_guide/) provides guidance to migrate from Connector for Python to the Connext Python API.
 
 ### Support
 If you have questions, use the [RTI Community Forum](https://community.rti.com/forums/technical-questions).
