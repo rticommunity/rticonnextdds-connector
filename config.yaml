@@ -26,7 +26,7 @@ architectures:
       - libnddscore.dylib
       - librtiddsconnector.dylib
   win-x64:
-    name: x64Win64VS2015
+    name: x64Win64VS2017
     libs:
       - nddsc.dll
       - nddscore.dll
