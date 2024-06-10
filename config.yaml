@@ -14,7 +14,7 @@ architectures:
       - libnddscore.so
       - librtiddsconnector.so
   linux-x64:
-    name: x64Linux3gcc4.8.2
+    name: x64Linux4gcc7.3.0
     libs:
       - libnddsc.so
       - libnddscore.so
