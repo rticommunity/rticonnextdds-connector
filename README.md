@@ -4,8 +4,8 @@
 It uses the DDS publish-subscribe communications model to make data distribution efficient and robust.
 At its core is the world’s leading ultra-high performance, distributed networking databus.
 
-*RTI Connector* is a simplified API that wraps RTI Connext Professional's XML Application Creation
-feature where an XML file defines a DDS system.
+*RTI Connector* is a simplified API that wraps RTI Connext Professional's XML-Based Application Creation
+feature, which supports the use of XML for the complete system definition.
 For each participant in the system, you can create a Connector and use its Inputs and Outputs
 (`DataReaders` and `DataWriters`, respectively) to send and receive samples using DynamicData.
 
@@ -28,14 +28,14 @@ with language bindings and examples provided in source format.
 
 ## Platform Support
 
-Platform Support might differ between releases, check the [RTI Connector releases][connector-releases].
+Platform Support may differ between releases. See [RTI Connector releases][connector-releases] for platform availability.
 
 [connector-releases]: https://www.github.com/rticommunity/rticonnextdds-connector/releases "RTI Connector releases"
 
 ## Support
 
 If you have questions, use the [RTI Community Forum][community-forum] or Github Issues.
-If you have an active support contract with RTI, you can also use the[RTI Support Portal][support-portal].
+If you have an active support contract with RTI, you can also use the [RTI Support Portal][support-portal].
 
 [community-forum]: https://community.rti.com/ "RTI Community Forum"
 [support-portal]: https://support.rti.com/ "RTI Support Portal"
@@ -43,7 +43,7 @@ If you have an active support contract with RTI, you can also use the[RTI Suppor
 ## License
 
 > *Note:* Each language binding may have its own license.
-> Please refer to the specific language binding repository for more details.
+> Refer to the specific language binding repository for more details.
 
 This software is an experimental ("pre-production") product.
 The Software is provided "as is," with no warranty of any type, including any warranty for fitness for any purpose.
