@@ -4,10 +4,10 @@
 It uses the DDS publish-subscribe communications model to make data distribution efficient and robust.
 At its core is the world’s leading ultra-high performance, distributed networking databus.
 
-*RTI Connector* is a simplified API that wraps RTI Connext Professional's XML-Based Application Creation
+*RTI Connector* is a simplified API that wraps the *RTI Connext Professional* XML-Based Application Creation
 feature, which supports the use of XML for the complete system definition.
 For each participant in the system, you can create a Connector and use its Inputs and Outputs
-(`DataReaders` and `DataWriters`, respectively) to send and receive samples using DynamicData.
+(*DataReaders* and *DataWriters*, respectively) to send and receive samples using DynamicData.
 
 ![connector-overview.svg](resources/connector-overview.svg)
 
